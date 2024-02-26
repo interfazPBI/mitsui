@@ -1,5 +1,5 @@
 {
-	"name": "DBM_VBAK_DB",
+	"name": "DBM_VBPA",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DEV_IG__DBM_VBAK_DB.parquet",
+				"fileName": "DEV_IG_DBM_VBPA.parquet",
 				"folderPath": "desarrollo",
 				"container": "dev"
 			},
