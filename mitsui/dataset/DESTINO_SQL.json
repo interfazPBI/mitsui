@@ -12,65 +12,7 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [
-			{
-				"name": "MANDT",
-				"type": "nvarchar"
-			},
-			{
-				"name": "SOCIEDAD",
-				"type": "nvarchar"
-			},
-			{
-				"name": "MODULO",
-				"type": "nvarchar"
-			},
-			{
-				"name": "APLICACION",
-				"type": "nvarchar"
-			},
-			{
-				"name": "PROGRAMA",
-				"type": "nvarchar"
-			},
-			{
-				"name": "CAMPO",
-				"type": "nvarchar"
-			},
-			{
-				"name": "SECUENCIA",
-				"type": "nvarchar"
-			},
-			{
-				"name": "SIGNO",
-				"type": "nvarchar"
-			},
-			{
-				"name": "OPCION",
-				"type": "nvarchar"
-			},
-			{
-				"name": "VALOR1",
-				"type": "nvarchar"
-			},
-			{
-				"name": "VALOR2",
-				"type": "nvarchar"
-			},
-			{
-				"name": "UNAME",
-				"type": "nvarchar"
-			},
-			{
-				"name": "DATUM",
-				"type": "date"
-			},
-			{
-				"name": "UZEIT",
-				"type": "time",
-				"scale": 7
-			}
-		],
+		"schema": [],
 		"typeProperties": {
 			"schema": "STAGING",
 			"table": {
