@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DEV_IG_ZTBCONSTANTES.parquet",
+				"fileName": "DEV_IG_ZTB_COTIZACIONES.parquet",
 				"folderPath": "desarrollo",
 				"container": "dev"
 			},
