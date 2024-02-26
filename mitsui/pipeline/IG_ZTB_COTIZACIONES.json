@@ -51,158 +51,146 @@
 							},
 							{
 								"source": {
-									"name": "SOCIEDAD",
+									"name": "VKORG",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "SOCIEDAD",
+									"name": "VKORG",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "MODULO",
+									"name": "VTWEG",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "MODULO",
+									"name": "VTWEG",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "APLICACION",
+									"name": "SPART",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "APLICACION",
+									"name": "SPART",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "PROGRAMA",
+									"name": "WERKS",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "PROGRAMA",
+									"name": "WERKS",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "CAMPO",
+									"name": "BZIRK",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "CAMPO",
+									"name": "BZIRK",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "SECUENCIA",
+									"name": "MATNR",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "SECUENCIA",
+									"name": "MATNR",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "SIGNO",
+									"name": "CHARG_D",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "SIGNO",
+									"name": "CHARG_D",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "OPCION",
+									"name": "VBELN",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "OPCION",
+									"name": "VBELN",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "VALOR1",
+									"name": "PERNR",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "VALOR1",
+									"name": "PERNR",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "VALOR2",
+									"name": "KUNNR",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "VALOR2",
+									"name": "KUNNR",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "UNAME",
+									"name": "FEC_COTIZ",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "UNAME",
+									"name": "FEC_COTIZ",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "DATUM",
-									"type": "DateTime",
-									"physicalType": "DATE"
+									"name": "CANT",
+									"type": "Byte",
+									"physicalType": "UINT_8"
 								},
 								"sink": {
-									"name": "DATUM",
-									"type": "DateTime",
-									"physicalType": "datetime2"
-								}
-							},
-							{
-								"source": {
-									"name": "UZEIT",
-									"type": "TimeSpan",
-									"physicalType": "TIME_MILLIS"
-								},
-								"sink": {
-									"name": "UZEIT",
-									"type": "TimeSpan",
-									"physicalType": "time"
+									"name": "CANT",
+									"type": "Byte",
+									"physicalType": "tinyint"
 								}
 							}
 						],
