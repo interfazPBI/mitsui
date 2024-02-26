@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "T023T",
+				"name": "ZTB_COTIZACIONES",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -51,50 +51,158 @@
 							},
 							{
 								"source": {
-									"name": "SPRAS",
+									"name": "SOCIEDAD",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "SPRAS",
+									"name": "SOCIEDAD",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "MATKL",
+									"name": "MODULO",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "MATKL",
+									"name": "MODULO",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "WGBEZ",
+									"name": "APLICACION",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "WGBEZ",
+									"name": "APLICACION",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "WGBEZ60",
+									"name": "PROGRAMA",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "WGBEZ60",
+									"name": "PROGRAMA",
 									"type": "String",
 									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAMPO",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CAMPO",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SECUENCIA",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "SECUENCIA",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SIGNO",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "SIGNO",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OPCION",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "OPCION",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "VALOR1",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "VALOR1",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "VALOR2",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "VALOR2",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "UNAME",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "UNAME",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DATUM",
+									"type": "DateTime",
+									"physicalType": "DATE"
+								},
+								"sink": {
+									"name": "DATUM",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "UZEIT",
+									"type": "TimeSpan",
+									"physicalType": "TIME_MILLIS"
+								},
+								"sink": {
+									"name": "UZEIT",
+									"type": "TimeSpan",
+									"physicalType": "time"
 								}
 							}
 						],
@@ -107,7 +215,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "T023T",
+						"referenceName": "ZTB_COTIZACIONES",
 						"type": "DatasetReference"
 					}
 				],
@@ -116,7 +224,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_T023T"
+							"TABLA": "IG_ZTB_COTIZACIONES"
 						}
 					}
 				]
