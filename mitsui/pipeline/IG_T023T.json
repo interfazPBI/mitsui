@@ -44,72 +44,57 @@
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "MANDT"
+									"name": "MANDT",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
+								"source": {
+									"name": "SPRAS",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
 								"sink": {
-									"name": "SOCIEDAD"
+									"name": "SPRAS",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
+								"source": {
+									"name": "MATKL",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
 								"sink": {
-									"name": "MODULO"
+									"name": "MATKL",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
+								"source": {
+									"name": "WGBEZ",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
 								"sink": {
-									"name": "APLICACION"
+									"name": "WGBEZ",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
+								"source": {
+									"name": "WGBEZ60",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
 								"sink": {
-									"name": "PROGRAMA"
-								}
-							},
-							{
-								"sink": {
-									"name": "CAMPO"
-								}
-							},
-							{
-								"sink": {
-									"name": "SECUENCIA"
-								}
-							},
-							{
-								"sink": {
-									"name": "SIGNO"
-								}
-							},
-							{
-								"sink": {
-									"name": "OPCION"
-								}
-							},
-							{
-								"sink": {
-									"name": "VALOR1"
-								}
-							},
-							{
-								"sink": {
-									"name": "VALOR2"
-								}
-							},
-							{
-								"sink": {
-									"name": "UNAME"
-								}
-							},
-							{
-								"sink": {
-									"name": "DATUM"
-								}
-							},
-							{
-								"sink": {
-									"name": "UZEIT"
+									"name": "WGBEZ60",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							}
 						],
