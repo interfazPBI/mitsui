@@ -1,5 +1,5 @@
 {
-	"name": "ZTDBM_METASMODEL_copy1",
+	"name": "VLCGRECEIPT",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
