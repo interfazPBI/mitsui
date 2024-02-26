@@ -875,7 +875,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DBM_SPLHDR_DB",
+						"referenceName": "DBM_VBAK_DB",
 						"type": "DatasetReference"
 					}
 				],
@@ -884,7 +884,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_DBM_SPLHDR_DB"
+							"TABLA": "IG_DBM_VBAK_DB"
 						}
 					}
 				]
