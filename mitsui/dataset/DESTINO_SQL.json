@@ -5,6 +5,11 @@
 			"referenceName": "BD_MITSUI",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"TABLA": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
@@ -68,7 +73,10 @@
 		],
 		"typeProperties": {
 			"schema": "STAGING",
-			"table": "IG_PRUEBA"
+			"table": {
+				"value": "@dataset().TABLA",
+				"type": "Expression"
+			}
 		}
 	}
 }
