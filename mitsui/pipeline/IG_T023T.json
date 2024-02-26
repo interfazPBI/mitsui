@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ASD",
+				"name": "T023T",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -36,6 +36,83 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MANDT",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "MANDT"
+								}
+							},
+							{
+								"sink": {
+									"name": "SOCIEDAD"
+								}
+							},
+							{
+								"sink": {
+									"name": "MODULO"
+								}
+							},
+							{
+								"sink": {
+									"name": "APLICACION"
+								}
+							},
+							{
+								"sink": {
+									"name": "PROGRAMA"
+								}
+							},
+							{
+								"sink": {
+									"name": "CAMPO"
+								}
+							},
+							{
+								"sink": {
+									"name": "SECUENCIA"
+								}
+							},
+							{
+								"sink": {
+									"name": "SIGNO"
+								}
+							},
+							{
+								"sink": {
+									"name": "OPCION"
+								}
+							},
+							{
+								"sink": {
+									"name": "VALOR1"
+								}
+							},
+							{
+								"sink": {
+									"name": "VALOR2"
+								}
+							},
+							{
+								"sink": {
+									"name": "UNAME"
+								}
+							},
+							{
+								"sink": {
+									"name": "DATUM"
+								}
+							},
+							{
+								"sink": {
+									"name": "UZEIT"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
