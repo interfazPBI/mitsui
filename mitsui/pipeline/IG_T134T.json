@@ -51,18 +51,6 @@
 							},
 							{
 								"source": {
-									"name": "MATNR",
-									"type": "String",
-									"physicalType": "UTF8"
-								},
-								"sink": {
-									"name": "MATNR",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
 									"name": "SPRAS",
 									"type": "String",
 									"physicalType": "UTF8"
@@ -75,24 +63,24 @@
 							},
 							{
 								"source": {
-									"name": "MAKTX",
+									"name": "MTART",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "MAKTX",
+									"name": "MTART",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "MAKTG",
+									"name": "MTBEZ",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "MAKTG",
+									"name": "MTBEZ",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
