@@ -14,7 +14,7 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "DWH",
+			"schema": "STAGING",
 			"table": {
 				"value": "@dataset().TABLA",
 				"type": "Expression"
