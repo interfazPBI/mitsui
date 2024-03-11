@@ -116,7 +116,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_PRUEBA_DWH"
+							"TABLA": "IG_MAKT"
 						}
 					}
 				]
