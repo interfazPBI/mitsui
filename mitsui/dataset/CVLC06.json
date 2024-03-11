@@ -1,5 +1,5 @@
 {
-	"name": "MAKT_copy1",
+	"name": "CVLC06",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
