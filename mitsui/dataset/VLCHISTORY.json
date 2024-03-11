@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DEV_IG_VLCHISTORY.parquet",
+				"fileName": "DEV_IG_DBM_VLCHISTORY.parquet",
 				"folderPath": "desarrollo",
 				"container": "dev"
 			},
