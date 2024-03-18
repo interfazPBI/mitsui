@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ZDBM010",
+				"name": "ZDBM010_FACT",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -608,7 +608,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_ZDBM010"
+							"TABLA": "IG_ZDBM010_FACT"
 						}
 					}
 				]
