@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CVLC02T",
+				"name": "ZDBM011",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -39,48 +39,144 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "MANDT",
+									"name": "Ce.",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "MANDT",
+									"name": "Ce.",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "SPRAS",
+									"name": "Material",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "SPRAS",
+									"name": "Material",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "STATU",
+									"name": "Modelo veh",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "STATU",
+									"name": "Modelo veh",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "STATUT",
+									"name": "Des. Modelo vehículo",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "STATUT",
+									"name": "Des. Modelo vehículo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Nombre Asesor",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "Nombre Asesor",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ZV",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "ZV",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OfVta",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "OfVta",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DenominZonaVtas",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "DenominZonaVtas",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Fecha doc.",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "Fecha doc.",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Pedido DBM",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "Pedido DBM",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Status Ped",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "Status Ped",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Cod. Clien",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "Cod. Clien",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -95,7 +191,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CVLC02T",
+						"referenceName": "ZDBM011",
 						"type": "DatasetReference"
 					}
 				],
@@ -104,7 +200,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_CVLC02T"
+							"TABLA": "IG_ZDBM011"
 						}
 					}
 				]
