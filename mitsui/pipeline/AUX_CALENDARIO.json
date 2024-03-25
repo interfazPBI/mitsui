@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Vendedores",
+				"name": "Calendario",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -80,7 +80,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Vendedores",
+						"referenceName": "Calendario",
 						"type": "DatasetReference"
 					}
 				],
@@ -89,7 +89,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "AUX_VENDEDORES"
+							"TABLA": "DIM_TIEMPO_1"
 						}
 					}
 				]
