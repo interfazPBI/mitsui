@@ -36,38 +36,626 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "Vendedor",
+									"name": "01 SK_DateKey",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Vendedor",
-									"type": "String",
-									"physicalType": "nvarchar"
+									"name": "01 SK_DateKey",
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							},
 							{
 								"source": {
-									"name": "Codigo",
+									"name": "02 Fecha",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Codigo",
-									"type": "String",
-									"physicalType": "nvarchar"
+									"name": "02 Fecha",
+									"type": "DateTime",
+									"physicalType": "datetime"
 								}
 							},
 							{
 								"source": {
-									"name": "Sede",
+									"name": "03 Año",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Sede",
+									"name": "03 Año",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "04 Año_Comercial",
 									"type": "String",
-									"physicalType": "nvarchar"
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "04 Año_Comercial",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "05 Año_Granja",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "05 Año_Granja",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "06 Año_Iso",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "06 Año_Iso",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "07 Año_Levante",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "07 Año_Levante",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "08 Año_Tradicional",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "08 Año_Tradicional",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "18 Trim_Num",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "18 Trim_Num",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "19 Trim_Text_Comp",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "19 Trim_Text_Comp",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "20 Trim_Text_Par",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "20 Trim_Text_Par",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "21 Mes_Num",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "21 Mes_Num",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "22 Mes_Text_Comp",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "22 Mes_Text_Comp",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "23 Mes_Text_Par",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "23 Mes_Text_Par",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "24 Mes_Num_Tradicional",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "24 Mes_Num_Tradicional",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "25 Mes_Num_Año_Levante",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "25 Mes_Num_Año_Levante",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "26 Mes_Text_Año_Levante",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "26 Mes_Text_Año_Levante",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "27 Mes_Text_Comp_Año_Levante",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "27 Mes_Text_Comp_Año_Levante",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "28 Mes_Num_Año_Comercial",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "28 Mes_Num_Año_Comercial",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "29 Mes_Text_Año_Comercial",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "29 Mes_Text_Año_Comercial",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "30 Mes_Text_Comp_Año_Comercial",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "30 Mes_Text_Comp_Año_Comercial",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "31 Mes_Num_Año_Granja",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "31 Mes_Num_Año_Granja",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "32 Mes_Text_Año_Granja",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "32 Mes_Text_Año_Granja",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "33 Mes_Text_Comp_Año_Granja",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "33 Mes_Text_Comp_Año_Granja",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "34 Sem_Num",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "34 Sem_Num",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "35 Sem_Text_Comp",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "35 Sem_Text_Comp",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "36 Sem_Text_Par",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "36 Sem_Text_Par",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "37 Sem_Contable",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "37 Sem_Contable",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "38 Sem_Calera",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "38 Sem_Calera",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "39 Sem_Iso",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "39 Sem_Iso",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "40 Sem_Comercial",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "40 Sem_Comercial",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "42 Sem_Gerencia",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "42 Sem_Gerencia",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "43 Sem_Levante",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "43 Sem_Levante",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "44 Sem_Granja",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "44 Sem_Granja",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "45 Sem_Iso_Text_Comp",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "45 Sem_Iso_Text_Comp",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "54 Año_Dia_num",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "54 Año_Dia_num",
+									"type": "Int16",
+									"physicalType": "smallint"
+								}
+							},
+							{
+								"source": {
+									"name": "55 Dia_Num",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "55 Dia_Num",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "56 Día_Num_x7",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "56 Día_Num_x7",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "57 Dia_Text_Comp",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "57 Dia_Text_Comp",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "58 Dia_Text_Par",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "58 Dia_Text_Par",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "59 Día_Levante",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "59 Día_Levante",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "60 Dia_Num_Tradicional",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "60 Dia_Num_Tradicional",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "70 Feriado",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "70 Feriado",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "71 F_Descripcion",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "71 F_Descripcion",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "72 Horas_Dias",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "72 Horas_Dias",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "73 Nro_Dia_Mes_Tradicional",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "73 Nro_Dia_Mes_Tradicional",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "74 Semestre_Text_Comp",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "74 Semestre_Text_Comp",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "75 Semestre_Num",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "75 Semestre_Num",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "52 Día_Comercial",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "52 Día_Comercial",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "53 Día_Granja",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "53 Día_Granja",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "50 Día Comercial x7",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "50 Día Comercial x7",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "51 Día Granja x7",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "51 Día Granja x7",
+									"type": "Int32",
+									"physicalType": "int"
 								}
 							}
 						],
