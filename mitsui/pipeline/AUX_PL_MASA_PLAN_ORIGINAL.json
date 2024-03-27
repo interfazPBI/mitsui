@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "PL_MASA",
+				"name": "PL_MASA_PLAN_ORIGINAL",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
