@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Vendedores",
+				"name": "PL_MASA",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -36,36 +36,204 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "Vendedor",
+									"name": "Cascada",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Vendedor",
+									"name": "Cascada",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "Codigo",
+									"name": "Marca",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Codigo",
+									"name": "Marca",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "Sede",
+									"name": "Tipo",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Sede",
+									"name": "Tipo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Area",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Area",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Año",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Año",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Enero",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Enero",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Febrero",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Febrero",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Marzo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Marzo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Abril",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Abril",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Mayo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Mayo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Junio",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Junio",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Julio",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Julio",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Agosto",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Agosto",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Setiembre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Setiembre",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Octubre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Octubre",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Noviembre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Noviembre",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Diciembre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Diciembre",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -80,7 +248,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Vendedores",
+						"referenceName": "PL_MASA",
 						"type": "DatasetReference"
 					}
 				],
@@ -89,7 +257,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "AUX_VENDEDORES"
+							"TABLA": "AUX_PL_MASA"
 						}
 					}
 				]
