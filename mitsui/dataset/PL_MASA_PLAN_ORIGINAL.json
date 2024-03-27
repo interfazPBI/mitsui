@@ -1,5 +1,5 @@
 {
-	"name": "PL_MASA",
+	"name": "PL_MASA_PLAN_ORIGINAL",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
