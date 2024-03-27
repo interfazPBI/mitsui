@@ -248,7 +248,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "PL_MASA_PLAN_ORIGINAL",
+						"referenceName": "PL_MASA_PLAN_REVISADO",
 						"type": "DatasetReference"
 					}
 				],
@@ -257,7 +257,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "AUX_PL_MASA_PLAN_ORIGINAL"
+							"TABLA": "AUX_PL_MASA_PLAN_REVISADO"
 						}
 					}
 				]
