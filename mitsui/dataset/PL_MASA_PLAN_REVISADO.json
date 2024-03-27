@@ -1,0 +1,35 @@
+{
+	"name": "PL_MASA_PLAN_REVISADO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "PL MASA MODIFICADO.xlsx",
+				"folderPath": "Archivos Planos",
+				"container": "dev"
+			},
+			"sheetIndex": 1,
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Vendedor",
+				"type": "String"
+			},
+			{
+				"name": "Codigo",
+				"type": "String"
+			},
+			{
+				"name": "Sede",
+				"type": "String"
+			}
+		]
+	}
+}
