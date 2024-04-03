@@ -111,18 +111,6 @@
 							},
 							{
 								"source": {
-									"name": "OfVta",
-									"type": "String",
-									"physicalType": "UTF8"
-								},
-								"sink": {
-									"name": "OfVta",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
 									"name": "DenominZonaVtas",
 									"type": "String",
 									"physicalType": "UTF8"
@@ -177,6 +165,18 @@
 								},
 								"sink": {
 									"name": "Cod. Clien",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Referencia",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "Referencia",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
