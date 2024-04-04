@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
-			"url": "https://mitsuiautomotrizcom.sharepoint.com/sites/BI-MASA/_api/web/GetFileByServerRelativeUrl('/sites/BI-MASA/Documentos%20compartidos%2FPL%20MASA%2FOriginal/Plan%20Original%202024.xlsx')/$value",
+			"url": "https://mitsuiautomotrizcom.sharepoint.com",
 			"enableServerCertificateValidation": false,
 			"authenticationType": "Anonymous"
 		}
