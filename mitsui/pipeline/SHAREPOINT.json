@@ -1,6 +1,29 @@
 {
 	"name": "SHAREPOINT",
 	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
+					"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
+				}
+			}
+		],
 		"annotations": []
 	}
 }
