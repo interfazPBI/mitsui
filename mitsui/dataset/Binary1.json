@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
-				"relativeUrl": "/sites/BI-MASA/_api/web/GetFileByServerRelativeUrl('/sites/BI-MASA/Documentos%20compartidos%2FPL%20MASA%2FOriginal/Plan%20Original%202024.xlsx')/$value"
+				"relativeUrl": "//sites/BI-MASA/_api/web/GetFileByServerRelativeUrl('/sites/BI-MASA/Documentos%20compartidos%2FPL%20MASA%2FOriginal/Plan%20Original%202024.xlsx')/$value"
 			}
 		}
 	}
