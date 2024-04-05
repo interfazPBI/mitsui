@@ -1,0 +1,124 @@
+{
+	"name": "AUX_CAD_TOYOTA_VALUE",
+	"properties": {
+		"activities": [
+			{
+				"name": "CAD_VAL_TOYOTA_VALUE",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "FECHA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FECHA",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LOCAL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LOCAL",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "REAL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "REAL",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "META_TDP",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "META_TDP",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "META_MASA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "META_MASA",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "CAD_VAL_TOYOTA_VALUE",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DESTINO_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"TABLA": "AUX_CAD_VAL_TOYOTA_VALUE"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
