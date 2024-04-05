@@ -1,0 +1,35 @@
+{
+	"name": "CAD_VAL_TOYOTA_VALUE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Toyota Value",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Cadena de Valor.xlsx",
+				"folderPath": "Archivos Planos",
+				"container": "dev"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Vendedor",
+				"type": "String"
+			},
+			{
+				"name": "Codigo",
+				"type": "String"
+			},
+			{
+				"name": "Sede",
+				"type": "String"
+			}
+		]
+	}
+}
