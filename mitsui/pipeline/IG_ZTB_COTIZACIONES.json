@@ -16,14 +16,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ParquetSource",
+						"type": "ExcelSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "ParquetReadSettings"
 						}
 					},
 					"sink": {
@@ -39,9 +36,9 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "MANDT",
+									"name": "Documento",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "MANDT",
@@ -51,9 +48,9 @@
 							},
 							{
 								"source": {
-									"name": "VKORG",
+									"name": "Nro. Doc.",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "VKORG",
@@ -63,9 +60,9 @@
 							},
 							{
 								"source": {
-									"name": "VTWEG",
+									"name": "Nombre Cliente Cotizado",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "VTWEG",
@@ -75,9 +72,9 @@
 							},
 							{
 								"source": {
-									"name": "SPART",
+									"name": "Tipo Cliente",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "SPART",
@@ -87,9 +84,9 @@
 							},
 							{
 								"source": {
-									"name": "WERKS",
+									"name": "Contacto",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "WERKS",
@@ -99,9 +96,9 @@
 							},
 							{
 								"source": {
-									"name": "BZIRK",
+									"name": "Direccion",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "BZIRK",
@@ -111,9 +108,9 @@
 							},
 							{
 								"source": {
-									"name": "MATNR",
+									"name": "Departamento",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "MATNR",
@@ -123,9 +120,9 @@
 							},
 							{
 								"source": {
-									"name": "CHARG_D",
+									"name": "Provincia",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "CHARG_D",
@@ -135,9 +132,9 @@
 							},
 							{
 								"source": {
-									"name": "VBELN",
+									"name": "Distrito",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "VBELN",
@@ -147,9 +144,9 @@
 							},
 							{
 								"source": {
-									"name": "PERNR",
+									"name": "Telf. Fijo",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "PERNR",
@@ -159,9 +156,9 @@
 							},
 							{
 								"source": {
-									"name": "KUNNR",
+									"name": "Telf. Movil",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "KUNNR",
@@ -171,9 +168,9 @@
 							},
 							{
 								"source": {
-									"name": "FEC_COTIZ",
+									"name": "Fec. Cotizacion",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "FEC_COTIZ",
@@ -183,9 +180,9 @@
 							},
 							{
 								"source": {
-									"name": "CANT",
-									"type": "Byte",
-									"physicalType": "UINT_8"
+									"name": "RPM/RPC/Nextel",
+									"type": "String",
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "CANT",
@@ -203,7 +200,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ZTB_COTIZACIONES",
+						"referenceName": "COTIZACIONES_EXCEL",
 						"type": "DatasetReference"
 					}
 				],
@@ -212,7 +209,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_ZTB_COTIZACIONES"
+							"TABLA": "IG_COTIZACIONES_EXCEL"
 						}
 					}
 				]
