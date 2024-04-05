@@ -24,9 +24,10 @@
 						}
 					},
 					"dataset": {
-						"referenceName": "CAD_VAL_TOYOTA_LIFE",
+						"referenceName": "TRANSACCIONALES",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
@@ -48,7 +49,7 @@
 					},
 					"activities": [
 						{
-							"name": "THEOBALD_copy1",
+							"name": "Web1",
 							"type": "WebActivity",
 							"dependsOn": [],
 							"policy": {
@@ -62,10 +63,9 @@
 							"typeProperties": {
 								"method": "GET",
 								"url": {
-									"value": "@concat('http://172.17.0.142:8065/?name=',item().EXTRACCIÓN)",
+									"value": "http://localhost:8065/?name=DEV_IG_ZDBM036&wait=false",
 									"type": "Expression"
-								},
-								"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
+								}
 							}
 						}
 					]
