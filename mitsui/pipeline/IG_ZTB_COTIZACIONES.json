@@ -117,6 +117,18 @@
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
+							},
+							{
+								"source": {
+									"name": "Cant. Cotizada",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Cant. Cotizada",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
 							}
 						],
 						"typeConversion": true,
