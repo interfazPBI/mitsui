@@ -8,13 +8,13 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Seguros",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "Cadena de Valor.xlsx",
 				"folderPath": "Archivos Planos",
 				"container": "dev"
 			},
-			"sheetIndex": 0,
 			"firstRowAsHeader": true
 		},
 		"schema": [
