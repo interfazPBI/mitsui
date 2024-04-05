@@ -36,158 +36,86 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "Documento",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "MANDT",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Nro. Doc.",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "VKORG",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Nombre Cliente Cotizado",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "VTWEG",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Tipo Cliente",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "SPART",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Contacto",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "WERKS",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Direccion",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "BZIRK",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Departamento",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "MATNR",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Provincia",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CHARG_D",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Distrito",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "VBELN",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Telf. Fijo",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "PERNR",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Telf. Movil",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "KUNNR",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
 									"name": "Fec. Cotizacion",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "FEC_COTIZ",
+									"name": "Fec. Cotizacion",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "RPM/RPC/Nextel",
+									"name": "Marca",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "CANT",
-									"type": "Byte",
-									"physicalType": "tinyint"
+									"name": "Marca",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Modelo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Modelo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Version",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Version",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Cod. Version",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Cod. Version",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Local",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Local",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Asesor Cotizacion",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Asesor Cotizacion",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							}
 						],
