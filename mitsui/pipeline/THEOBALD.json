@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Web1",
+				"name": "THEOBALD",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -15,11 +15,11 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"method": "POST",
-					"headers": {
-						"Content-Type": "application/x-www-form-urlencoded"
+					"method": "GET",
+					"url": {
+						"value": "@concat('http://13.78.212.108:8065/?name=',item().Extracción,'&FECHAINI=',pipeline().parameters.FECHA_DESDE,'&FECHAFIN=',pipeline().parameters.FECHA_HASTA)",
+						"type": "Expression"
 					},
-					"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
 					"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
 				}
 			},
@@ -28,7 +28,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Web1",
+						"activity": "THEOBALD",
 						"dependencyConditions": [
 							"Succeeded"
 						]
