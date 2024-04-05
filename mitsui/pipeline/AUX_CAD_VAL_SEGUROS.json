@@ -60,36 +60,36 @@
 							},
 							{
 								"source": {
-									"name": "HOT",
+									"name": "REAL",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "HOT",
+									"name": "REAL",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "SEGURA ",
+									"name": "META_TDP",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "SEGURA ",
+									"name": "META_TDP",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "TOTAL_GENERAL",
+									"name": "META_MASA",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "TOTAL_GENERAL",
+									"name": "META_MASA",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
