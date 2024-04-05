@@ -1,0 +1,35 @@
+{
+	"name": "CAD_VAL_EPDP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Cadena de Valor.xlsx",
+				"folderPath": "Archivos Planos",
+				"container": "dev"
+			},
+			"sheetIndex": 4,
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Vendedor",
+				"type": "String"
+			},
+			{
+				"name": "Codigo",
+				"type": "String"
+			},
+			{
+				"name": "Sede",
+				"type": "String"
+			}
+		]
+	}
+}
