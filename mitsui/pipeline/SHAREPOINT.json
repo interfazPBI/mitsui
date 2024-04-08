@@ -130,7 +130,13 @@
 							"outputs": [
 								{
 									"referenceName": "receptor_SP",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"archivo": {
+											"value": "@item().Nombre",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
