@@ -5,6 +5,14 @@
 			"referenceName": "XTRACT_SP",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"ruta": {
+				"type": "string"
+			},
+			"archivo": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
