@@ -5,7 +5,7 @@
 		"type": "HttpServer",
 		"typeProperties": {
 			"url": "https://mitsuiautomotrizcom.sharepoint.com",
-			"enableServerCertificateValidation": false,
+			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
 	}
