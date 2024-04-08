@@ -94,7 +94,7 @@
 										"type": "HttpReadSettings",
 										"requestMethod": "GET",
 										"additionalHeaders": {
-											"value": "@{concat('Authorization: Bearer ', activity('Web1').output.access_token)}",
+											"value": "@{concat('Authorization: Bearer ', activity('Web1_copy1').output.access_token)}",
 											"type": "Expression"
 										}
 									},
@@ -113,7 +113,17 @@
 							"inputs": [
 								{
 									"referenceName": "Binary1",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"ruta": {
+											"value": "@item().rutadeacceso",
+											"type": "Expression"
+										},
+										"archivo": {
+											"value": "@item().Nombre",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
