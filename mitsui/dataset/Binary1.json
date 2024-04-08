@@ -3,7 +3,17 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "XTRACT_SP",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"path": {
+					"value": "@dataset().ruta",
+					"type": "Expression"
+				},
+				"file": {
+					"value": "@dataset().archivo",
+					"type": "Expression"
+				}
+			}
 		},
 		"parameters": {
 			"ruta": {
