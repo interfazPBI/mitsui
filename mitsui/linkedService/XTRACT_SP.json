@@ -1,6 +1,14 @@
 {
 	"name": "XTRACT_SP",
 	"properties": {
+		"parameters": {
+			"path": {
+				"type": "string"
+			},
+			"file": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
