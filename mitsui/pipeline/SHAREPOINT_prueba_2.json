@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SharePointOnlineListSource",
 						"query": {
-							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/PL%20MASA/Original/''', 'and Nombre eq ''', 'Plan%20Original%202024.xlsx','''')",
+							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/LOCAL-VENDEDOR/''', 'and Nombre eq ''', 'Pizarra%20Ventas%202020.xlsx','''')",
 							"type": "Expression"
 						},
 						"httpRequestTimeout": "00:05:00"
