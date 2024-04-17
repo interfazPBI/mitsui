@@ -311,7 +311,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ZDBM036",
+						"referenceName": "ZDBM036_LEX",
 						"type": "DatasetReference"
 					}
 				],
@@ -320,7 +320,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_ZDBM036"
+							"TABLA": "IG_ZDBM036_LEX"
 						}
 					}
 				]
