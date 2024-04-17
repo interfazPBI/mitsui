@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ZDBM036",
+				"name": "ZDBM036_LEX",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
