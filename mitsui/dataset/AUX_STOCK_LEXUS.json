@@ -1,5 +1,5 @@
 {
-	"name": "AUX_LOTE_LEXUS",
+	"name": "AUX_STOCK_LEXUS",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
