@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "LOTE_LEXUS",
+				"name": "STOCK_LEXUS",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -152,7 +152,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "AUX_LOTE_LEXUS",
+						"referenceName": "AUX_STOCK_LEXUS",
 						"type": "DatasetReference"
 					}
 				],
@@ -161,7 +161,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "AUX_LOTE_LEXUS"
+							"TABLA": "AUX_STOCK_LEXUS"
 						}
 					}
 				]
