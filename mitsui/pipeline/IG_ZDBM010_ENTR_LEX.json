@@ -588,6 +588,18 @@
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
+							},
+							{
+								"source": {
+									"name": "Moneda",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "moneda",
+									"type": "String",
+									"physicalType": "varchar"
+								}
 							}
 						],
 						"typeConversion": true,
