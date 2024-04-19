@@ -1,9 +1,9 @@
 {
-	"name": "IG_ZTB_COTIZACIONES",
+	"name": "IAUX_COTIZACIONES",
 	"properties": {
 		"activities": [
 			{
-				"name": "ZTB_COTIZACIONES",
+				"name": "AUX_COTIZACIONES",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
