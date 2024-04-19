@@ -140,7 +140,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "COTIZACIONES_EXCEL",
+						"referenceName": "COTIZACIONES_LEXUS",
 						"type": "DatasetReference"
 					}
 				],
