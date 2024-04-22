@@ -611,7 +611,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ZDBM010_LEX_E",
+						"referenceName": "ZDBM010_HINO_E",
 						"type": "DatasetReference"
 					}
 				],
@@ -620,7 +620,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_ZDBM010_ENT_L"
+							"TABLA": "IG_ZDBM010_ENT_H"
 						}
 					}
 				]
