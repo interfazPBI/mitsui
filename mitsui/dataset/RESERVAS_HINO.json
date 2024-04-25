@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "RepCotizacion_20240331_Final.xlsx",
+				"fileName": "fuente reservas.xlsx",
 				"folderPath": "Archivos Planos",
 				"container": "dev"
 			},
