@@ -72,7 +72,9 @@
 								"sink": {
 									"name": "TSTMP",
 									"type": "Decimal",
-									"physicalType": "decimal"
+									"physicalType": "decimal",
+									"scale": 7,
+									"precision": 21
 								}
 							},
 							{
