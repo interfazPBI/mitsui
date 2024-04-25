@@ -36,96 +36,108 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "Fec. Cotizacion",
+									"name": "NRO      ",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Fec. Cotizacion",
+									"name": "NRO",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "SERIE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SERIE",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "Marca",
+									"name": " Año Fab. ",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Marca",
+									"name": "Año Fab.",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "Modelo",
+									"name": " Año Mod. ",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Modelo",
+									"name": "Año Mod",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "Version",
+									"name": "CÓD.",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Version",
+									"name": "COd",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "Cod. Version",
+									"name": "MODELO",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Cod. Version",
+									"name": "MODELO",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "Local",
+									"name": "COLOR",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Local",
+									"name": "COLOR",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "Asesor Cotizacion",
+									"name": "SEPARADO",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Asesor Cotizacion",
+									"name": "SEPARADO",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "Cant. Cotizada",
+									"name": "FECHA",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Cant. Cotizada",
+									"name": "FECHA",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -140,7 +152,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "COTIZACIONES_EXCEL",
+						"referenceName": "RESERVAS_HINO",
 						"type": "DatasetReference"
 					}
 				],
@@ -149,7 +161,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_COTIZACIONES_EXCEL"
+							"TABLA": "AUX_RESERVAS_HINO"
 						}
 					}
 				]
