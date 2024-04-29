@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "fuente reservas.xlsx",
+				"fileName": "fuente reservas -HINO FINAL.xlsx",
 				"folderPath": "Archivos Planos",
 				"container": "dev"
 			},
