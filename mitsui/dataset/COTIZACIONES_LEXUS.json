@@ -10,11 +10,11 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "RepCotizacion_20200604 _20240404_Final_LEXUS.xls",
+				"fileName": "COTIZACIONES.xlsx",
 				"folderPath": "Archivos Planos",
 				"container": "dev"
 			},
-			"sheetIndex": 1,
+			"sheetIndex": 0,
 			"firstRowAsHeader": true
 		},
 		"schema": [
