@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"method": "GET",
 					"url": {
-						"value": "http://172.17.0.142:8065/?name=DEV_IG_ZDBM036",
+						"value": "http://10.54.1.22:8065/?name=DEV_IG_ZDBM036&wait=false",
 						"type": "Expression"
 					}
 				}
