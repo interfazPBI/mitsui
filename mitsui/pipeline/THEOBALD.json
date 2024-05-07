@@ -63,7 +63,7 @@
 							"typeProperties": {
 								"method": "GET",
 								"url": {
-									"value": "http://localhost:8065/?name=DEV_IG_ZDBM036&wait=false",
+									"value": "@concat('http://190.116.61.84:8065/?name=',item().Extracción)",
 									"type": "Expression"
 								}
 							}
