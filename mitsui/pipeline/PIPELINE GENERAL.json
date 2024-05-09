@@ -200,6 +200,39 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "LEXUS",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRANSACCIONALES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "HINO",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_INI": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_FIN": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+							"type": "Expression"
+						}
+					}
+				}
 			}
 		],
 		"parameters": {
