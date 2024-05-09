@@ -49,6 +49,14 @@
 				}
 			}
 		],
+		"parameters": {
+			"FECHA_INI": {
+				"type": "string"
+			},
+			"FECHA_FIN": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
