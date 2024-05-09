@@ -70,7 +70,7 @@
 							}
 						},
 						{
-							"name": "Copy data1_copy1",
+							"name": "SHAREPOINT AZURE",
 							"type": "Copy",
 							"dependsOn": [
 								{
@@ -139,6 +139,29 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "AZURE SQL",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "SHAREPOINT AZURE",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"enableStaging": false
+							}
 						}
 					]
 				}
