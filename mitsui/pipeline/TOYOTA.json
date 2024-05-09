@@ -285,6 +285,13 @@
 								"type": "Expression"
 							},
 							"type": "Datetime"
+						},
+						"FECHA_BOOKING": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
 						}
 					}
 				},
