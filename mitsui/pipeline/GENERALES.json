@@ -41,6 +41,34 @@
 					"referenceName": "BD_MITSUI",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "INT_VLCINVOICE_STOCK",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[CARGA_INT_VLCINVOICE_STOCK]",
+					"storedProcedureParameters": {
+						"FECHA_INI": {
+							"value": ""
+						},
+						"FECHA_FIN": {
+							"value": ""
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
