@@ -173,7 +173,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[DWH].[CARGA_FACT_FACTURAS_BOOKING_HINO]",
+					"storedProcedureName": "[DWH].[CARGA_FACT_FACTURAS_BOOKING_LEXUS]",
 					"storedProcedureParameters": {
 						"FECHA_INI": {
 							"value": {
