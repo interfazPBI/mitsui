@@ -111,7 +111,21 @@
 						"referenceName": "GENERALES",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_DESDE": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_HASTA": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_HASTA",
+							"type": "Expression"
+						},
+						"TIMESTAMP": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.TIMESTAMP",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
