@@ -179,14 +179,7 @@
 				"typeProperties": {
 					"storedProcedureName": "[DWH].[CARGA_FACT_STOCK]",
 					"storedProcedureParameters": {
-						"FECHA_INI": {
-							"value": {
-								"value": "@pipeline().parameters.FECHA_INI",
-								"type": "Expression"
-							},
-							"type": "Datetime"
-						},
-						"FECHA_FIN": {
+						"FECHA": {
 							"value": {
 								"value": "@pipeline().parameters.FECHA_FIN",
 								"type": "Expression"
