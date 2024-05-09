@@ -92,7 +92,7 @@
 				}
 			},
 			{
-				"name": "GENERALES",
+				"name": "TRANSVERSALES",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
