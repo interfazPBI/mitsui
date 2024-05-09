@@ -1,0 +1,44 @@
+{
+	"name": "PIPELINE GENERAL",
+	"properties": {
+		"activities": [
+			{
+				"name": "LP_OBTIENE_FECHA",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			},
+			{
+				"name": "CARGA TRANSACCIONALES",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "LP_OBTIENE_FECHA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "EXTRACCION_TRANSACCIONALES",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}
