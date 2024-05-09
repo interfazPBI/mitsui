@@ -39,6 +39,12 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
+					},
+					{
+						"activity": "TRANSVERSALES",
+						"dependencyConditions": [
+							"Completed"
+						]
 					}
 				],
 				"policy": {
