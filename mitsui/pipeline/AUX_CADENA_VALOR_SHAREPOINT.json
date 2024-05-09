@@ -129,7 +129,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "receptor_CADENA_VALOR",
+									"referenceName": "receptor",
 									"type": "DatasetReference",
 									"parameters": {
 										"archivo": {
