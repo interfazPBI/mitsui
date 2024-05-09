@@ -19,7 +19,7 @@
 					"value": "@dataset().archivo",
 					"type": "Expression"
 				},
-				"folderPath": "Archivos Planos/Cotizaciones",
+				"folderPath": "Archivos Planos/PL_MASA_ORIGINAL",
 				"container": "dev"
 			}
 		}
