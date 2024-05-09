@@ -77,7 +77,7 @@
 				}
 			},
 			{
-				"name": "PLAN_ORIG_REV",
+				"name": "PLANES ORIG_REV",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [],
 				"policy": {
