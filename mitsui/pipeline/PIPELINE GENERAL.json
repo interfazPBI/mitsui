@@ -18,7 +18,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "@concat('SELECT \nSUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10) AS FECHA_DESDE\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10) AS FECHA_HASTA\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,4) AS ANIO\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),6,2) AS MES\n, CONVERT(BIGINT,REPLACE(SUBSTRING(CONVERT(VARCHAR,getdate(),120),1,10),''-'',''''))*1000000 AS TIMESTAMP\nMODULO \nFROM (SELECT \n',string(pipeline().parameters.Fecha_Desde), ' AS FECHA_DESDE ,\n',string(pipeline().parameters.Fecha_Hasta), ' AS FECHA_HASTA \n  from staging_prd.dw_proceso) R' )",
+							"value": "@concat('SELECT \nSUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10) AS FECHA_DESDE\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10) AS FECHA_HASTA\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,4) AS ANIO\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),6,2) AS MES\n, CONVERT(BIGINT,REPLACE(SUBSTRING(CONVERT(VARCHAR,getdate(),120),1,10),''-'',''''))*1000000 AS TIMESTAMP\n\nFROM (SELECT \n',string(pipeline().parameters.Fecha_Desde), ' AS FECHA_DESDE ,\n',string(pipeline().parameters.Fecha_Hasta), ' AS FECHA_HASTA , \n',string(pipeline().parameters.Modulo) , ' AS MODULO from staging.dw_proceso) R' )",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -58,10 +58,16 @@
 		],
 		"parameters": {
 			"Fecha_Desde": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "GETDATE()"
 			},
 			"Fecha_Hasta": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "GETDATE()"
+			},
+			"Modulo": {
+				"type": "string",
+				"defaultValue": "'FACT'"
 			}
 		},
 		"annotations": []
