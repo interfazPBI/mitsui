@@ -50,7 +50,29 @@
 						"referenceName": "EXTRACCION_TRANSACCIONALES",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_DESDE": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_HASTA": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+							"type": "Expression"
+						},
+						"ANIO": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.ANIO",
+							"type": "Expression"
+						},
+						"MES": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.MES",
+							"type": "Expression"
+						},
+						"TIMESTAMP": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.TIMESTAMP",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
