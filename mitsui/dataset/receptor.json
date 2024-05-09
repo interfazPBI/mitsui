@@ -1,5 +1,5 @@
 {
-	"name": "receptor_CADENA_VALOR",
+	"name": "receptor",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
