@@ -18,23 +18,27 @@
 		},
 		"schema": [
 			{
-				"name": "MANDT",
+				"name": "VGUID",
 				"type": "UTF8"
 			},
 			{
-				"name": "SPRAS",
+				"name": "CUOBJ",
 				"type": "UTF8"
 			},
 			{
-				"name": "MATKL",
+				"name": "CHARG",
 				"type": "UTF8"
 			},
 			{
-				"name": "WGBEZ",
+				"name": "ZOBTARREP",
 				"type": "UTF8"
 			},
 			{
-				"name": "WGBEZ60",
+				"name": "ZPETARREP",
+				"type": "UTF8"
+			},
+			{
+				"name": "ZDESCOLOR",
 				"type": "UTF8"
 			}
 		]
