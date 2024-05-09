@@ -32,7 +32,7 @@
 				}
 			},
 			{
-				"name": "INT_FACT_STOCK",
+				"name": "INT_FACT_STOCK_SAP",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -51,7 +51,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_STOCK_HINO]",
+					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_STOCK_LEXUS_SAP]",
 					"storedProcedureParameters": {
 						"FECHA": {
 							"value": {
@@ -68,11 +68,11 @@
 				}
 			},
 			{
-				"name": "FACT_STOCK",
+				"name": "FACT_STOCK_SAP",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "INT_FACT_STOCK",
+						"activity": "INT_FACT_STOCK_SAP",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -87,7 +87,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[DWH].[CARGA_FACT_STOCK_HINO]",
+					"storedProcedureName": "[DWH].[CARGA_FACT_STOCK_LEXUS_SAP]",
 					"storedProcedureParameters": {
 						"FECHA": {
 							"value": {
@@ -204,7 +204,7 @@
 				}
 			},
 			{
-				"name": "INT_FACT_STOCK_copy1",
+				"name": "INT_FACT_STOCK_LEXUS",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -223,7 +223,93 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_STOCK_HINO]",
+					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_STOCK_LEXUS]",
+					"storedProcedureParameters": {
+						"FECHA_FIN": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_INI",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "FACT_STOCK_LEXUS",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "INT_FACT_STOCK_LEXUS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[CARGA_FACT_STOCK_LEXUS]",
+					"storedProcedureParameters": {
+						"FECHA_FIN": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_INI",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "INT_STATUS_STOCK",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "INT_ZDBM036_LEXUS",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_STOCK_LEXUS]",
 					"storedProcedureParameters": {
 						"FECHA": {
 							"value": {
@@ -240,11 +326,11 @@
 				}
 			},
 			{
-				"name": "FACT_STOCK_copy1",
+				"name": "FACT_STOCK_LEXUS_copy1",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "INT_FACT_STOCK_copy1",
+						"activity": "INT_STATUS_STOCK",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -259,7 +345,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[DWH].[CARGA_FACT_STOCK_HINO]",
+					"storedProcedureName": "[DWH].[CARGA_FACT_STOCK_LEXUS]",
 					"storedProcedureParameters": {
 						"FECHA": {
 							"value": {
