@@ -63,6 +63,18 @@
 							},
 							{
 								"source": {
+									"name": "CHARG",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "CHARG",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
 									"name": "ZOBTARREP",
 									"type": "String",
 									"physicalType": "UTF8"
