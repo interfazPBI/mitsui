@@ -31,13 +31,13 @@
 				}
 			},
 			{
-				"name": "CARGA TRANSACCIONALES",
+				"name": "TRANSACCIONALES",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "LP_OBTIENE_FECHA",
+						"activity": "MAESTRAS",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -73,6 +73,29 @@
 							"type": "Expression"
 						}
 					}
+				}
+			},
+			{
+				"name": "MAESTRAS",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "LP_OBTIENE_FECHA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "EXTRACCION_MAESTRAS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
 				}
 			}
 		],
