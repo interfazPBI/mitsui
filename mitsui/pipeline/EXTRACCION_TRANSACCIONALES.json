@@ -224,6 +224,23 @@
 				}
 			}
 		],
+		"parameters": {
+			"FECHA_DESDE": {
+				"type": "string"
+			},
+			"FECHA_HASTA": {
+				"type": "string"
+			},
+			"ANIO": {
+				"type": "string"
+			},
+			"MES": {
+				"type": "string"
+			},
+			"TIMESTAMP": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
