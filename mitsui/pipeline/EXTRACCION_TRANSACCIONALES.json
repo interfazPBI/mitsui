@@ -74,7 +74,7 @@
 				}
 			},
 			{
-				"name": "Truncate Maestras",
+				"name": "Truncate Transaccionales",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -93,7 +93,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[DWH].[TRUNCATE_MAESTRAS]"
+					"storedProcedureName": "[DWH].[TRUNCATE_TRANSACCIONALES]"
 				},
 				"linkedServiceName": {
 					"referenceName": "BD_MITSUI",
@@ -105,7 +105,7 @@
 				"type": "GetMetadata",
 				"dependsOn": [
 					{
-						"activity": "Truncate Maestras",
+						"activity": "Truncate Transaccionales",
 						"dependencyConditions": [
 							"Succeeded"
 						]
