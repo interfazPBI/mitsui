@@ -61,13 +61,15 @@
 							"value": {
 								"value": "@pipeline().parameters.FECHA_DESDE",
 								"type": "Expression"
-							}
+							},
+							"type": "Datetime"
 						},
 						"FECHA_FIN": {
 							"value": {
 								"value": "@pipeline().parameters.FECHA_HASTA",
 								"type": "Expression"
-							}
+							},
+							"type": "Datetime"
 						}
 					}
 				},
@@ -95,6 +97,54 @@
 					"referenceName": "BD_MITSUI",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "FTE_PEDIDO",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_INT_FTE_PEDIDO]"
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "FTE_COMPRA",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_INT_FTE_COMPRA]",
+					"storedProcedureParameters": {
+						"FECHA_INI": {
+							"value": ""
+						},
+						"FECHA_FIN": {
+							"value": ""
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"parameters": {
@@ -102,6 +152,9 @@
 				"type": "string"
 			},
 			"FECHA_HASTA": {
+				"type": "string"
+			},
+			"TIMESTAMP": {
 				"type": "string"
 			}
 		},
