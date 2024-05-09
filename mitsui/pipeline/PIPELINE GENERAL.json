@@ -57,11 +57,11 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-2))"
+				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-1))"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-2))"
+				"defaultValue": "dateadd(dd ,0 ,getdate())"
 			},
 			"Modulo": {
 				"type": "string",
