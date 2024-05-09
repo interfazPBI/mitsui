@@ -58,10 +58,16 @@
 					"storedProcedureName": "[DWH].[CARGA_INT_VLCINVOICE_STOCK]",
 					"storedProcedureParameters": {
 						"FECHA_INI": {
-							"value": ""
+							"value": {
+								"value": "@pipeline().parameters.FECHA_DESDE",
+								"type": "Expression"
+							}
 						},
 						"FECHA_FIN": {
-							"value": ""
+							"value": {
+								"value": "@pipeline().parameters.FECHA_HASTA",
+								"type": "Expression"
+							}
 						}
 					}
 				},
