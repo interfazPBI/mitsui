@@ -218,7 +218,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "HINO",
+						"referenceName": "LEXUS",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
