@@ -65,7 +65,7 @@
 								"method": "GET",
 								"httpRequestTimeout": "00:10:00",
 								"url": {
-									"value": "@concat('http://190.116.61.84:8065/?name=',item().Extracción)",
+									"value": "@concat('http://190.116.61.84:8065/?name=',item().Extracción,\n'&FECHAINI=',pipeline().parameters.FECHA_DESDE,\n'&FECHAFIN=',pipeline().parameters.FECHA_HASTA,\n'&ANIO=',pipeline().parameters.ANIO,\n'&MES=',pipeline().parameters.MES,\n'&TIMESTAMP=',pipeline().parameters.TIMESTAMP)",
 									"type": "Expression"
 								}
 							}
