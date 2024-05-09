@@ -71,6 +71,14 @@
 				}
 			}
 		],
+		"parameters": {
+			"FECHA_DESDE": {
+				"type": "string"
+			},
+			"FECHA_HASTA": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
