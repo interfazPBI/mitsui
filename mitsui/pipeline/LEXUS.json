@@ -1,0 +1,217 @@
+{
+	"name": "LEXUS",
+	"properties": {
+		"activities": [
+			{
+				"name": "INT_ZDBM036",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_INT_ZDBM036_HINO]",
+					"storedProcedureParameters": {
+						"FECHA": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "INT_FACT_STOCK",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "INT_ZDBM036",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_STOCK_HINO]",
+					"storedProcedureParameters": {
+						"FECHA": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "FACT_STOCK",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "INT_FACT_STOCK",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[CARGA_FACT_STOCK_HINO]",
+					"storedProcedureParameters": {
+						"FECHA": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "INT_FACTURAS_BOOKING",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "INT_ZDBM036",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_FACTURAS_BOOKING_HINO]",
+					"storedProcedureParameters": {
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_INI",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_FIN": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_BOOKING": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "FACTURAS_BOOKING",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "INT_FACTURAS_BOOKING",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[CARGA_FACT_FACTURAS_BOOKING_HINO]",
+					"storedProcedureParameters": {
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_INI",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_FIN": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_BOOKING": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"FECHA_INI": {
+				"type": "string"
+			},
+			"FECHA_FIN": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
