@@ -24,7 +24,7 @@
 						}
 					},
 					"dataset": {
-						"referenceName": "MAESTRAS",
+						"referenceName": "TRANSACCIONALES",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
