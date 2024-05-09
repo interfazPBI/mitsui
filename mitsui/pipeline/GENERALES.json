@@ -111,7 +111,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[STAGING].[CARGA_INT_FTE_PEDIDO]"
+					"storedProcedureName": "[STAGING].[CARGA_INT_FTE_PEDIDO]",
+					"storedProcedureParameters": {
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.TIMESTAMP",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						}
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "BD_MITSUI",
@@ -134,10 +143,11 @@
 					"storedProcedureName": "[STAGING].[CARGA_INT_FTE_COMPRA]",
 					"storedProcedureParameters": {
 						"FECHA_INI": {
-							"value": ""
-						},
-						"FECHA_FIN": {
-							"value": ""
+							"value": {
+								"value": "@pipeline().parameters.TIMESTAMP",
+								"type": "Expression"
+							},
+							"type": "Int64"
 						}
 					}
 				},
