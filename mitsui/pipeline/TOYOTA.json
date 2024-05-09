@@ -38,7 +38,10 @@
 					"storedProcedureName": "[STAGING].[CARGA_INT_ZDBM036]",
 					"storedProcedureParameters": {
 						"FECHA": {
-							"value": "",
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
 							"type": "Datetime"
 						}
 					}
