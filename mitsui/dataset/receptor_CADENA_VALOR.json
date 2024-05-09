@@ -19,7 +19,7 @@
 					"value": "@dataset().archivo",
 					"type": "Expression"
 				},
-				"folderPath": "Archivos Planos/CADENA_VALOR",
+				"folderPath": "Archivos Planos",
 				"container": "dev"
 			}
 		}
