@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SharePointOnlineListSource",
 						"query": {
-							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/4.%20PL%20MASA/Original','''')",
+							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/4.%20PL%20MASA/Revisado','''')",
 							"type": "Expression"
 						},
 						"httpRequestTimeout": "00:05:00"
