@@ -129,7 +129,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "receptor_PL_MASA_ORIGINAL",
+									"referenceName": "receptor_PL_MASA_REVISADO",
 									"type": "DatasetReference",
 									"parameters": {
 										"archivo": {
@@ -141,7 +141,7 @@
 							]
 						},
 						{
-							"name": "PL_MASA_PLAN_ORIGINAL",
+							"name": "PL_MASA_PLAN_REVISADO",
 							"type": "Copy",
 							"dependsOn": [
 								{
@@ -393,7 +393,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "PL_MASA_ORIGINAL_EXCEL",
+									"referenceName": "PL_MASA_REVISADO_EXCEL",
 									"type": "DatasetReference",
 									"parameters": {
 										"File": {
@@ -408,7 +408,7 @@
 									"referenceName": "DESTINO_SQL",
 									"type": "DatasetReference",
 									"parameters": {
-										"TABLA": "AUX_PL_MASA_PLAN_ORIGINAL"
+										"TABLA": "AUX_PL_MASA_PLAN_REVISADO"
 									}
 								}
 							]
