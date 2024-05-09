@@ -5,16 +5,23 @@
 			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"File": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "RepCotizacion_20240331_Final.xlsx",
-				"folderPath": "Archivos Planos",
+				"fileName": {
+					"value": "@dataset().File",
+					"type": "Expression"
+				},
+				"folderPath": "Archivos Planos/Cotizaciones",
 				"container": "dev"
 			},
-			"sheetIndex": 0,
 			"firstRowAsHeader": true
 		},
 		"schema": [
