@@ -148,7 +148,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[DWH].[CARGA_INT_FACT_STOCK]",
+					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_STOCK]",
 					"storedProcedureParameters": {
 						"FECHA": {
 							"value": {
@@ -220,7 +220,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[DWH].[CARGA_FACT_CADENA_VALOR]",
+					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_FACTURAS_BOOKING]",
 					"storedProcedureParameters": {
 						"FECHA_INI": {
 							"value": {
@@ -270,7 +270,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[DWH].[CARGA_FACT_CADENA_VALOR]",
+					"storedProcedureName": "[DWH].[CARGA_FACT_FACTURAS_BOOKING]",
 					"storedProcedureParameters": {
 						"FECHA_INI": {
 							"value": {
