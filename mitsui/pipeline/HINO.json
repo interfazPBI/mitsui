@@ -42,7 +42,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[STAGING].[CARGA_INT_ZDBM036]",
+					"storedProcedureName": "[STAGING].[CARGA_INT_ZDBM036_HINO]",
 					"storedProcedureParameters": {
 						"FECHA": {
 							"value": {
