@@ -138,7 +138,14 @@
 			{
 				"name": "TOYOTA",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "TRANSACCIONALES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureInput": false
 				},
@@ -148,7 +155,50 @@
 						"referenceName": "TOYOTA",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_INI": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_FIN": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "HINO",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRANSACCIONALES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "HINO",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_INI": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_FIN": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
