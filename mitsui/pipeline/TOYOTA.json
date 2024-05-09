@@ -167,7 +167,14 @@
 			{
 				"name": "FACT_STOCK",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "INT_FACT_STOCK",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -180,6 +187,92 @@
 					"storedProcedureName": "[DWH].[CARGA_FACT_STOCK]",
 					"storedProcedureParameters": {
 						"FECHA": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "FACT_CADENA_VALOR_copy1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "DIM_VENDEDORES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[CARGA_FACT_CADENA_VALOR]",
+					"storedProcedureParameters": {
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_INI",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_FIN": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "FACT_CADENA_VALOR_copy2",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "FACT_CADENA_VALOR_copy1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[CARGA_FACT_CADENA_VALOR]",
+					"storedProcedureParameters": {
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_INI",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_FIN": {
 							"value": {
 								"value": "@pipeline().parameters.FECHA_FIN",
 								"type": "Expression"
