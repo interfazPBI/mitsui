@@ -139,6 +139,792 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "CAD_VAL_TOYOTA_VALUE",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Copy data1_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "LOCAL",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "LOCAL",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "REAL",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "REAL",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "META_TDP",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "META_TDP",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "META_MASA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "META_MASA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "CAD_VAL_TOYOTA_VALUE",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DESTINO_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLA": "AUX_CAD_VAL_TOYOTA_VALUE"
+									}
+								}
+							]
+						},
+						{
+							"name": "CAD_VAL_EPDP",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Copy data1_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "RESULTADO",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "RESULTADO",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "META_TDP",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "META_TDP",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "META_MASA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "META_MASA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "CAD_VAL_EPDP",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DESTINO_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLA": "AUX_CAD_VAL_EPDP"
+									}
+								}
+							]
+						},
+						{
+							"name": "CAD_VAL_MET_TOYOTA_LIFE",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Copy data1_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "LOCAL",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "LOCAL",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "TDP",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "TDP",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "MASA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "MASA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "CAD_VAL_MET_TOYOTA_LIFE",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DESTINO_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLA": "AUX_CAD_VAL_MET_TOYOTA_LIFE"
+									}
+								}
+							]
+						},
+						{
+							"name": "CAD_VAL_SEGUROS",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Copy data1_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "LOCAL",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "LOCAL",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "REAL",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "REAL",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "META_TDP",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "META_TDP",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "META_MASA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "META_MASA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "CAD_VAL_SEGUROS",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DESTINO_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLA": "AUX_CAD_VAL_SEGUROS"
+									}
+								}
+							]
+						},
+						{
+							"name": "CAD_VAL_TOYOTA_LIFE",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Copy data1_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "LOCAL",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "LOCAL",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "HOT",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "HOT",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "SEGURA ",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "SEGURA ",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "TOTAL_GENERAL",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "TOTAL_GENERAL",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "CAD_VAL_TOYOTA_LIFE",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DESTINO_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLA": "AUX_CAD_VAL_TOYOTA_LIFE"
+									}
+								}
+							]
+						},
+						{
+							"name": "CAD_VAL_VENTA_REG",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Copy data1_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "FECHA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "VR_META_TDP",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "VR_META_TDP",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "VR_RESULTADO",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "VR_RESULTADO",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "VR_PORCENTAJE",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "VR_PORCENTAJE",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "TD_META_TDP",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "TD_META_TDP",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "TD_META_MASA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "TD_META_MASA",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "TD_RESULTADO",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "TD_RESULTADO",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "CD_META_TDP",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "CD_META_TDP",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "CD_RESULTADO",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "CD_RESULTADO",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "RENOV_META_TDP",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "RENOV_META_TDP",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "RENOV_RESULTADO",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "RENOV_RESULTADO",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "CAD_VAL_VENTA_REG",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DESTINO_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLA": "AUX_CAD_VAL_VENTA_REG"
+									}
+								}
+							]
 						}
 					]
 				}
