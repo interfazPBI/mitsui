@@ -1,5 +1,5 @@
 {
-	"name": "TRANSACCIONALES",
+	"name": "MAESTRAS",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
