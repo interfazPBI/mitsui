@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "TRANSACCIONALES_FACTURAS_BOOKING.xlsx",
+				"fileName": "MAESTRAS.xlsx",
 				"folderPath": "archivos control",
 				"container": "dev"
 			},
