@@ -33,7 +33,14 @@
 			{
 				"name": "TRANSACCIONALES",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "MAESTRAS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureInput": false
 				},
@@ -108,7 +115,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "GENERALES",
+						"referenceName": "TRANSVERSALES",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
