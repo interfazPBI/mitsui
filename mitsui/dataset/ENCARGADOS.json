@@ -10,11 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "dim_encargados.xlsx",
+				"fileName": "BBDD Encagado por tienda.xlsx",
 				"folderPath": "Archivos Planos",
 				"container": "dev"
 			},
-			"sheetIndex": 0,
 			"firstRowAsHeader": true
 		},
 		"schema": [
