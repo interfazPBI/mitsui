@@ -5,7 +5,20 @@
 			{
 				"name": "DIM_MATERIALES",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "PLANES ORIG_REV",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "INT_VLCINVOICE_STOCK",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -45,7 +58,20 @@
 			{
 				"name": "INT_VLCINVOICE_STOCK",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "FTE_COMPRA",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "FTE_PEDIDO",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -81,7 +107,20 @@
 			{
 				"name": "PLANES ORIG_REV",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "FTE_COMPRA",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "FTE_PEDIDO",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
