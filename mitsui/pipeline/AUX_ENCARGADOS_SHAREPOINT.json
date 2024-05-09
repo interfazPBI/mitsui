@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SharePointOnlineListSource",
 						"query": {
-							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/1.%20TOYOTA/Cadena%20de%20Valor/''','and Nombre eq ''', 'Cadena%20de%20Valor.xlsx','''')",
+							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/1.%20TOYOTA/Local-Encargado/''','and Nombre eq ''', 'BBDD%20Encargado%20por%20tienda.xlsx','''')",
 							"type": "Expression"
 						},
 						"httpRequestTimeout": "00:05:00"
@@ -129,7 +129,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "receptor_CADENA_VALOR",
+									"referenceName": "receptor",
 									"type": "DatasetReference",
 									"parameters": {
 										"archivo": {
@@ -143,7 +143,14 @@
 						{
 							"name": "ENCARGADOS",
 							"type": "Copy",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Copy data1_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
