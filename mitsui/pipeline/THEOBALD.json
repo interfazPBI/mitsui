@@ -62,6 +62,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"method": "GET",
+								"httpRequestTimeout": "00:10:00",
 								"url": {
 									"value": "@concat('http://190.116.61.84:8065/?name=',item().Extracción)",
 									"type": "Expression"
