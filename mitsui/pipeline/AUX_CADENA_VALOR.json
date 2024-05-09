@@ -143,8 +143,6 @@
 						{
 							"name": "CAD_VAL_TOYOTA_VALUE",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Copy data1_copy1",
@@ -268,8 +266,6 @@
 						{
 							"name": "CAD_VAL_EPDP",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Copy data1_copy1",
@@ -381,8 +377,6 @@
 						{
 							"name": "CAD_VAL_MET_TOYOTA_LIFE",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Copy data1_copy1",
@@ -494,8 +488,6 @@
 						{
 							"name": "CAD_VAL_SEGUROS",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Copy data1_copy1",
@@ -619,8 +611,6 @@
 						{
 							"name": "CAD_VAL_TOYOTA_LIFE",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Copy data1_copy1",
@@ -744,8 +734,6 @@
 						{
 							"name": "CAD_VAL_VENTA_REG",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Copy data1_copy1",
