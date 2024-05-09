@@ -3,33 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "DIM_VENDEDORES",
-				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "INT_ZDBM036",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"storedProcedureName": "[DWH].[CARGA_DIM_VENDEDORES]"
-				},
-				"linkedServiceName": {
-					"referenceName": "BD_MITSUI",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
 				"name": "INT_ZDBM036",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [],
@@ -59,81 +32,11 @@
 				}
 			},
 			{
-				"name": "INT_CADENA_VALOR",
-				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "DIM_VENDEDORES",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_CADENA_VALOR]"
-				},
-				"linkedServiceName": {
-					"referenceName": "BD_MITSUI",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "FACT_CADENA_VALOR",
-				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "INT_CADENA_VALOR",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"storedProcedureName": "[DWH].[CARGA_FACT_CADENA_VALOR]",
-					"storedProcedureParameters": {
-						"FECHA_INI": {
-							"value": {
-								"value": "@pipeline().parameters.FECHA_INI",
-								"type": "Expression"
-							},
-							"type": "Datetime"
-						},
-						"FECHA_FIN": {
-							"value": {
-								"value": "@pipeline().parameters.FECHA_FIN",
-								"type": "Expression"
-							},
-							"type": "Datetime"
-						}
-					}
-				},
-				"linkedServiceName": {
-					"referenceName": "BD_MITSUI",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
 				"name": "INT_FACT_STOCK",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "DIM_VENDEDORES",
+						"activity": "INT_ZDBM036",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -205,7 +108,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "DIM_VENDEDORES",
+						"activity": "INT_ZDBM036",
 						"dependencyConditions": [
 							"Succeeded"
 						]
