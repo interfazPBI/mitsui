@@ -201,7 +201,7 @@
 				}
 			},
 			{
-				"name": "FACT_CADENA_VALOR_copy1",
+				"name": "INT_FACTURAS_BOOKING",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -235,6 +235,13 @@
 								"type": "Expression"
 							},
 							"type": "Datetime"
+						},
+						"FECHA_BOOKING": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
 						}
 					}
 				},
@@ -244,11 +251,11 @@
 				}
 			},
 			{
-				"name": "FACT_CADENA_VALOR_copy2",
+				"name": "FACTURAS_BOOKING",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "FACT_CADENA_VALOR_copy1",
+						"activity": "INT_FACTURAS_BOOKING",
 						"dependencyConditions": [
 							"Succeeded"
 						]
