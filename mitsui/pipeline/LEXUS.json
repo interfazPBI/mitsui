@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "INT_ZDBM036",
+				"name": "INT_ZDBM036_LEXUS",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [],
 				"policy": {
@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[STAGING].[CARGA_INT_ZDBM036_HINO]",
+					"storedProcedureName": "[STAGING].[CARGA_INT_ZDBM036_LEX]",
 					"storedProcedureParameters": {
 						"FECHA": {
 							"value": {
@@ -36,7 +36,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "INT_ZDBM036",
+						"activity": "INT_ZDBM036_LEXUS",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -108,7 +108,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "INT_ZDBM036",
+						"activity": "INT_ZDBM036_LEXUS",
 						"dependencyConditions": [
 							"Succeeded"
 						]
