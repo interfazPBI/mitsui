@@ -121,7 +121,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "GETMETADATA_PRD",
+						"referenceName": "GETMETADATA_PRD_TRANSACCIONAL",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
