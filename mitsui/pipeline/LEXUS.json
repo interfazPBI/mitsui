@@ -290,7 +290,7 @@
 				}
 			},
 			{
-				"name": "INT_STATUS_STOCK",
+				"name": "INT_FACT_STATUS_STOCK",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -309,11 +309,18 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_STOCK_LEXUS]",
+					"storedProcedureName": "[STAGING].[CARGA_INT_FACT_STATUS_STOCK_LEXUS]",
 					"storedProcedureParameters": {
-						"FECHA": {
+						"FECHA_FIN": {
 							"value": {
 								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_INI",
 								"type": "Expression"
 							},
 							"type": "Datetime"
@@ -326,11 +333,11 @@
 				}
 			},
 			{
-				"name": "FACT_STOCK_LEXUS_copy1",
+				"name": "FACT_STATUS_STOCK",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "INT_STATUS_STOCK",
+						"activity": "INT_FACT_STATUS_STOCK",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -345,11 +352,18 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[DWH].[CARGA_FACT_STOCK_LEXUS]",
+					"storedProcedureName": "[DWH].[CARGA_FACT_STATUS_STOCK_LEXUS]",
 					"storedProcedureParameters": {
-						"FECHA": {
+						"FECHA_FIN": {
 							"value": {
 								"value": "@pipeline().parameters.FECHA_FIN",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_INI",
 								"type": "Expression"
 							},
 							"type": "Datetime"
