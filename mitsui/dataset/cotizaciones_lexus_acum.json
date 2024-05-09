@@ -1,0 +1,21 @@
+{
+	"name": "cotizaciones_lexus_acum",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_MITSUI",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TABLA": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "STAGING",
+			"table": "AUX_COTIZACIONES_LEXUS"
+		}
+	}
+}
