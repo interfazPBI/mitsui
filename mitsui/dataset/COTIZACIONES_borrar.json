@@ -1,0 +1,35 @@
+{
+	"name": "COTIZACIONES_borrar",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "0",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Historico Ene23-Abr24.xlsx",
+				"folderPath": "Archivos Planos",
+				"container": "dev"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Vendedor",
+				"type": "String"
+			},
+			{
+				"name": "Codigo",
+				"type": "String"
+			},
+			{
+				"name": "Sede",
+				"type": "String"
+			}
+		]
+	}
+}
