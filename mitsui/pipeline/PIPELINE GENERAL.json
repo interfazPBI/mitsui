@@ -101,6 +101,8 @@
 			{
 				"name": "TRANSVERSALES",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TRANSACCIONALES",
