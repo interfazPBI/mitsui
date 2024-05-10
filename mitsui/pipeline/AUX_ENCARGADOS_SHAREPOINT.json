@@ -143,8 +143,6 @@
 						{
 							"name": "ENCARGADOS",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Copy data1_copy1",
