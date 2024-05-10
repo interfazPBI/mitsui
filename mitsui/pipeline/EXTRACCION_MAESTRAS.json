@@ -107,7 +107,7 @@
 					{
 						"activity": "Truncate Maestras",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
