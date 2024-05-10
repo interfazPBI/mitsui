@@ -246,11 +246,11 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-3))"
+				"defaultValue": " dateadd(dd ,1 ,eomonth(getdate(),-4))"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,0 ,eomonth(getdate(),-2))"
+				"defaultValue": "dateadd(dd ,0 ,eomonth(getdate(),-3))"
 			},
 			"Modulo": {
 				"type": "string",
