@@ -33,19 +33,11 @@
 			{
 				"name": "TRANSACCIONALES",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "MAESTRAS",
+						"activity": "LP_OBTIENE_FECHA",
 						"dependencyConditions": [
 							"Succeeded"
-						]
-					},
-					{
-						"activity": "TRANSVERSALES",
-						"dependencyConditions": [
-							"Completed"
 						]
 					}
 				],
@@ -115,9 +107,15 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "LP_OBTIENE_FECHA",
+						"activity": "TRANSACCIONALES",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
+						]
+					},
+					{
+						"activity": "MAESTRAS",
+						"dependencyConditions": [
+							"Completed"
 						]
 					}
 				],
@@ -152,7 +150,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "TRANSACCIONALES",
+						"activity": "TRANSVERSALES",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -185,9 +183,9 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "TRANSACCIONALES",
+						"activity": "TRANSVERSALES",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -218,9 +216,9 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "TRANSACCIONALES",
+						"activity": "TRANSVERSALES",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
