@@ -109,7 +109,7 @@
 					{
 						"activity": "Truncate Transaccionales",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
