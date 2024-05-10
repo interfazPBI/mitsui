@@ -263,6 +263,14 @@
 			"Modulo": {
 				"type": "string",
 				"defaultValue": "'FACT'"
+			},
+			"Fecha_Desde_SAP": {
+				"type": "string",
+				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-1))"
+			},
+			"Fecha_Hasta_SAP": {
+				"type": "string",
+				"defaultValue": "dateadd(dd ,0 ,getdate())"
 			}
 		},
 		"annotations": []
