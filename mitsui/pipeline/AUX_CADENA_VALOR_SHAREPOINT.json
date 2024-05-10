@@ -170,6 +170,7 @@
 								},
 								"sink": {
 									"type": "AzureSqlSink",
+									"preCopyScript": "TRUNCATE TABLE AUX_CAD_VAL_TOYOTA_VALUE",
 									"writeBehavior": "insert",
 									"sqlWriterUseTableLock": false,
 									"tableOption": "autoCreate",
