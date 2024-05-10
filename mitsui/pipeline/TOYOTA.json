@@ -61,6 +61,8 @@
 			{
 				"name": "INT_CADENA_VALOR",
 				"type": "SqlServerStoredProcedure",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DIM_VENDEDORES",
@@ -88,6 +90,8 @@
 			{
 				"name": "FACT_CADENA_VALOR",
 				"type": "SqlServerStoredProcedure",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "INT_CADENA_VALOR",
