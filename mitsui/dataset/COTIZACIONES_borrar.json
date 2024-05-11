@@ -8,13 +8,13 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "0",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "Historico Ene23-Abr24.xlsx",
 				"folderPath": "Archivos Planos",
 				"container": "dev"
 			},
+			"sheetIndex": 0,
 			"firstRowAsHeader": true
 		},
 		"schema": [
