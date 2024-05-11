@@ -149,7 +149,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_COTIZACIONES_EXCEL"
+							"TABLA": "AUX_COTIZACIONES_LEXUS"
 						}
 					}
 				]
