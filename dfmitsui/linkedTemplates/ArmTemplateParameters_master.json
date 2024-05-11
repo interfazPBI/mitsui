@@ -11,6 +11,15 @@
 		"BD_MITSUI_connectionString": {
 			"value": ""
 		},
+		"SharePointOnlineList1_servicePrincipalKey": {
+			"value": ""
+		},
+		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
+			"value": "87d4e0d5-3458-4110-a34e-e699775c7c07"
+		},
+		"XTRACT_SP_properties_typeProperties_url": {
+			"value": "@{concat('https://mitsuiautomotrizcom.sharepoint.com/sites/BI-MASA/_api/web/GetFileByServerRelativeUrl(''',linkedService().path,'/',linkedService().file,''')/$value')}"
+		},
 		"containerUri": {
 			"value": ""
 		},
