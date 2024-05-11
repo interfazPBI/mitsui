@@ -246,7 +246,7 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "SELECT  dateadd(dd ,1 ,eomonth(getdate(),-3))"
+				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-3))"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
