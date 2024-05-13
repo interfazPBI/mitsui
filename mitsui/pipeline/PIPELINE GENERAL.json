@@ -103,6 +103,8 @@
 			{
 				"name": "TRANSVERSALES",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TRANSACCIONALES",
@@ -146,6 +148,8 @@
 			{
 				"name": "TOYOTA",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TRANSVERSALES",
@@ -179,6 +183,8 @@
 			{
 				"name": "HINO",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TRANSVERSALES",
@@ -212,6 +218,8 @@
 			{
 				"name": "LEXUS",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TRANSVERSALES",
@@ -246,11 +254,11 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-14))"
+				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-2))"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,0 ,eomonth(getdate(),-13))"
+				"defaultValue": "dateadd(dd ,0 ,eomonth(getdate(),-1))"
 			},
 			"Modulo": {
 				"type": "string",
