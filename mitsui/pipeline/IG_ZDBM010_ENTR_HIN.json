@@ -596,9 +596,9 @@
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "moneda",
+									"name": "Moneda",
 									"type": "String",
-									"physicalType": "varchar"
+									"physicalType": "nvarchar"
 								}
 							}
 						],
