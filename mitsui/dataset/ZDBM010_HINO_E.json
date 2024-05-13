@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DEV_IG_ZDBM010_ENTR_HIN.parquet",
-				"folderPath": "desarrollo/Hino",
+				"fileName": "DEV_IG_ZDBM010_ENT_H.parquet",
+				"folderPath": "productivo/PRD/TRASACCIONAL",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
