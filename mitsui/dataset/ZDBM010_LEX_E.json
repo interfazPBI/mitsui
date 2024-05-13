@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "DEV_IG_ZDBM010_ENTR_LEX.parquet",
-				"folderPath": "desarrollo/Lexus",
+				"folderPath": "productivo/PRD/TRASACCIONAL",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
