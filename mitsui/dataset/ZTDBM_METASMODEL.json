@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "DEV_IG_ZTDBM_METASMODEL.parquet",
-				"folderPath": "productivo/PRD",
+				"folderPath": "productivo/PRD/TRASACCIONAL",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
