@@ -33,8 +33,6 @@
 			{
 				"name": "TRANSACCIONALES",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LP_OBTIENE_FECHA",
@@ -80,6 +78,8 @@
 			{
 				"name": "MAESTRAS",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LP_OBTIENE_FECHA",
@@ -246,11 +246,11 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-17))"
+				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-16))"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,0 ,eomonth(getdate(),-16))"
+				"defaultValue": "dateadd(dd ,0 ,eomonth(getdate(),-15))"
 			},
 			"Modulo": {
 				"type": "string",
