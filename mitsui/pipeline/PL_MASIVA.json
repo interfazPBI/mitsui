@@ -26,7 +26,8 @@
 					"dataset": {
 						"referenceName": "MASIVA",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			}
 		],
