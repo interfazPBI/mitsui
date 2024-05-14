@@ -1,0 +1,16 @@
+{
+	"name": "status_stock_lexus_acum",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BD_MITSUI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "STAGING",
+			"table": "AUX_STATUS_STOCK_LEXUS"
+		}
+	}
+}
