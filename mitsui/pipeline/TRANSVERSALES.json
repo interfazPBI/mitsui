@@ -5,8 +5,6 @@
 			{
 				"name": "DIM_MATERIALES",
 				"type": "SqlServerStoredProcedure",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "PLANES ORIG_REV",
