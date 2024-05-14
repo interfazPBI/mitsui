@@ -1,0 +1,35 @@
+{
+	"name": "MASIVA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "MASIVA_MITSUI.xlsx",
+				"container": "dev"
+			},
+			"sheetIndex": 0,
+			"range": "A1:B14",
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Vendedor",
+				"type": "String"
+			},
+			{
+				"name": "Codigo",
+				"type": "String"
+			},
+			{
+				"name": "Sede",
+				"type": "String"
+			}
+		]
+	}
+}
