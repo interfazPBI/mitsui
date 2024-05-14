@@ -68,6 +68,10 @@
 										"value": "@item().FECHA_INI",
 										"type": "Expression"
 									},
+									"Fecha_Hasta": {
+										"value": "@item().FECHA_FIN",
+										"type": "Expression"
+									},
 									"Modulo": "'FACT'"
 								}
 							}
