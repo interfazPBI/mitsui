@@ -58,7 +58,18 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"waitOnCompletion": true
+								"pipeline": {
+									"referenceName": "PIPELINE GENERAL",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"Fecha_Desde": {
+										"value": "@item().FECHA_INI",
+										"type": "Expression"
+									},
+									"Modulo": "'FACT'"
+								}
 							}
 						}
 					]
