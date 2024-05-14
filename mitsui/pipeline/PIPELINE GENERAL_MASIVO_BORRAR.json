@@ -18,7 +18,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "@concat('SELECT \nreplace(','''',string(pipeline().parameters.FECHA_DESDE),'''',',', '''','-','''',',','''','''',' ) FECHA_DESDE_SAP, ',\n'replace(','''',string(pipeline().parameters.FECHA_HASTA),'''',',', '''','-','''',',','''','''',' ) FECHA_HASTA_SAP ,',\n '''',string(pipeline().parameters.FECHA_DESDE) ,'''', '  FECHA_DESDE,', \n '''',string(pipeline().parameters.FECHA_HASTA) ,'''', '  FECHA_HASTA,', \nstring(pipeline().parameters.Modulo) , '  MODULO from staging_prd.dw_proceso')",
+							"value": "@concat('SELECT \nreplace(','''',string(pipeline().parameters.FECHA_DESDE),'''',',', '''','-','''',',','''','''',' ) FECHA_DESDE_SAP, ',\n'replace(','''',string(pipeline().parameters.FECHA_HASTA),'''',',', '''','-','''',',','''','''',' ) FECHA_HASTA_SAP ,',\n '''',string(pipeline().parameters.FECHA_DESDE) ,'''', '  FECHA_DESDE,', \n '''',string(pipeline().parameters.FECHA_HASTA) ,'''', '  FECHA_HASTA,', \nstring(pipeline().parameters.Modulo) , '  MODULO from staging.dw_proceso')",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
