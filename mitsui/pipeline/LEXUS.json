@@ -34,6 +34,8 @@
 			{
 				"name": "INT_FACT_STOCK_SAP",
 				"type": "SqlServerStoredProcedure",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "INT_ZDBM036_LEXUS",
@@ -70,6 +72,8 @@
 			{
 				"name": "FACT_STOCK_SAP",
 				"type": "SqlServerStoredProcedure",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "INT_FACT_STOCK_SAP",
