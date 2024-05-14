@@ -131,8 +131,6 @@
 			{
 				"name": "INT_FACT_STOCK",
 				"type": "SqlServerStoredProcedure",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DIM_VENDEDORES",
@@ -169,8 +167,6 @@
 			{
 				"name": "FACT_STOCK",
 				"type": "SqlServerStoredProcedure",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "INT_FACT_STOCK",
