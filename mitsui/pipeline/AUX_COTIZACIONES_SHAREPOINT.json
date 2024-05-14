@@ -143,6 +143,8 @@
 						{
 							"name": "AZURE SQL",
 							"type": "Copy",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "SHAREPOINT AZURE",
@@ -201,6 +203,171 @@
 								{
 									"referenceName": "cotizaciones_lexus_acum",
 									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "AUX_COTIZACIONES_LEXUS",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "SHAREPOINT AZURE",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "Fec. Cotizacion",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Fec. Cotizacion",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Marca",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Marca",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Modelo",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Modelo",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Version",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Version",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Cod. Version",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Cod. Version",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Local",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Local",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Asesor Cotizacion",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Asesor Cotizacion",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Cant. Cotizada",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Cant. Cotizada",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "COTIZACIONES_EXCEL",
+									"type": "DatasetReference",
+									"parameters": {
+										"File": {
+											"value": "@item().Nombre",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DESTINO_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLA": "AUX_COTIZACIONES_LEXUS"
+									}
 								}
 							]
 						}
