@@ -1,0 +1,272 @@
+{
+	"name": "PIPELINE GENERAL_MASIVO_BORRAR",
+	"properties": {
+		"activities": [
+			{
+				"name": "LP_OBTIENE_FECHA",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "@concat('SELECT \nSUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10) AS FECHA_DESDE\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'','''') AS FECHA_DESDE_SAP\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10),''-'','''') AS FECHA_HASTA_SAP\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10) AS FECHA_HASTA\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,4) AS ANIO\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),6,2) AS MES\n, CONVERT(BIGINT,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'',''''))*1000000 AS TIMESTAMP\n\nFROM (SELECT \n',string(pipeline().parameters.Fecha_Desde), ' AS FECHA_DESDE ,\n',string(pipeline().parameters.Fecha_Hasta), ' AS FECHA_HASTA , \n',string(pipeline().parameters.Modulo) , ' AS MODULO from staging.dw_proceso) R' )",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DWH_PROCESO",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "TRANSACCIONALES",
+				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "LP_OBTIENE_FECHA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "EXTRACCION_TRANSACCIONALES",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_DESDE": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE_SAP",
+							"type": "Expression"
+						},
+						"FECHA_HASTA": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA_SAP",
+							"type": "Expression"
+						},
+						"ANIO": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.ANIO",
+							"type": "Expression"
+						},
+						"MES": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.MES",
+							"type": "Expression"
+						},
+						"TIMESTAMP": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.TIMESTAMP",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "MAESTRAS",
+				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "LP_OBTIENE_FECHA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "EXTRACCION_MAESTRAS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "TRANSVERSALES",
+				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "TRANSACCIONALES",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "MAESTRAS",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "TRANSVERSALES",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_DESDE": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_HASTA": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_HASTA",
+							"type": "Expression"
+						},
+						"TIMESTAMP": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.TIMESTAMP",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "TOYOTA",
+				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "TRANSVERSALES",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "TOYOTA",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_INI": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_FIN": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "HINO",
+				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "TRANSVERSALES",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "HINO",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_INI": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_FIN": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "LEXUS",
+				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "TRANSVERSALES",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LEXUS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_INI": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_FIN": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Fecha_Desde": {
+				"type": "string",
+				"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-15))"
+			},
+			"Fecha_Hasta": {
+				"type": "string",
+				"defaultValue": "dateadd(dd ,0 ,eomonth(getdate(),-14))"
+			},
+			"Modulo": {
+				"type": "string",
+				"defaultValue": "'FACT'"
+			}
+		},
+		"annotations": []
+	}
+}
