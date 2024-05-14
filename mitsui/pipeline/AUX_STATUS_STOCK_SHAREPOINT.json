@@ -129,7 +129,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "receptor_COTIZACIONES",
+									"referenceName": "receptor_STATUS_STSOCK",
 									"type": "DatasetReference",
 									"parameters": {
 										"archivo": {
@@ -170,7 +170,7 @@
 								},
 								"sink": {
 									"type": "AzureSqlSink",
-									"preCopyScript": "TRUNCATE TABLE STAGING.AUX_COTIZACIONES_LEXUS",
+									"preCopyScript": "TRUNCATE TABLE STAGING.AUX_STATUS_STOCK_LEXUS",
 									"writeBehavior": "insert",
 									"sqlWriterUseTableLock": false,
 									"disableMetricsCollection": false
@@ -187,7 +187,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "COTIZACIONES_EXCEL",
+									"referenceName": "STATUS_STOCK_LEXUS",
 									"type": "DatasetReference",
 									"parameters": {
 										"File": {
@@ -199,7 +199,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "cotizaciones_lexus_acum",
+									"referenceName": "status_stock_lexus_acum",
 									"type": "DatasetReference"
 								}
 							]
