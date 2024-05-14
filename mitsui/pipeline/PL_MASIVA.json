@@ -59,7 +59,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
-									"referenceName": "PIPELINE GENERAL",
+									"referenceName": "PIPELINE GENERAL_MASIVO_BORRAR",
 									"type": "PipelineReference"
 								},
 								"waitOnCompletion": true,
