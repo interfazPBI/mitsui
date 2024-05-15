@@ -5,7 +5,14 @@
 			{
 				"name": "DIM_MATERIALES",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "CARROCERIA_MODELO_CLASE",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -165,7 +172,20 @@
 			{
 				"name": "CARROCERIA_MODELO_CLASE",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "INT_VLCINVOICE_STOCK",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "PLANES ORIG_REV",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
