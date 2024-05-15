@@ -282,11 +282,11 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-10))"
+				"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-2))"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,0 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-9))"
+				"defaultValue": "dateadd(dd ,0 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
 			},
 			"Modulo": {
 				"type": "string",
