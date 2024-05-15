@@ -5,20 +5,7 @@
 			{
 				"name": "DIM_MATERIALES",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "PLANES ORIG_REV",
-						"dependencyConditions": [
-							"Completed"
-						]
-					},
-					{
-						"activity": "INT_VLCINVOICE_STOCK",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -169,6 +156,26 @@
 							"type": "Int64"
 						}
 					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "CARROCERIA_MODELO_CLASE",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_CARROCERIA_MODELO_CLASE]"
 				},
 				"linkedServiceName": {
 					"referenceName": "BD_MITSUI",
