@@ -255,10 +255,6 @@
 			"Modulo": {
 				"type": "string",
 				"defaultValue": "'FACT'"
-			},
-			"Fecha_Actualizacion": {
-				"type": "string",
-				"defaultValue": "dateadd(hour,-5,getUTCdate())"
 			}
 		},
 		"annotations": []
