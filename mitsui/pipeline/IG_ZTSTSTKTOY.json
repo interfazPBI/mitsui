@@ -51,18 +51,6 @@
 							},
 							{
 								"source": {
-									"name": "CUOBJ",
-									"type": "String",
-									"physicalType": "UTF8"
-								},
-								"sink": {
-									"name": "CUOBJ",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
 									"name": "CHARG",
 									"type": "String",
 									"physicalType": "UTF8"
@@ -75,36 +63,108 @@
 							},
 							{
 								"source": {
-									"name": "ZOBTARREP",
+									"name": "WERKS",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "ZOBTARREP",
+									"name": "WERKS",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "ZPETARREP",
+									"name": "LGORT",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "ZPETARREP",
+									"name": "LGORT",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "ZDESCOLOR",
+									"name": "CUOBJ",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "ZDESCOLOR",
+									"name": "CUOBJ",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "MMSTA",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "MMSTA",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SDSTA",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "SDSTA",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "VBLTY",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "VBLTY",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IN_RECNO",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "IN_RECNO",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ATINN",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "ATINN",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ATWRT",
+									"type": "String",
+									"physicalType": "UTF8"
+								},
+								"sink": {
+									"name": "ATWRT",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -128,7 +188,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_ZTSTSTKTOY"
+							"TABLA": "IG_ZTSTSTKTOY_PRUEBA"
 						}
 					}
 				]
