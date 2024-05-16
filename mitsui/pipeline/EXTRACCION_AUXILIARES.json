@@ -44,6 +44,52 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "AUX_COTIZACIONES_SHAREPOINT",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRUNCATE AUXILIARES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "AUX_COTIZACIONES_SHAREPOINT",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "AUX_ENCARGADOS_SHAREPOINT",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRUNCATE AUXILIARES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "AUX_ENCARGADOS_SHAREPOINT",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"annotations": []
