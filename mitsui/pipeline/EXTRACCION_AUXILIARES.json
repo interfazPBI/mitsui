@@ -1,0 +1,28 @@
+{
+	"name": "EXTRACCION_AUXILIARES",
+	"properties": {
+		"activities": [
+			{
+				"name": "TRUNCATE AUXILIARES",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[TRUNCATE_AUXILIARES]"
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
