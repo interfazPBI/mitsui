@@ -114,7 +114,14 @@
 			{
 				"name": "FTE_PEDIDO",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "IG_ZTSTSTKTOY",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -143,7 +150,14 @@
 			{
 				"name": "FTE_COMPRA",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "IG_ZTSTSTKTOY",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -196,6 +210,26 @@
 				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": "[STAGING].[CARGA_CARROCERIA_MODELO_CLASE]"
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "IG_ZTSTSTKTOY",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_IG_ZTSTSTKTOY]"
 				},
 				"linkedServiceName": {
 					"referenceName": "BD_MITSUI",
