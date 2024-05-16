@@ -309,11 +309,11 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-17))"
+				"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-16))"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,0 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-16))"
+				"defaultValue": "dateadd(dd ,0 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-15))"
 			},
 			"Modulo": {
 				"type": "string",
