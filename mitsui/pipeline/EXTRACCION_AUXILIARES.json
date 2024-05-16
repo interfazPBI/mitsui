@@ -159,6 +159,29 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "AUX_STATUS_STOCK_SHAREPOINT",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRUNCATE AUXILIARES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "AUX_STATUS_STOCK_SHAREPOINT",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"annotations": []
