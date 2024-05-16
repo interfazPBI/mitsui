@@ -90,6 +90,52 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "AUX_PL_MASA_ORIGINAL_SHAREPOINT",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRUNCATE AUXILIARES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "AUX_PL_MASA_ORIGINAL_SHAREPOINT",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "AUX_PL_MASA_REVISADO_SHAREPOINT",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRUNCATE AUXILIARES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "AUX_PL_MASA_REVISADO_SHAREPOINT",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"annotations": []
