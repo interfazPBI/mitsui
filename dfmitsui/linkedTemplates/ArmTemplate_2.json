@@ -366,6 +366,44 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/MASIVA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "MASIVA_MITSUI.xlsx",
+						"container": "dev"
+					},
+					"sheetIndex": 0,
+					"range": "A1:B14",
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Vendedor",
+						"type": "String"
+					},
+					{
+						"name": "Codigo",
+						"type": "String"
+					},
+					{
+						"name": "Sede",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MSEG')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -854,24 +892,6 @@
 						"type": "UTF8"
 					}
 				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SharePointOnlineListResource1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SharePointOnlineList1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SharePointOnlineListResource",
-				"schema": [],
-				"typeProperties": {
-					"listName": "Documentos"
-				}
 			},
 			"dependsOn": []
 		}

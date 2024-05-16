@@ -207,7 +207,6 @@
 										},
 										"sink": {
 											"type": "AzureSqlSink",
-											"preCopyScript": "TRUNCATE TABLE STAGING.AUX_CAD_VAL_TOYOTA_VALUE",
 											"writeBehavior": "insert",
 											"sqlWriterUseTableLock": false,
 											"tableOption": "autoCreate",
@@ -332,7 +331,6 @@
 										},
 										"sink": {
 											"type": "AzureSqlSink",
-											"preCopyScript": "TRUNCATE TABLE STAGING.AUX_CAD_VAL_EPDP",
 											"writeBehavior": "insert",
 											"sqlWriterUseTableLock": false,
 											"tableOption": "autoCreate",
@@ -445,7 +443,6 @@
 										},
 										"sink": {
 											"type": "AzureSqlSink",
-											"preCopyScript": "TRUNCATE TABLE STAGING.AUX_CAD_VAL_MET_TOYOTA_LIFE",
 											"writeBehavior": "insert",
 											"sqlWriterUseTableLock": false,
 											"tableOption": "autoCreate",
@@ -558,7 +555,6 @@
 										},
 										"sink": {
 											"type": "AzureSqlSink",
-											"preCopyScript": "TRUNCATE TABLE STAGING.AUX_CAD_VAL_SEGUROS",
 											"writeBehavior": "insert",
 											"sqlWriterUseTableLock": false,
 											"tableOption": "autoCreate",
@@ -683,7 +679,6 @@
 										},
 										"sink": {
 											"type": "AzureSqlSink",
-											"preCopyScript": "TRUNCATE TABLE STAGING.AUX_CAD_VAL_TOYOTA_LIFE",
 											"writeBehavior": "insert",
 											"sqlWriterUseTableLock": false,
 											"tableOption": "autoCreate",
@@ -808,7 +803,6 @@
 										},
 										"sink": {
 											"type": "AzureSqlSink",
-											"preCopyScript": "TRUNCATE TABLE STAGING.AUX_CAD_VAL_VENTA_REG",
 											"writeBehavior": "insert",
 											"sqlWriterUseTableLock": false,
 											"tableOption": "autoCreate",
@@ -2337,6 +2331,8 @@
 								{
 									"name": "AZURE SQL",
 									"type": "Copy",
+									"state": "Inactive",
+									"onInactiveMarkAs": "Succeeded",
 									"dependsOn": [
 										{
 											"activity": "SHAREPOINT AZURE",
@@ -2364,8 +2360,10 @@
 										},
 										"sink": {
 											"type": "AzureSqlSink",
+											"preCopyScript": "TRUNCATE TABLE STAGING.AUX_COTIZACIONES_LEXUS",
 											"writeBehavior": "insert",
-											"sqlWriterUseTableLock": false
+											"sqlWriterUseTableLock": false,
+											"disableMetricsCollection": false
 										},
 										"enableStaging": false,
 										"translator": {
@@ -2396,6 +2394,171 @@
 											"parameters": {}
 										}
 									]
+								},
+								{
+									"name": "AUX_COTIZACIONES_LEXUS",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "SHAREPOINT AZURE",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "Fec. Cotizacion",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Fec. Cotizacion",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Marca",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Marca",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Modelo",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Modelo",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Version",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Version",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Cod. Version",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Cod. Version",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Local",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Local",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Asesor Cotizacion",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Asesor Cotizacion",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Cant. Cotizada",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Cant. Cotizada",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "COTIZACIONES_EXCEL",
+											"type": "DatasetReference",
+											"parameters": {
+												"File": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DESTINO_SQL",
+											"type": "DatasetReference",
+											"parameters": {
+												"TABLA": "AUX_COTIZACIONES_LEXUS"
+											}
+										}
+									]
 								}
 							]
 						}
@@ -2411,7 +2574,8 @@
 				"[concat(variables('factoryId'), '/datasets/Binary1')]",
 				"[concat(variables('factoryId'), '/datasets/receptor_COTIZACIONES')]",
 				"[concat(variables('factoryId'), '/datasets/COTIZACIONES_EXCEL')]",
-				"[concat(variables('factoryId'), '/datasets/cotizaciones_lexus_acum')]"
+				"[concat(variables('factoryId'), '/datasets/cotizaciones_lexus_acum')]",
+				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]"
 			]
 		},
 		{
@@ -4808,6 +4972,232 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AUX_STATUS_STOCK_SHAREPOINT')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SharePointOnlineListSource",
+								"query": {
+									"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/3.%20LEXUS/STOCK%20LEXUS/Stock%20TDP/','''')",
+									"type": "Expression"
+								},
+								"httpRequestTimeout": "00:05:00"
+							},
+							"dataset": {
+								"referenceName": "SharePointOnlineListResource1",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.Value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Web1_copy1",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/x-www-form-urlencoded"
+										},
+										"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
+										"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
+									}
+								},
+								{
+									"name": "SHAREPOINT AZURE",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "Web1_copy1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "BinarySource",
+											"storeSettings": {
+												"type": "HttpReadSettings",
+												"requestMethod": "GET",
+												"additionalHeaders": {
+													"value": "@{concat('Authorization: Bearer ', activity('Web1_copy1').output.access_token)}",
+													"type": "Expression"
+												}
+											},
+											"formatSettings": {
+												"type": "BinaryReadSettings"
+											}
+										},
+										"sink": {
+											"type": "BinarySink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "Binary1",
+											"type": "DatasetReference",
+											"parameters": {
+												"ruta": {
+													"value": "@item().rutadeacceso",
+													"type": "Expression"
+												},
+												"archivo": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "receptor_STATUS_STSOCK",
+											"type": "DatasetReference",
+											"parameters": {
+												"archivo": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "AZURE SQL",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "SHAREPOINT AZURE",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "STATUS_STOCK_LEXUS",
+											"type": "DatasetReference",
+											"parameters": {
+												"File": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "status_stock_lexus_acum",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource1')]",
+				"[concat(variables('factoryId'), '/datasets/Binary1')]",
+				"[concat(variables('factoryId'), '/datasets/receptor_STATUS_STSOCK')]",
+				"[concat(variables('factoryId'), '/datasets/STATUS_STOCK_LEXUS')]",
+				"[concat(variables('factoryId'), '/datasets/status_stock_lexus_acum')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AUX_STOCK_LEXUS')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -5151,7 +5541,7 @@
 								"value": "@activity('Lookup1').output.value",
 								"type": "Expression"
 							},
-							"batchCount": 3,
+							"batchCount": 6,
 							"activities": [
 								{
 									"name": "Web1",
@@ -5396,7 +5786,7 @@
 								"value": "@activity('Lookup1').output.value",
 								"type": "Expression"
 							},
-							"batchCount": 3,
+							"batchCount": 16,
 							"activities": [
 								{
 									"name": "Web1",
@@ -43443,9 +43833,9 @@
 											"physicalType": "UTF8"
 										},
 										"sink": {
-											"name": "moneda",
+											"name": "Moneda",
 											"type": "String",
-											"physicalType": "varchar"
+											"physicalType": "nvarchar"
 										}
 									}
 								],
@@ -49541,18 +49931,6 @@
 									},
 									{
 										"source": {
-											"name": "CUOBJ",
-											"type": "String",
-											"physicalType": "UTF8"
-										},
-										"sink": {
-											"name": "CUOBJ",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
 											"name": "CHARG",
 											"type": "String",
 											"physicalType": "UTF8"
@@ -49565,36 +49943,108 @@
 									},
 									{
 										"source": {
-											"name": "ZOBTARREP",
+											"name": "WERKS",
 											"type": "String",
 											"physicalType": "UTF8"
 										},
 										"sink": {
-											"name": "ZOBTARREP",
+											"name": "WERKS",
 											"type": "String",
 											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "ZPETARREP",
+											"name": "LGORT",
 											"type": "String",
 											"physicalType": "UTF8"
 										},
 										"sink": {
-											"name": "ZPETARREP",
+											"name": "LGORT",
 											"type": "String",
 											"physicalType": "nvarchar"
 										}
 									},
 									{
 										"source": {
-											"name": "ZDESCOLOR",
+											"name": "CUOBJ",
 											"type": "String",
 											"physicalType": "UTF8"
 										},
 										"sink": {
-											"name": "ZDESCOLOR",
+											"name": "CUOBJ",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MMSTA",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "MMSTA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SDSTA",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "SDSTA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "VBLTY",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "VBLTY",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IN_RECNO",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IN_RECNO",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ATINN",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "ATINN",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ATWRT",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "ATWRT",
 											"type": "String",
 											"physicalType": "nvarchar"
 										}
@@ -49619,7 +50069,7 @@
 								"referenceName": "DESTINO_SQL",
 								"type": "DatasetReference",
 								"parameters": {
-									"TABLA": "IG_ZTSTSTKTOY"
+									"TABLA": "IG_ZTSTSTKTOY_TABLAS"
 								}
 							}
 						]
@@ -50054,7 +50504,7 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "@concat('SELECT \nSUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10) AS FECHA_DESDE\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'','''') AS FECHA_DESDE_SAP\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10),''-'','''') AS FECHA_HASTA_SAP\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10) AS FECHA_HASTA\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,4) AS ANIO\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),6,2) AS MES\n, CONVERT(BIGINT,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'',''''))*1000000 AS TIMESTAMP\n\nFROM (SELECT \n',string(pipeline().parameters.Fecha_Desde), ' AS FECHA_DESDE ,\n',string(pipeline().parameters.Fecha_Hasta), ' AS FECHA_HASTA , \n',string(pipeline().parameters.Modulo) , ' AS MODULO from staging.dw_proceso) R' )",
+									"value": "@concat('SELECT \nSUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10) AS FECHA_DESDE\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'','''') AS FECHA_DESDE_SAP\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10),''-'','''') AS FECHA_HASTA_SAP\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10) AS FECHA_HASTA\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,4) AS ANIO\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),6,2) AS MES\n, CONVERT(BIGINT,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'',''''))*1000000 AS TIMESTAMP\n,SUBSTRING(CONVERT(VARCHAR,DATEADD(HOUR,-5,getUTCdate()),120),1,19) AS FECHA_ACTUALIZACION\n\nFROM (SELECT \n',string(pipeline().parameters.Fecha_Desde), ' AS FECHA_DESDE ,\n',string(pipeline().parameters.Fecha_Hasta), ' AS FECHA_HASTA , \n',string(pipeline().parameters.Modulo) , ' AS MODULO from staging.dw_proceso) R' )",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -50150,6 +50600,12 @@
 							},
 							{
 								"activity": "MAESTRAS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "EXTRACCION_AUXILIARES",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -50279,6 +50735,66 @@
 								}
 							}
 						}
+					},
+					{
+						"name": "FECHA_ACTUALIZACION",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FECHA_HORA_ACTUALIZACION]",
+							"storedProcedureParameters": {
+								"FECHA_ACTUALIZACION": {
+									"value": {
+										"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_ACTUALIZACION",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "EXTRACCION_AUXILIARES",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXTRACCION_AUXILIARES",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"policy": {
@@ -50287,11 +50803,301 @@
 				"parameters": {
 					"Fecha_Desde": {
 						"type": "string",
-						"defaultValue": "dateadd(dd ,1 ,eomonth(getdate(),-14))"
+						"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
 					},
 					"Fecha_Hasta": {
 						"type": "string",
-						"defaultValue": "dateadd(dd ,0 ,eomonth(getdate(),-13))"
+						"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
+					},
+					"Modulo": {
+						"type": "string",
+						"defaultValue": "'FACT'"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DWH_PROCESO')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_TRANSACCIONALES')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_MAESTRAS')]",
+				"[concat(variables('factoryId'), '/pipelines/TRANSVERSALES')]",
+				"[concat(variables('factoryId'), '/pipelines/TOYOTA')]",
+				"[concat(variables('factoryId'), '/pipelines/HINO')]",
+				"[concat(variables('factoryId'), '/pipelines/LEXUS')]",
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_AUXILIARES')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PIPELINE GENERAL_MASIVO_BORRAR')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LP_OBTIENE_FECHA",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "@concat('SELECT \nreplace(','''',string(pipeline().parameters.FECHA_DESDE),'''',',', '''','-','''',',','''','''',' ) FECHA_DESDE_SAP, ',\n'replace(','''',string(pipeline().parameters.FECHA_HASTA),'''',',', '''','-','''',',','''','''',' ) FECHA_HASTA_SAP ,',\n '''',string(pipeline().parameters.FECHA_DESDE) ,'''', '  FECHA_DESDE,', \n '''',string(pipeline().parameters.FECHA_HASTA) ,'''', '  FECHA_HASTA,', \nstring(pipeline().parameters.Modulo) , '  MODULO from staging.dw_proceso')",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DWH_PROCESO",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "TRANSACCIONALES",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXTRACCION_TRANSACCIONALES",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_DESDE": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE_SAP",
+									"type": "Expression"
+								},
+								"FECHA_HASTA": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA_SAP",
+									"type": "Expression"
+								},
+								"ANIO": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.ANIO",
+									"type": "Expression"
+								},
+								"MES": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.MES",
+									"type": "Expression"
+								},
+								"TIMESTAMP": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.TIMESTAMP",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "MAESTRAS",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXTRACCION_MAESTRAS",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "TRANSVERSALES",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "TRANSACCIONALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "MAESTRAS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "TRANSVERSALES",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_DESDE": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_HASTA": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_HASTA",
+									"type": "Expression"
+								},
+								"TIMESTAMP": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.TIMESTAMP",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "TOYOTA",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "TOYOTA",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "HINO",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HINO",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "LEXUS",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "LEXUS",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"Fecha_Desde": {
+						"type": "string",
+						"defaultValue": "2020-01-01"
+					},
+					"Fecha_Hasta": {
+						"type": "string",
+						"defaultValue": "2020-01-01"
 					},
 					"Modulo": {
 						"type": "string",
@@ -50308,6 +51114,101 @@
 				"[concat(variables('factoryId'), '/pipelines/TOYOTA')]",
 				"[concat(variables('factoryId'), '/pipelines/HINO')]",
 				"[concat(variables('factoryId'), '/pipelines/LEXUS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_MASIVA')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"dataset": {
+								"referenceName": "MASIVA",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "PIPELINE GENERAL",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"policy": {
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "PIPELINE GENERAL",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"Fecha_Desde": {
+												"value": "@item().FECHA_INI",
+												"type": "Expression"
+											},
+											"Fecha_Hasta": {
+												"value": "@item().FECHA_FIN",
+												"type": "Expression"
+											},
+											"Modulo": "'FACT'"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MASIVA')]",
+				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
 			]
 		},
 		{
@@ -50998,13 +51899,7 @@
 						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
 							{
-								"activity": "PLANES ORIG_REV",
-								"dependencyConditions": [
-									"Completed"
-								]
-							},
-							{
-								"activity": "INT_VLCINVOICE_STOCK",
+								"activity": "CARROCERIA_MODELO_CLASE",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -51111,7 +52006,14 @@
 					{
 						"name": "FTE_PEDIDO",
 						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "IG_ZTSTSTKTOY",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -51140,7 +52042,14 @@
 					{
 						"name": "FTE_COMPRA",
 						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "IG_ZTSTSTKTOY",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -51160,6 +52069,59 @@
 									"type": "Int64"
 								}
 							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "CARROCERIA_MODELO_CLASE",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "INT_VLCINVOICE_STOCK",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "PLANES ORIG_REV",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_CARROCERIA_MODELO_CLASE]"
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "IG_ZTSTSTKTOY",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_IG_ZTSTSTKTOY]"
 						},
 						"linkedServiceName": {
 							"referenceName": "BD_MITSUI",
@@ -52870,6 +53832,46 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/MASIVA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "MASIVA_MITSUI.xlsx",
+						"container": "dev"
+					},
+					"sheetIndex": 0,
+					"range": "A1:B14",
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Vendedor",
+						"type": "String"
+					},
+					{
+						"name": "Codigo",
+						"type": "String"
+					},
+					{
+						"name": "Sede",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MSEG')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -53376,6 +54378,54 @@
 					{
 						"name": "WGBEZ60",
 						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STATUS_STOCK_LEXUS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"File": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().File",
+							"type": "Expression"
+						},
+						"folderPath": "Archivos Planos/Status_Stock",
+						"container": "dev"
+					},
+					"sheetIndex": 0,
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Vendedor",
+						"type": "String"
+					},
+					{
+						"name": "Codigo",
+						"type": "String"
+					},
+					{
+						"name": "Sede",
+						"type": "String"
 					}
 				]
 			},
@@ -54351,7 +55401,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "DEV_IG_VBRK.parquet",
-						"folderPath": "desarrollo",
+						"folderPath": "productivo/PRD/TRASACCIONAL",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -54633,7 +55683,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "DEV_IG_VLCINVOICE.parquet",
-						"folderPath": "desarrollo",
+						"folderPath": "productivo/PRD/TRASACCIONAL",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -54861,7 +55911,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "DEV_IG_ZDBM010_ENTREGAS.parquet",
-						"folderPath": "desarrollo",
+						"folderPath": "productivo/PRD/TRASACCIONAL",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -54907,8 +55957,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "DEV_IG_ZDBM010_ENTR_HIN.parquet",
-						"folderPath": "desarrollo/Hino",
+						"fileName": "DEV_IG_ZDBM010_ENT_H.parquet",
+						"folderPath": "productivo/PRD/TRASACCIONAL",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -55001,8 +56051,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "DEV_IG_ZDBM010_ENTR_LEX.parquet",
-						"folderPath": "desarrollo/Lexus",
+						"fileName": "DEV_IG_ZDBM010_ENT_L.parquet",
+						"folderPath": "productivo/PRD/TRASACCIONAL",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -55190,7 +56240,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "DEV_IG_ZDBM036.parquet",
-						"folderPath": "desarrollo",
+						"folderPath": "productivo/PRD/TRASACCIONAL",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -55660,7 +56710,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "DEV_IG_ZTDBM_METASMODEL.parquet",
-						"folderPath": "desarrollo",
+						"folderPath": "productivo/PRD/TRASACCIONAL",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -55706,8 +56756,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "DEV_IG_ZTSTSTKTOY.parquet",
-						"folderPath": "productivo/PRD/MAESTROS",
+						"fileName": "DEV_IG_ZTSTSKTOY_TABLAS.parquet",
+						"folderPath": "productivo/PRD/TRANSACCIONAL",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -55925,6 +56975,59 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/receptor_STATUS_STSOCK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"archivo": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().archivo",
+							"type": "Expression"
+						},
+						"folderPath": "Archivos Planos/Status_Stock",
+						"container": "dev"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/status_stock_lexus_acum')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGING",
+					"table": "AUX_STATUS_STOCK_LEXUS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -55991,6 +57094,218 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ZTSTSTKTOY_PRUEBA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "DEV_IG_ZTSTSKTOY_PRUEBA.parquet",
+						"folderPath": "productivo/QAS/TRANSACCIONAL",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "VGUID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUOBJ",
+						"type": "UTF8"
+					},
+					{
+						"name": "CHARG",
+						"type": "UTF8"
+					},
+					{
+						"name": "ZOBTARREP",
+						"type": "UTF8"
+					},
+					{
+						"name": "ZPETARREP",
+						"type": "UTF8"
+					},
+					{
+						"name": "ZDESCOLOR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXTRACCION_AUXILIARES')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "TRUNCATE AUXILIARES",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[TRUNCATE_AUXILIARES]"
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "CADENA_VALOR",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRUNCATE AUXILIARES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "AUX_CADENA_VALOR_SHAREPOINT",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "AUX_COTIZACIONES_SHAREPOINT",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRUNCATE AUXILIARES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "AUX_COTIZACIONES_SHAREPOINT",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "AUX_ENCARGADOS_SHAREPOINT",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRUNCATE AUXILIARES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "AUX_ENCARGADOS_SHAREPOINT",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "AUX_PL_MASA_ORIGINAL_SHAREPOINT",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRUNCATE AUXILIARES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "AUX_PL_MASA_ORIGINAL_SHAREPOINT",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "AUX_PL_MASA_REVISADO_SHAREPOINT",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRUNCATE AUXILIARES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "AUX_PL_MASA_REVISADO_SHAREPOINT",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]",
+				"[concat(variables('factoryId'), '/pipelines/AUX_CADENA_VALOR_SHAREPOINT')]",
+				"[concat(variables('factoryId'), '/pipelines/AUX_COTIZACIONES_SHAREPOINT')]",
+				"[concat(variables('factoryId'), '/pipelines/AUX_ENCARGADOS_SHAREPOINT')]",
+				"[concat(variables('factoryId'), '/pipelines/AUX_PL_MASA_ORIGINAL_SHAREPOINT')]",
+				"[concat(variables('factoryId'), '/pipelines/AUX_PL_MASA_REVISADO_SHAREPOINT')]"
+			]
 		}
 	]
 }
