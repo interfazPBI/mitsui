@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DEV_IG_ZTSTSKTOY_PRUE.parquet",
-				"folderPath": "productivo/QAS/TRANSACCIONAL",
+				"fileName": "DEV_IG_ZTSTSKTOY_TABLAS.parquet",
+				"folderPath": "productivo/PRD/TRANSACCIONAL",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
