@@ -14,7 +14,7 @@
 				"container": "dev"
 			},
 			"sheetIndex": 0,
-			"range": "A1:B4",
+			"range": "A1:B16",
 			"firstRowAsHeader": true
 		},
 		"schema": [
