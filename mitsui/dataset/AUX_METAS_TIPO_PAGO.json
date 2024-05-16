@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "METAS_TIPOS_PAGO.xlsx",
+				"fileName": "Metas.xlsx",
 				"folderPath": "Archivos Planos",
 				"container": "dev"
 			},
