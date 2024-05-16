@@ -21,6 +21,29 @@
 					"referenceName": "BD_MITSUI",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "CADENA_VALOR",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRUNCATE AUXILIARES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "AUX_CADENA_VALOR_SHAREPOINT",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"annotations": []
