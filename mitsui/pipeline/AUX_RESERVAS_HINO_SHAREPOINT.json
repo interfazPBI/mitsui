@@ -1,0 +1,314 @@
+{
+	"name": "AUX_RESERVAS_HINO_SHAREPOINT",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SharePointOnlineListSource",
+						"query": {
+							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/Cotizaciones%20(SGC)/','''')",
+							"type": "Expression"
+						},
+						"httpRequestTimeout": "00:05:00"
+					},
+					"dataset": {
+						"referenceName": "SharePointOnlineListResource1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup1').output.Value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Web1_copy1",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/x-www-form-urlencoded"
+								},
+								"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
+								"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
+							}
+						},
+						{
+							"name": "SHAREPOINT AZURE",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Web1_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET",
+										"additionalHeaders": {
+											"value": "@{concat('Authorization: Bearer ', activity('Web1_copy1').output.access_token)}",
+											"type": "Expression"
+										}
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Binary1",
+									"type": "DatasetReference",
+									"parameters": {
+										"ruta": {
+											"value": "@item().rutadeacceso",
+											"type": "Expression"
+										},
+										"archivo": {
+											"value": "@item().Nombre",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "receptor_COTIZACIONES",
+									"type": "DatasetReference",
+									"parameters": {
+										"archivo": {
+											"value": "@item().Nombre",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "AUX_COTIZACIONES_LEXUS",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "SHAREPOINT AZURE",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "Fec. Cotizacion",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Fec. Cotizacion",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Marca",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Marca",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Modelo",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Modelo",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Version",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Version",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Cod. Version",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Cod. Version",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Local",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Local",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Asesor Cotizacion",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Asesor Cotizacion",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Cant. Cotizada",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Cant. Cotizada",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "COTIZACIONES_EXCEL",
+									"type": "DatasetReference",
+									"parameters": {
+										"File": {
+											"value": "@item().Nombre",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DESTINO_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLA": "AUX_COTIZACIONES_LEXUS"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"annotations": []
+	}
+}
