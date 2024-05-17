@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SharePointOnlineListSource",
 						"query": {
-							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/Cotizaciones%20(SGC)/','''')",
+							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/02%20HINO/Reservas/','''')",
 							"type": "Expression"
 						},
 						"httpRequestTimeout": "00:05:00"
@@ -129,7 +129,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "receptor_COTIZACIONES",
+									"referenceName": "receptor_RESERVAS_HINO",
 									"type": "DatasetReference",
 									"parameters": {
 										"archivo": {
@@ -143,6 +143,8 @@
 						{
 							"name": "AUX_COTIZACIONES_LEXUS",
 							"type": "Copy",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "SHAREPOINT AZURE",
