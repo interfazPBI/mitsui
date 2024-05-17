@@ -129,11 +129,11 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "receptor_STATUS_STSOCK",
+									"referenceName": "receptor_STOCK_PROYECCION",
 									"type": "DatasetReference",
 									"parameters": {
 										"archivo": {
-											"value": "@item().Nombre",
+											"value": "Item().Nombre",
 											"type": "Expression"
 										}
 									}
