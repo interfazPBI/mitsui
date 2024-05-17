@@ -1,5 +1,5 @@
 {
-	"name": "receptor_STSOCK_PROYECCION",
+	"name": "receptor_STOCK_PROYECCION",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
@@ -19,7 +19,7 @@
 					"value": "@dataset().archivo",
 					"type": "Expression"
 				},
-				"folderPath": "Archivos Planos/Status_Stock",
+				"folderPath": "Archivos Planos/Stock_Proyeccion",
 				"container": "dev"
 			}
 		}
