@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DEV_IG_ZTSTSKTOY_TABLAS.parquet",
+				"fileName": "DEV_IG_ZTSTSTKTOY_TABLAS.parquet",
 				"folderPath": "productivo/PRD/TRASACCIONAL",
 				"container": "dev"
 			},
