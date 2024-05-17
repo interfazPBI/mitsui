@@ -19,7 +19,7 @@
 					"value": "@dataset().File",
 					"type": "Expression"
 				},
-				"folderPath": "Archivos Planos/Stock_proyeccion",
+				"folderPath": "Archivos Planos/Stock_Proyeccion",
 				"container": "dev"
 			},
 			"sheetIndex": 0,
