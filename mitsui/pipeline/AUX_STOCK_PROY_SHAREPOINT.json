@@ -141,10 +141,8 @@
 							]
 						},
 						{
-							"name": "AZURE SQL",
+							"name": "STOCK_PROY_LEXUS",
 							"type": "Copy",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "SHAREPOINT AZURE",
@@ -174,11 +172,122 @@
 									"type": "AzureSqlSink",
 									"writeBehavior": "insert",
 									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
 								"translator": {
 									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "Modelo",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Modelo",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "fecha",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "fecha",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Inventario Inicial",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Inventario Inicial",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Facturado",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Facturado",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Llegadas Siguiente Mes",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Llegadas Siguiente Mes",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Inventario Inicial Siguiente Mes",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Inventario Inicial Siguiente Mes",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Reservado",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Reservado",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "MOS",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "MOS",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Meta Siguiente Mes",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Meta Siguiente Mes",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
 									"typeConversion": true,
 									"typeConversionSettings": {
 										"allowDataTruncation": true,
@@ -188,7 +297,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "STATUS_STOCK_LEXUS",
+									"referenceName": "AUX_STOCK_LEXUS",
 									"type": "DatasetReference",
 									"parameters": {
 										"File": {
@@ -200,8 +309,11 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "status_stock_lexus_acum",
-									"type": "DatasetReference"
+									"referenceName": "DESTINO_SQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLA": "AUX_STOCK_LEXUS"
+									}
 								}
 							]
 						}
