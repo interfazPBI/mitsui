@@ -143,6 +143,8 @@
 						{
 							"name": "AZURE SQL",
 							"type": "Copy",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "SHAREPOINT AZURE",
