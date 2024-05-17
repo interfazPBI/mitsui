@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "DEV_IG_ZTSTSKTOY_TABLAS.parquet",
-				"folderPath": "productivo/PRD/TRANSACCIONAL",
+				"folderPath": "productivo/PRD/TRASACCIONAL",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
