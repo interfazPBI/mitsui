@@ -1121,12 +1121,6 @@
 								"dependencyConditions": [
 									"Completed"
 								]
-							},
-							{
-								"activity": "FTE_PEDIDO",
-								"dependencyConditions": [
-									"Completed"
-								]
 							}
 						],
 						"policy": {
@@ -1170,12 +1164,6 @@
 								"dependencyConditions": [
 									"Completed"
 								]
-							},
-							{
-								"activity": "FTE_PEDIDO",
-								"dependencyConditions": [
-									"Completed"
-								]
 							}
 						],
 						"policy": {
@@ -1188,42 +1176,6 @@
 						"userProperties": [],
 						"typeProperties": {
 							"storedProcedureName": "[[DWH].[CARGA_PLAN_ORIG_REV]"
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_MITSUI",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "FTE_PEDIDO",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "IG_ZTSTSTKTOY",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[STAGING].[CARGA_INT_FTE_PEDIDO]",
-							"storedProcedureParameters": {
-								"FECHA_INI": {
-									"value": {
-										"value": "@pipeline().parameters.TIMESTAMP",
-										"type": "Expression"
-									},
-									"type": "Int64"
-								}
-							}
 						},
 						"linkedServiceName": {
 							"referenceName": "BD_MITSUI",
@@ -1354,7 +1306,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "METAS_TIPOS_PAGO.xlsx",
+						"fileName": "Metas.xlsx",
 						"folderPath": "Archivos Planos",
 						"container": "dev"
 					},
@@ -1429,13 +1381,21 @@
 					"referenceName": "AzureBlobStorage1",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"File": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "Excel",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "stock lexus.xlsx",
-						"folderPath": "Archivos Planos",
+						"fileName": {
+							"value": "@dataset().File",
+							"type": "Expression"
+						},
+						"folderPath": "Archivos Planos/Stock_Proyeccion",
 						"container": "dev"
 					},
 					"sheetIndex": 0,

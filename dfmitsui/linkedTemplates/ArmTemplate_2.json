@@ -383,7 +383,7 @@
 						"container": "dev"
 					},
 					"sheetIndex": 0,
-					"range": "A1:B14",
+					"range": "A1:B4",
 					"firstRowAsHeader": true
 				},
 				"schema": [
@@ -821,13 +821,21 @@
 					"referenceName": "AzureBlobStorage1",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"File": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "Excel",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "fuente reservas -HINO FINAL.xlsx",
-						"folderPath": "Archivos Planos",
+						"fileName": {
+							"value": "@dataset().File",
+							"type": "Expression"
+						},
+						"folderPath": "Archivos Planos/Reservas_Hino",
 						"container": "dev"
 					},
 					"sheetIndex": 0,

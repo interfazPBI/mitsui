@@ -521,8 +521,57 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "DEV_IG_ZTSTSKTOY_TABLAS.parquet",
-						"folderPath": "productivo/PRD/TRANSACCIONAL",
+						"fileName": "DEV_IG_ZTSTSTKTOY_TABLAS.parquet",
+						"folderPath": "productivo/PRD/MAESTROS",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "VGUID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUOBJ",
+						"type": "UTF8"
+					},
+					{
+						"name": "CHARG",
+						"type": "UTF8"
+					},
+					{
+						"name": "ZOBTARREP",
+						"type": "UTF8"
+					},
+					{
+						"name": "ZPETARREP",
+						"type": "UTF8"
+					},
+					{
+						"name": "ZDESCOLOR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ZTSTSTKTOY_PRUEBA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "DEV_IG_ZTSTSKTOY_PRUEBA.parquet",
+						"folderPath": "productivo/QAS/TRANSACCIONAL",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -751,25 +800,6 @@
 						"folderPath": "Archivos Planos/Status_Stock",
 						"container": "dev"
 					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/status_stock_lexus_acum')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BD_MITSUI",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "STAGING",
-					"table": "AUX_STATUS_STOCK_LEXUS"
 				}
 			},
 			"dependsOn": []
