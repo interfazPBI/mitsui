@@ -182,6 +182,52 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "AUX_RESERVAS_HINO_SHAREPOINT",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRUNCATE AUXILIARES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "AUX_RESERVAS_HINO_SHAREPOINT",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "AUX_STOCK_PROY_SHAREPOINT",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRUNCATE AUXILIARES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "AUX_STOCK_PROY_SHAREPOINT",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"annotations": []
