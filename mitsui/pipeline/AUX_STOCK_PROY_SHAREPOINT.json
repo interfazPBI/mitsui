@@ -297,7 +297,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "AUX_STOCK_LEXUS",
+									"referenceName": "STOCK_PROYECCION",
 									"type": "DatasetReference",
 									"parameters": {
 										"File": {
