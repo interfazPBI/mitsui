@@ -133,7 +133,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"archivo": {
-											"value": "Item().Nombre",
+											"value": "@item().Nombre",
 											"type": "Expression"
 										}
 									}
