@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SharePointOnlineListSource",
 						"query": {
-							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/3.%20LEXUS/STOCK%20LEXUS/Stock%20TDP/','''')",
+							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/3.%20LEXUS/STOCK%20LEXUS/Stock%20Status-Proyección/','''')",
 							"type": "Expression"
 						},
 						"httpRequestTimeout": "00:05:00"
