@@ -38,12 +38,6 @@
 						"dependencyConditions": [
 							"Completed"
 						]
-					},
-					{
-						"activity": "FTE_PEDIDO",
-						"dependencyConditions": [
-							"Completed"
-						]
 					}
 				],
 				"policy": {
@@ -87,12 +81,6 @@
 						"dependencyConditions": [
 							"Completed"
 						]
-					},
-					{
-						"activity": "FTE_PEDIDO",
-						"dependencyConditions": [
-							"Completed"
-						]
 					}
 				],
 				"policy": {
@@ -105,44 +93,6 @@
 				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": "[DWH].[CARGA_PLAN_ORIG_REV]"
-				},
-				"linkedServiceName": {
-					"referenceName": "BD_MITSUI",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "FTE_PEDIDO",
-				"type": "SqlServerStoredProcedure",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "IG_ZTSTSTKTOY",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"storedProcedureName": "[STAGING].[CARGA_INT_FTE_PEDIDO]",
-					"storedProcedureParameters": {
-						"FECHA_INI": {
-							"value": {
-								"value": "@pipeline().parameters.TIMESTAMP",
-								"type": "Expression"
-							},
-							"type": "Int64"
-						}
-					}
 				},
 				"linkedServiceName": {
 					"referenceName": "BD_MITSUI",
