@@ -1,0 +1,27 @@
+{
+	"name": "receptor_STSOCK_PROYECCION",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"archivo": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().archivo",
+					"type": "Expression"
+				},
+				"folderPath": "Archivos Planos/Status_Stock",
+				"container": "dev"
+			}
+		}
+	}
+}
