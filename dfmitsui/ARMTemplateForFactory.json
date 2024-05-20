@@ -52340,8 +52340,6 @@
 					{
 						"name": "MAESTRAS",
 						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "LP_OBTIENE_FECHA",
@@ -52415,8 +52413,6 @@
 					{
 						"name": "TOYOTA",
 						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSVERSALES",
@@ -52450,8 +52446,6 @@
 					{
 						"name": "HINO",
 						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSVERSALES",
@@ -52556,8 +52550,6 @@
 					{
 						"name": "EXTRACCION_AUXILIARES",
 						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "LP_OBTIENE_FECHA",
