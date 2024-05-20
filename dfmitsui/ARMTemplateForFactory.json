@@ -7015,6 +7015,235 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/HINO_SIN_STOCK')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "INT_ZDBM036",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_ZDBM036_HINO]",
+							"storedProcedureParameters": {
+								"FECHA": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_FACT_STOCK",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "INT_ZDBM036",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_FACT_STOCK_HINO]",
+							"storedProcedureParameters": {
+								"FECHA": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "FACT_STOCK",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "INT_FACT_STOCK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FACT_STOCK_HINO]",
+							"storedProcedureParameters": {
+								"FECHA": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_FACTURAS_BOOKING",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "INT_ZDBM036",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_FACT_FACTURAS_BOOKING_HINO]",
+							"storedProcedureParameters": {
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_BOOKING": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "FACTURAS_BOOKING",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "INT_FACTURAS_BOOKING",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FACT_FACTURAS_BOOKING_HINO]",
+							"storedProcedureParameters": {
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_BOOKING": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"FECHA_INI": {
+						"type": "string"
+					},
+					"FECHA_FIN": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/IG_CVLC02T')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -51276,6 +51505,415 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/LEXUS_SIN_STOCK')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "INT_ZDBM036_LEXUS",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_ZDBM036_LEX]",
+							"storedProcedureParameters": {
+								"FECHA": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_FACT_STOCK_SAP",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "INT_ZDBM036_LEXUS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_FACT_STOCK_LEXUS_SAP]",
+							"storedProcedureParameters": {
+								"FECHA": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "FACT_STOCK_SAP",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "INT_FACT_STOCK_SAP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FACT_STOCK_LEXUS_SAP]",
+							"storedProcedureParameters": {
+								"FECHA": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_FACTURAS_BOOKING",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "INT_ZDBM036_LEXUS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_FACT_FACTURAS_BOOKING_LEXUS]",
+							"storedProcedureParameters": {
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_BOOKING": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "FACTURAS_BOOKING",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "INT_FACTURAS_BOOKING",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FACT_FACTURAS_BOOKING_LEXUS]",
+							"storedProcedureParameters": {
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_BOOKING": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_FACT_STOCK_LEXUS",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "INT_ZDBM036_LEXUS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_FACT_STOCK_LEXUS]",
+							"storedProcedureParameters": {
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "FACT_STOCK_LEXUS",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "INT_FACT_STOCK_LEXUS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FACT_STOCK_LEXUS]",
+							"storedProcedureParameters": {
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_FACT_STATUS_STOCK",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "INT_ZDBM036_LEXUS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_FACT_STATUS_STOCK_LEXUS]",
+							"storedProcedureParameters": {
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "FACT_STATUS_STOCK",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "INT_FACT_STATUS_STOCK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FACT_STATUS_STOCK_LEXUS]",
+							"storedProcedureParameters": {
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"FECHA_INI": {
+						"type": "string"
+					},
+					"FECHA_FIN": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PIPELINE GENERAL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -51594,6 +52232,352 @@
 				"parameters": {
 					"Fecha_Desde": {
 						"type": "string",
+						"defaultValue": "'2024-05-01'"
+					},
+					"Fecha_Hasta": {
+						"type": "string",
+						"defaultValue": "'2024-05-20'"
+					},
+					"Modulo": {
+						"type": "string",
+						"defaultValue": "'FACT'"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DWH_PROCESO')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_TRANSACCIONALES')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_MAESTRAS')]",
+				"[concat(variables('factoryId'), '/pipelines/TRANSVERSALES')]",
+				"[concat(variables('factoryId'), '/pipelines/TOYOTA')]",
+				"[concat(variables('factoryId'), '/pipelines/HINO')]",
+				"[concat(variables('factoryId'), '/pipelines/LEXUS')]",
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_AUXILIARES')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PIPELINE GENERAL_MANUAL_SIN_STOCK')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LP_OBTIENE_FECHA",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "@concat('SELECT \nSUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10) AS FECHA_DESDE\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'','''') AS FECHA_DESDE_SAP\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10),''-'','''') AS FECHA_HASTA_SAP\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10) AS FECHA_HASTA\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,4) AS ANIO\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),6,2) AS MES\n, CONVERT(BIGINT,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'',''''))*1000000 AS TIMESTAMP\n,SUBSTRING(CONVERT(VARCHAR,DATEADD(HOUR,-5,getUTCdate()),120),1,19) AS FECHA_ACTUALIZACION\n\nFROM (SELECT \n',string(pipeline().parameters.Fecha_Desde), ' AS FECHA_DESDE ,\n',string(pipeline().parameters.Fecha_Hasta), ' AS FECHA_HASTA , \n',string(pipeline().parameters.Modulo) , ' AS MODULO from staging.dw_proceso) R' )",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DWH_PROCESO",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "TRANSACCIONALES",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXTRACCION_TRANSACCIONALES",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_DESDE": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE_SAP",
+									"type": "Expression"
+								},
+								"FECHA_HASTA": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA_SAP",
+									"type": "Expression"
+								},
+								"ANIO": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.ANIO",
+									"type": "Expression"
+								},
+								"MES": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.MES",
+									"type": "Expression"
+								},
+								"TIMESTAMP": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.TIMESTAMP",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "MAESTRAS",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXTRACCION_MAESTRAS",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "TRANSVERSALES",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSACCIONALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "MAESTRAS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "EXTRACCION_AUXILIARES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "TRANSVERSALES_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_DESDE": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_HASTA": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_HASTA",
+									"type": "Expression"
+								},
+								"TIMESTAMP": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.TIMESTAMP",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "TOYOTA",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "TOYOTA_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "HINO",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HINO_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "LEXUS",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "LEXUS_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "FECHA_ACTUALIZACION",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FECHA_HORA_ACTUALIZACION]",
+							"storedProcedureParameters": {
+								"FECHA_ACTUALIZACION": {
+									"value": {
+										"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_ACTUALIZACION",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "EXTRACCION_AUXILIARES",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXTRACCION_AUXILIARES",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"Fecha_Desde": {
+						"type": "string",
 						"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
 					},
 					"Fecha_Hasta": {
@@ -51611,10 +52595,10 @@
 				"[concat(variables('factoryId'), '/datasets/DWH_PROCESO')]",
 				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_TRANSACCIONALES')]",
 				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_MAESTRAS')]",
-				"[concat(variables('factoryId'), '/pipelines/TRANSVERSALES')]",
-				"[concat(variables('factoryId'), '/pipelines/TOYOTA')]",
-				"[concat(variables('factoryId'), '/pipelines/HINO')]",
-				"[concat(variables('factoryId'), '/pipelines/LEXUS')]",
+				"[concat(variables('factoryId'), '/pipelines/TRANSVERSALES_SIN_STOCK')]",
+				"[concat(variables('factoryId'), '/pipelines/TOYOTA_SIN_STOCK')]",
+				"[concat(variables('factoryId'), '/pipelines/HINO_SIN_STOCK')]",
+				"[concat(variables('factoryId'), '/pipelines/LEXUS_SIN_STOCK')]",
 				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]",
 				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_AUXILIARES')]"
 			]
@@ -52392,6 +53376,332 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/TOYOTA_SIN_STOCK')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DIM_VENDEDORES",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "INT_ZDBM036",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_DIM_VENDEDORES]"
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_ZDBM036",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_ZDBM036]",
+							"storedProcedureParameters": {
+								"FECHA": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_CADENA_VALOR",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "DIM_VENDEDORES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_FACT_CADENA_VALOR]"
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "FACT_CADENA_VALOR",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "INT_CADENA_VALOR",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FACT_CADENA_VALOR]",
+							"storedProcedureParameters": {
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_FACT_STOCK",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "DIM_VENDEDORES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_FACT_STOCK]",
+							"storedProcedureParameters": {
+								"FECHA": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "FACT_STOCK",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "INT_FACT_STOCK",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FACT_STOCK]",
+							"storedProcedureParameters": {
+								"FECHA": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_FACTURAS_BOOKING",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "DIM_VENDEDORES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_FACT_FACTURAS_BOOKING]",
+							"storedProcedureParameters": {
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_BOOKING": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "FACTURAS_BOOKING",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "INT_FACTURAS_BOOKING",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FACT_FACTURAS_BOOKING]",
+							"storedProcedureParameters": {
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_INI",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_BOOKING": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_FIN",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"FECHA_INI": {
+						"type": "string"
+					},
+					"FECHA_FIN": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/TRANSVERSALES')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -52497,6 +53807,223 @@
 					{
 						"name": "FTE_COMPRA",
 						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "IG_ZTSTSTKTOY",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_INT_FTE_COMPRA]",
+							"storedProcedureParameters": {
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.TIMESTAMP",
+										"type": "Expression"
+									},
+									"type": "Int64"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "CARROCERIA_MODELO_CLASE",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "INT_VLCINVOICE_STOCK",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "PLANES ORIG_REV",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_CARROCERIA_MODELO_CLASE]"
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "IG_ZTSTSTKTOY",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_IG_ZTSTSTKTOY]"
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"FECHA_DESDE": {
+						"type": "string"
+					},
+					"FECHA_HASTA": {
+						"type": "string"
+					},
+					"TIMESTAMP": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TRANSVERSALES_SIN_STOCK')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DIM_MATERIALES",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "CARROCERIA_MODELO_CLASE",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_DIM_MATERIALES]"
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "INT_VLCINVOICE_STOCK",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "FTE_COMPRA",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_INT_VLCINVOICE_STOCK]",
+							"storedProcedureParameters": {
+								"FECHA_INI": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_DESDE",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"FECHA_FIN": {
+									"value": {
+										"value": "@pipeline().parameters.FECHA_HASTA",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "PLANES ORIG_REV",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "FTE_COMPRA",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_PLAN_ORIG_REV]"
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "FTE_COMPRA",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "IG_ZTSTSTKTOY",
@@ -57680,352 +59207,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PIPELINE GENERAL_MANUAL_SIN_STOCK')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "LP_OBTIENE_FECHA",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "@concat('SELECT \nSUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10) AS FECHA_DESDE\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'','''') AS FECHA_DESDE_SAP\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10),''-'','''') AS FECHA_HASTA_SAP\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10) AS FECHA_HASTA\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,4) AS ANIO\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),6,2) AS MES\n, CONVERT(BIGINT,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'',''''))*1000000 AS TIMESTAMP\n,SUBSTRING(CONVERT(VARCHAR,DATEADD(HOUR,-5,getUTCdate()),120),1,19) AS FECHA_ACTUALIZACION\n\nFROM (SELECT \n',string(pipeline().parameters.Fecha_Desde), ' AS FECHA_DESDE ,\n',string(pipeline().parameters.Fecha_Hasta), ' AS FECHA_HASTA , \n',string(pipeline().parameters.Modulo) , ' AS MODULO from staging.dw_proceso) R' )",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "DWH_PROCESO",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "TRANSACCIONALES",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "EXTRACCION_TRANSACCIONALES",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_DESDE": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE_SAP",
-									"type": "Expression"
-								},
-								"FECHA_HASTA": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA_SAP",
-									"type": "Expression"
-								},
-								"ANIO": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.ANIO",
-									"type": "Expression"
-								},
-								"MES": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.MES",
-									"type": "Expression"
-								},
-								"TIMESTAMP": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.TIMESTAMP",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "MAESTRAS",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "EXTRACCION_MAESTRAS",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "TRANSVERSALES",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "TRANSACCIONALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							},
-							{
-								"activity": "MAESTRAS",
-								"dependencyConditions": [
-									"Completed"
-								]
-							},
-							{
-								"activity": "EXTRACCION_AUXILIARES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "TRANSVERSALES",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_DESDE": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_HASTA": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_HASTA",
-									"type": "Expression"
-								},
-								"TIMESTAMP": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.TIMESTAMP",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "TOYOTA",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "TOYOTA",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "HINO",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "HINO",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "LEXUS",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "LEXUS",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "FECHA_ACTUALIZACION",
-						"type": "SqlServerStoredProcedure",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[DWH].[CARGA_FECHA_HORA_ACTUALIZACION]",
-							"storedProcedureParameters": {
-								"FECHA_ACTUALIZACION": {
-									"value": {
-										"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_ACTUALIZACION",
-										"type": "Expression"
-									},
-									"type": "Datetime"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_MITSUI",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "EXTRACCION_AUXILIARES",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "EXTRACCION_AUXILIARES",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"Fecha_Desde": {
-						"type": "string",
-						"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
-					},
-					"Fecha_Hasta": {
-						"type": "string",
-						"defaultValue": "getUTCdate()"
-					},
-					"Modulo": {
-						"type": "string",
-						"defaultValue": "'FACT'"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DWH_PROCESO')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_TRANSACCIONALES')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_MAESTRAS')]",
-				"[concat(variables('factoryId'), '/pipelines/TRANSVERSALES')]",
-				"[concat(variables('factoryId'), '/pipelines/TOYOTA')]",
-				"[concat(variables('factoryId'), '/pipelines/HINO')]",
-				"[concat(variables('factoryId'), '/pipelines/LEXUS')]",
-				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_AUXILIARES')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/EX_DIARIO')]",
