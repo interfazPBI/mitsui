@@ -52340,6 +52340,8 @@
 					{
 						"name": "MAESTRAS",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "LP_OBTIENE_FECHA",
@@ -52413,6 +52415,8 @@
 					{
 						"name": "TOYOTA",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSVERSALES",
@@ -52446,6 +52450,8 @@
 					{
 						"name": "HINO",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSVERSALES",
@@ -52550,6 +52556,8 @@
 					{
 						"name": "EXTRACCION_AUXILIARES",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "LP_OBTIENE_FECHA",
@@ -52667,7 +52675,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"pipeline": {
-											"referenceName": "PIPELINE GENERAL",
+											"referenceName": "PIPELINE GENERAL_MANUAL_SIN_STOCK",
 											"type": "PipelineReference"
 										},
 										"waitOnCompletion": true,
@@ -52695,7 +52703,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MASIVA')]",
-				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
+				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL_MANUAL_SIN_STOCK')]"
 			]
 		},
 		{
@@ -55839,7 +55847,7 @@
 						"container": "dev"
 					},
 					"sheetIndex": 0,
-					"range": "A1:B4",
+					"range": "A1:B6",
 					"firstRowAsHeader": true
 				},
 				"schema": [
@@ -59214,7 +59222,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
