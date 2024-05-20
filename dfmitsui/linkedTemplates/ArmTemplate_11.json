@@ -6,6 +6,18 @@
 			"type": "string",
 			"metadata": "Nombre de instancia de Data Factory",
 			"defaultValue": "dfmitsui"
+		},
+		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
+			"type": "string",
+			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
+		},
+		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
+			"type": "string",
+			"defaultValue": "getUTCdate()"
+		},
+		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Modulo": {
+			"type": "string",
+			"defaultValue": "'FACT'"
 		}
 	},
 	"variables": {
@@ -1025,6 +1037,40 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EX_DIARIO')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PIPELINE GENERAL",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"Fecha_Desde": "[parameters('EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]",
+							"Fecha_Hasta": "[parameters('EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]",
+							"Modulo": "[parameters('EX_DIARIO_properties_PIPELINE GENERAL_parameters_Modulo')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 30,
+						"startTime": "2024-05-20T12:01:00",
+						"timeZone": "SA Pacific Standard Time"
+					}
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
