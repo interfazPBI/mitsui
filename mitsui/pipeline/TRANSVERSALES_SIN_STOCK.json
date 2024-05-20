@@ -32,6 +32,8 @@
 			{
 				"name": "INT_VLCINVOICE_STOCK",
 				"type": "SqlServerStoredProcedure",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "FTE_COMPRA",
@@ -102,6 +104,8 @@
 			{
 				"name": "FTE_COMPRA",
 				"type": "SqlServerStoredProcedure",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "IG_ZTSTSTKTOY",
