@@ -1,0 +1,17 @@
+{
+	"name": "EX_DIARIO",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 30,
+				"startTime": "2024-05-20T12:01:00",
+				"timeZone": "SA Pacific Standard Time"
+			}
+		}
+	}
+}
