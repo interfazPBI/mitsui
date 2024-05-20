@@ -127,7 +127,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "TRANSVERSALES",
+						"referenceName": "TRANSVERSALES_SIN_STOCK",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
