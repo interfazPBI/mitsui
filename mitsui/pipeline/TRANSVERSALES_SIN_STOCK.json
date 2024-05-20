@@ -1,0 +1,205 @@
+{
+	"name": "TRANSVERSALES_SIN_STOCK",
+	"properties": {
+		"activities": [
+			{
+				"name": "DIM_MATERIALES",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "CARROCERIA_MODELO_CLASE",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[CARGA_DIM_MATERIALES]"
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "INT_VLCINVOICE_STOCK",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "FTE_COMPRA",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[CARGA_INT_VLCINVOICE_STOCK]",
+					"storedProcedureParameters": {
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_DESDE",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"FECHA_FIN": {
+							"value": {
+								"value": "@pipeline().parameters.FECHA_HASTA",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "PLANES ORIG_REV",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "FTE_COMPRA",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[CARGA_PLAN_ORIG_REV]"
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "FTE_COMPRA",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "IG_ZTSTSTKTOY",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_INT_FTE_COMPRA]",
+					"storedProcedureParameters": {
+						"FECHA_INI": {
+							"value": {
+								"value": "@pipeline().parameters.TIMESTAMP",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "CARROCERIA_MODELO_CLASE",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "INT_VLCINVOICE_STOCK",
+						"dependencyConditions": [
+							"Completed"
+						]
+					},
+					{
+						"activity": "PLANES ORIG_REV",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_CARROCERIA_MODELO_CLASE]"
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "IG_ZTSTSTKTOY",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[STAGING].[CARGA_IG_ZTSTSTKTOY]"
+				},
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"FECHA_DESDE": {
+				"type": "string"
+			},
+			"FECHA_HASTA": {
+				"type": "string"
+			},
+			"TIMESTAMP": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
