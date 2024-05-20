@@ -13,20 +13,31 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/status_stock_lexus_acum')]",
+			"name": "[concat(parameters('factoryName'), '/receptor_STATUS_STSOCK')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "BD_MITSUI",
+					"referenceName": "AzureBlobStorage1",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"archivo": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
+				"type": "Binary",
 				"typeProperties": {
-					"schema": "STAGING",
-					"table": "AUX_STATUS_STOCK_LEXUS"
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().archivo",
+							"type": "Expression"
+						},
+						"folderPath": "Archivos Planos/Status_Stock",
+						"container": "dev"
+					}
 				}
 			},
 			"dependsOn": []
@@ -62,31 +73,20 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/receptor_RESERVAS_HINO')]",
+			"name": "[concat(parameters('factoryName'), '/status_stock_lexus_acum')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "BD_MITSUI",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"archivo": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
-				"type": "Binary",
+				"type": "AzureSqlTable",
+				"schema": [],
 				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().archivo",
-							"type": "Expression"
-						},
-						"folderPath": "Archivos Planos/Reservas_Hino",
-						"container": "dev"
-					}
+					"schema": "STAGING",
+					"table": "AUX_STATUS_STOCK_LEXUS"
 				}
 			},
 			"dependsOn": []

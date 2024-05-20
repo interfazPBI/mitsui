@@ -4706,6 +4706,345 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AUX_RESERVAS_HINO_SHAREPOINT')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SharePointOnlineListSource",
+								"query": {
+									"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/2.%20HINO/Reservas/','''')",
+									"type": "Expression"
+								},
+								"httpRequestTimeout": "00:05:00"
+							},
+							"dataset": {
+								"referenceName": "SharePointOnlineListResource1",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.Value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Web1_copy1",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/x-www-form-urlencoded"
+										},
+										"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
+										"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
+									}
+								},
+								{
+									"name": "SHAREPOINT AZURE",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "Web1_copy1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "BinarySource",
+											"storeSettings": {
+												"type": "HttpReadSettings",
+												"requestMethod": "GET",
+												"additionalHeaders": {
+													"value": "@{concat('Authorization: Bearer ', activity('Web1_copy1').output.access_token)}",
+													"type": "Expression"
+												}
+											},
+											"formatSettings": {
+												"type": "BinaryReadSettings"
+											}
+										},
+										"sink": {
+											"type": "BinarySink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "Binary1",
+											"type": "DatasetReference",
+											"parameters": {
+												"ruta": {
+													"value": "@item().rutadeacceso",
+													"type": "Expression"
+												},
+												"archivo": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "receptor_RESERVAS_HINO",
+											"type": "DatasetReference",
+											"parameters": {
+												"archivo": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "AUX_RESERVAS_HINO",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "SHAREPOINT AZURE",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "NRO      ",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "NRO",
+														"type": "Int32",
+														"physicalType": "int"
+													}
+												},
+												{
+													"source": {
+														"name": "SERIE",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "SERIE",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": " Año Fab. ",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Año Fab.",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": " Año Mod. ",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Año Mod",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "CÓD.",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "COd",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "MODELO",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "MODELO",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "COLOR",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "COLOR",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "SEPARADO",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "SEPARADO",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "FECHA",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "FECHA",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "RESERVAS_HINO",
+											"type": "DatasetReference",
+											"parameters": {
+												"File": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DESTINO_SQL",
+											"type": "DatasetReference",
+											"parameters": {
+												"TABLA": "AUX_RESERVAS_HINO"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource1')]",
+				"[concat(variables('factoryId'), '/datasets/Binary1')]",
+				"[concat(variables('factoryId'), '/datasets/receptor_RESERVAS_HINO')]",
+				"[concat(variables('factoryId'), '/datasets/RESERVAS_HINO')]",
+				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AUX_STATUS_STOCK_LEXUS')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -5219,6 +5558,345 @@
 				"[concat(variables('factoryId'), '/datasets/receptor_STATUS_STSOCK')]",
 				"[concat(variables('factoryId'), '/datasets/STATUS_STOCK_LEXUS')]",
 				"[concat(variables('factoryId'), '/datasets/status_stock_lexus_acum')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AUX_STOCK_PROY_SHAREPOINT')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SharePointOnlineListSource",
+								"query": {
+									"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/3.%20LEXUS/STOCK%20LEXUS/Stock%20Status-Proyección/','''')",
+									"type": "Expression"
+								},
+								"httpRequestTimeout": "00:05:00"
+							},
+							"dataset": {
+								"referenceName": "SharePointOnlineListResource1",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.Value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Web1_copy1",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/x-www-form-urlencoded"
+										},
+										"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
+										"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
+									}
+								},
+								{
+									"name": "SHAREPOINT AZURE",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "Web1_copy1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "BinarySource",
+											"storeSettings": {
+												"type": "HttpReadSettings",
+												"requestMethod": "GET",
+												"additionalHeaders": {
+													"value": "@{concat('Authorization: Bearer ', activity('Web1_copy1').output.access_token)}",
+													"type": "Expression"
+												}
+											},
+											"formatSettings": {
+												"type": "BinaryReadSettings"
+											}
+										},
+										"sink": {
+											"type": "BinarySink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "Binary1",
+											"type": "DatasetReference",
+											"parameters": {
+												"ruta": {
+													"value": "@item().rutadeacceso",
+													"type": "Expression"
+												},
+												"archivo": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "receptor_STOCK_PROYECCION",
+											"type": "DatasetReference",
+											"parameters": {
+												"archivo": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "STOCK_PROY_LEXUS",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "SHAREPOINT AZURE",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "Modelo",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Modelo",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "fecha",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "fecha",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Inventario Inicial",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Inventario Inicial",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Facturado",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Facturado",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Llegadas Siguiente Mes",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Llegadas Siguiente Mes",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Inventario Inicial Siguiente Mes",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Inventario Inicial Siguiente Mes",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Reservado",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Reservado",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "MOS",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "MOS",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Meta Siguiente Mes",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Meta Siguiente Mes",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AUX_STOCK_LEXUS",
+											"type": "DatasetReference",
+											"parameters": {
+												"File": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DESTINO_SQL",
+											"type": "DatasetReference",
+											"parameters": {
+												"TABLA": "AUX_STOCK_LEXUS"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource1')]",
+				"[concat(variables('factoryId'), '/datasets/Binary1')]",
+				"[concat(variables('factoryId'), '/datasets/receptor_STOCK_PROYECCION')]",
+				"[concat(variables('factoryId'), '/datasets/AUX_STOCK_LEXUS')]",
+				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]"
 			]
 		},
 		{
@@ -50930,294 +51608,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PIPELINE GENERAL_MASIVO_BORRAR')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "LP_OBTIENE_FECHA",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "@concat('SELECT \nreplace(','''',string(pipeline().parameters.FECHA_DESDE),'''',',', '''','-','''',',','''','''',' ) FECHA_DESDE_SAP, ',\n'replace(','''',string(pipeline().parameters.FECHA_HASTA),'''',',', '''','-','''',',','''','''',' ) FECHA_HASTA_SAP ,',\n '''',string(pipeline().parameters.FECHA_DESDE) ,'''', '  FECHA_DESDE,', \n '''',string(pipeline().parameters.FECHA_HASTA) ,'''', '  FECHA_HASTA,', \nstring(pipeline().parameters.Modulo) , '  MODULO from staging.dw_proceso')",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "DWH_PROCESO",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "TRANSACCIONALES",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "EXTRACCION_TRANSACCIONALES",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_DESDE": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE_SAP",
-									"type": "Expression"
-								},
-								"FECHA_HASTA": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA_SAP",
-									"type": "Expression"
-								},
-								"ANIO": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.ANIO",
-									"type": "Expression"
-								},
-								"MES": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.MES",
-									"type": "Expression"
-								},
-								"TIMESTAMP": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.TIMESTAMP",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "MAESTRAS",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "EXTRACCION_MAESTRAS",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "TRANSVERSALES",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "TRANSACCIONALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							},
-							{
-								"activity": "MAESTRAS",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "TRANSVERSALES",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_DESDE": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_HASTA": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_HASTA",
-									"type": "Expression"
-								},
-								"TIMESTAMP": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.TIMESTAMP",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "TOYOTA",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "TOYOTA",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "HINO",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "HINO",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "LEXUS",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "LEXUS",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"Fecha_Desde": {
-						"type": "string",
-						"defaultValue": "2020-01-01"
-					},
-					"Fecha_Hasta": {
-						"type": "string",
-						"defaultValue": "2020-01-01"
-					},
-					"Modulo": {
-						"type": "string",
-						"defaultValue": "'FACT'"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DWH_PROCESO')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_TRANSACCIONALES')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_MAESTRAS')]",
-				"[concat(variables('factoryId'), '/pipelines/TRANSVERSALES')]",
-				"[concat(variables('factoryId'), '/pipelines/TOYOTA')]",
-				"[concat(variables('factoryId'), '/pipelines/HINO')]",
-				"[concat(variables('factoryId'), '/pipelines/LEXUS')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/PL_MASIVA')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -57063,6 +57453,38 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/receptor_RESERVAS_HINO')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"archivo": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().archivo",
+							"type": "Expression"
+						},
+						"folderPath": "Archivos Planos/Reservas_Hino",
+						"container": "dev"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/receptor_SP')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -57118,6 +57540,38 @@
 							"type": "Expression"
 						},
 						"folderPath": "Archivos Planos/Status_Stock",
+						"container": "dev"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/receptor_STOCK_PROYECCION')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"archivo": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().archivo",
+							"type": "Expression"
+						},
+						"folderPath": "Archivos Planos/Stock_Proyeccion",
 						"container": "dev"
 					}
 				}
@@ -57216,13 +57670,13 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AUX_STOCK_PROY_SHAREPOINT')]",
+			"name": "[concat(parameters('factoryName'), '/PIPELINE GENERAL_MANUAL_SIN_STOCK')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Lookup1",
+						"name": "LP_OBTIENE_FECHA",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -57235,367 +57689,251 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SharePointOnlineListSource",
-								"query": {
-									"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/3.%20LEXUS/STOCK%20LEXUS/Stock%20Status-Proyección/','''')",
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "@concat('SELECT \nSUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10) AS FECHA_DESDE\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'','''') AS FECHA_DESDE_SAP\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10),''-'','''') AS FECHA_HASTA_SAP\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10) AS FECHA_HASTA\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,4) AS ANIO\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),6,2) AS MES\n, CONVERT(BIGINT,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'',''''))*1000000 AS TIMESTAMP\n,SUBSTRING(CONVERT(VARCHAR,DATEADD(HOUR,-5,getUTCdate()),120),1,19) AS FECHA_ACTUALIZACION\n\nFROM (SELECT \n',string(pipeline().parameters.Fecha_Desde), ' AS FECHA_DESDE ,\n',string(pipeline().parameters.Fecha_Hasta), ' AS FECHA_HASTA , \n',string(pipeline().parameters.Modulo) , ' AS MODULO from staging.dw_proceso) R' )",
 									"type": "Expression"
 								},
-								"httpRequestTimeout": "00:05:00"
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
 							},
 							"dataset": {
-								"referenceName": "SharePointOnlineListResource1",
+								"referenceName": "DWH_PROCESO",
 								"type": "DatasetReference",
 								"parameters": {}
-							},
-							"firstRowOnly": false
+							}
 						}
 					},
 					{
-						"name": "ForEach1",
-						"type": "ForEach",
+						"name": "TRANSACCIONALES",
+						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "Lookup1",
+								"activity": "LP_OBTIENE_FECHA",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							}
 						],
+						"policy": {
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup1').output.Value",
-								"type": "Expression"
+							"pipeline": {
+								"referenceName": "EXTRACCION_TRANSACCIONALES",
+								"type": "PipelineReference"
 							},
-							"activities": [
-								{
-									"name": "Web1_copy1",
-									"type": "WebActivity",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"method": "POST",
-										"headers": {
-											"Content-Type": "application/x-www-form-urlencoded"
-										},
-										"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
-										"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
-									}
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_DESDE": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE_SAP",
+									"type": "Expression"
 								},
-								{
-									"name": "SHAREPOINT AZURE",
-									"type": "Copy",
-									"dependsOn": [
-										{
-											"activity": "Web1_copy1",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "BinarySource",
-											"storeSettings": {
-												"type": "HttpReadSettings",
-												"requestMethod": "GET",
-												"additionalHeaders": {
-													"value": "@{concat('Authorization: Bearer ', activity('Web1_copy1').output.access_token)}",
-													"type": "Expression"
-												}
-											},
-											"formatSettings": {
-												"type": "BinaryReadSettings"
-											}
-										},
-										"sink": {
-											"type": "BinarySink",
-											"storeSettings": {
-												"type": "AzureBlobStorageWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "Binary1",
-											"type": "DatasetReference",
-											"parameters": {
-												"ruta": {
-													"value": "@item().rutadeacceso",
-													"type": "Expression"
-												},
-												"archivo": {
-													"value": "@item().Nombre",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "receptor_STOCK_PROYECCION",
-											"type": "DatasetReference",
-											"parameters": {
-												"archivo": {
-													"value": "@item().Nombre",
-													"type": "Expression"
-												}
-											}
-										}
-									]
+								"FECHA_HASTA": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA_SAP",
+									"type": "Expression"
 								},
-								{
-									"name": "STOCK_PROY_LEXUS",
-									"type": "Copy",
-									"dependsOn": [
-										{
-											"activity": "SHAREPOINT AZURE",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "ExcelSource",
-											"storeSettings": {
-												"type": "AzureBlobStorageReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											}
-										},
-										"sink": {
-											"type": "AzureSqlSink",
-											"writeBehavior": "insert",
-											"sqlWriterUseTableLock": false,
-											"tableOption": "autoCreate",
-											"disableMetricsCollection": false
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"mappings": [
-												{
-													"source": {
-														"name": "Modelo",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "Modelo",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "fecha",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "fecha",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "Inventario Inicial",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "Inventario Inicial",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "Facturado",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "Facturado",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "Llegadas Siguiente Mes",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "Llegadas Siguiente Mes",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "Inventario Inicial Siguiente Mes",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "Inventario Inicial Siguiente Mes",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "Reservado",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "Reservado",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "MOS",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "MOS",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "Meta Siguiente Mes",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "Meta Siguiente Mes",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												}
-											],
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "AUX_STOCK_LEXUS",
-											"type": "DatasetReference",
-											"parameters": {
-												"File": {
-													"value": "@item().Nombre",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DESTINO_SQL",
-											"type": "DatasetReference",
-											"parameters": {
-												"TABLA": "AUX_STOCK_LEXUS"
-											}
-										}
-									]
+								"ANIO": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.ANIO",
+									"type": "Expression"
+								},
+								"MES": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.MES",
+									"type": "Expression"
+								},
+								"TIMESTAMP": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.TIMESTAMP",
+									"type": "Expression"
 								}
-							]
+							}
 						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource1')]",
-				"[concat(variables('factoryId'), '/datasets/Binary1')]",
-				"[concat(variables('factoryId'), '/datasets/receptor_STOCK_PROYECCION')]",
-				"[concat(variables('factoryId'), '/datasets/AUX_STOCK_LEXUS')]",
-				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/receptor_STOCK_PROYECCION')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"archivo": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().archivo",
-							"type": "Expression"
-						},
-						"folderPath": "Archivos Planos/Stock_Proyeccion",
-						"container": "dev"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AUX_RESERVAS_HINO_SHAREPOINT')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
+					},
 					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
+						"name": "MAESTRAS",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXTRACCION_MAESTRAS",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "TRANSVERSALES",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSACCIONALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "MAESTRAS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "EXTRACCION_AUXILIARES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "TRANSVERSALES",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_DESDE": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_HASTA": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_HASTA",
+									"type": "Expression"
+								},
+								"TIMESTAMP": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.TIMESTAMP",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "TOYOTA",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "TOYOTA",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "HINO",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HINO",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "LEXUS",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "LEXUS",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "FECHA_ACTUALIZACION",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -57605,356 +57943,76 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "SharePointOnlineListSource",
-								"query": {
-									"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/2.%20HINO/Reservas/','''')",
-									"type": "Expression"
-								},
-								"httpRequestTimeout": "00:05:00"
-							},
-							"dataset": {
-								"referenceName": "SharePointOnlineListResource1",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
+							"storedProcedureName": "[[DWH].[CARGA_FECHA_HORA_ACTUALIZACION]",
+							"storedProcedureParameters": {
+								"FECHA_ACTUALIZACION": {
+									"value": {
+										"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_ACTUALIZACION",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
 						}
 					},
 					{
-						"name": "ForEach1",
-						"type": "ForEach",
+						"name": "EXTRACCION_AUXILIARES",
+						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "Lookup1",
+								"activity": "LP_OBTIENE_FECHA",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							}
 						],
+						"policy": {
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup1').output.Value",
-								"type": "Expression"
+							"pipeline": {
+								"referenceName": "EXTRACCION_AUXILIARES",
+								"type": "PipelineReference"
 							},
-							"activities": [
-								{
-									"name": "Web1_copy1",
-									"type": "WebActivity",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"method": "POST",
-										"headers": {
-											"Content-Type": "application/x-www-form-urlencoded"
-										},
-										"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
-										"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
-									}
-								},
-								{
-									"name": "SHAREPOINT AZURE",
-									"type": "Copy",
-									"dependsOn": [
-										{
-											"activity": "Web1_copy1",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "BinarySource",
-											"storeSettings": {
-												"type": "HttpReadSettings",
-												"requestMethod": "GET",
-												"additionalHeaders": {
-													"value": "@{concat('Authorization: Bearer ', activity('Web1_copy1').output.access_token)}",
-													"type": "Expression"
-												}
-											},
-											"formatSettings": {
-												"type": "BinaryReadSettings"
-											}
-										},
-										"sink": {
-											"type": "BinarySink",
-											"storeSettings": {
-												"type": "AzureBlobStorageWriteSettings"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "Binary1",
-											"type": "DatasetReference",
-											"parameters": {
-												"ruta": {
-													"value": "@item().rutadeacceso",
-													"type": "Expression"
-												},
-												"archivo": {
-													"value": "@item().Nombre",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "receptor_RESERVAS_HINO",
-											"type": "DatasetReference",
-											"parameters": {
-												"archivo": {
-													"value": "@item().Nombre",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								},
-								{
-									"name": "AUX_RESERVAS_HINO",
-									"type": "Copy",
-									"dependsOn": [
-										{
-											"activity": "SHAREPOINT AZURE",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "ExcelSource",
-											"storeSettings": {
-												"type": "AzureBlobStorageReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											}
-										},
-										"sink": {
-											"type": "AzureSqlSink",
-											"writeBehavior": "insert",
-											"sqlWriterUseTableLock": false,
-											"tableOption": "autoCreate",
-											"disableMetricsCollection": false
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"mappings": [
-												{
-													"source": {
-														"name": "NRO      ",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "NRO",
-														"type": "Int32",
-														"physicalType": "int"
-													}
-												},
-												{
-													"source": {
-														"name": "SERIE",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "SERIE",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": " Año Fab. ",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "Año Fab.",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": " Año Mod. ",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "Año Mod",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "CÓD.",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "COd",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "MODELO",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "MODELO",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "COLOR",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "COLOR",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "SEPARADO",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "SEPARADO",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												},
-												{
-													"source": {
-														"name": "FECHA",
-														"type": "String",
-														"physicalType": "String"
-													},
-													"sink": {
-														"name": "FECHA",
-														"type": "String",
-														"physicalType": "nvarchar"
-													}
-												}
-											],
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "RESERVAS_HINO",
-											"type": "DatasetReference",
-											"parameters": {
-												"File": {
-													"value": "@item().Nombre",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DESTINO_SQL",
-											"type": "DatasetReference",
-											"parameters": {
-												"TABLA": "AUX_RESERVAS_HINO"
-											}
-										}
-									]
-								}
-							]
+							"waitOnCompletion": true,
+							"parameters": {}
 						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"parameters": {
+					"Fecha_Desde": {
+						"type": "string",
+						"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
+					},
+					"Fecha_Hasta": {
+						"type": "string",
+						"defaultValue": "getUTCdate()"
+					},
+					"Modulo": {
+						"type": "string",
+						"defaultValue": "'FACT'"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource1')]",
-				"[concat(variables('factoryId'), '/datasets/Binary1')]",
-				"[concat(variables('factoryId'), '/datasets/receptor_RESERVAS_HINO')]",
-				"[concat(variables('factoryId'), '/datasets/RESERVAS_HINO')]",
-				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/receptor_RESERVAS_HINO')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"archivo": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().archivo",
-							"type": "Expression"
-						},
-						"folderPath": "Archivos Planos/Reservas_Hino",
-						"container": "dev"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/datasets/DWH_PROCESO')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_TRANSACCIONALES')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_MAESTRAS')]",
+				"[concat(variables('factoryId'), '/pipelines/TRANSVERSALES')]",
+				"[concat(variables('factoryId'), '/pipelines/TOYOTA')]",
+				"[concat(variables('factoryId'), '/pipelines/HINO')]",
+				"[concat(variables('factoryId'), '/pipelines/LEXUS')]",
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_AUXILIARES')]"
 			]
 		}
 	]
