@@ -1827,7 +1827,7 @@
 					"recurrence": {
 						"frequency": "Day",
 						"interval": 1,
-						"startTime": "2024-05-20T12:01:00",
+						"startTime": "2024-05-19T12:01:00",
 						"timeZone": "SA Pacific Standard Time",
 						"schedule": {
 							"minutes": [
