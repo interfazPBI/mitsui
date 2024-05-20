@@ -311,11 +311,11 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
+				"defaultValue": "'2024-04-01'"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "getUTCdate()"
+				"defaultValue": "'2024-04-30'"
 			},
 			"Modulo": {
 				"type": "string",
