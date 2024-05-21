@@ -321,11 +321,11 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "'2023-04-01'"
+				"defaultValue": "'2024-02-01'"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "'2023-04-30'"
+				"defaultValue": "'2024-02-29'"
 			},
 			"Modulo": {
 				"type": "string",
