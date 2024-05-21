@@ -78,8 +78,6 @@
 			{
 				"name": "MAESTRAS",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LP_OBTIENE_FECHA",
@@ -103,8 +101,6 @@
 			{
 				"name": "TRANSVERSALES",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TRANSACCIONALES",
@@ -291,8 +287,6 @@
 			{
 				"name": "EXTRACCION_AUXILIARES",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LP_OBTIENE_FECHA",
