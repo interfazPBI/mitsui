@@ -554,7 +554,7 @@
 						"container": "dev"
 					},
 					"sheetIndex": 0,
-					"range": "A1:B6",
+					"range": "A1:B18",
 					"firstRowAsHeader": true
 				},
 				"schema": [
