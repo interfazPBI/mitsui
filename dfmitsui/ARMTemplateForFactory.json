@@ -52236,7 +52236,7 @@
 					},
 					"Fecha_Hasta": {
 						"type": "string",
-						"defaultValue": "'2024-05-20'"
+						"defaultValue": "'2024-05-21'"
 					},
 					"Modulo": {
 						"type": "string",
@@ -52340,6 +52340,8 @@
 					{
 						"name": "MAESTRAS",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "LP_OBTIENE_FECHA",
@@ -52364,6 +52366,8 @@
 					{
 						"name": "TRANSVERSALES",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSACCIONALES",
@@ -52446,6 +52450,8 @@
 					{
 						"name": "HINO",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSVERSALES",
@@ -52479,6 +52485,8 @@
 					{
 						"name": "LEXUS",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSVERSALES",
@@ -52550,6 +52558,8 @@
 					{
 						"name": "EXTRACCION_AUXILIARES",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "LP_OBTIENE_FECHA",
@@ -53384,6 +53394,8 @@
 					{
 						"name": "DIM_VENDEDORES",
 						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "INT_ZDBM036",
@@ -53440,6 +53452,8 @@
 					{
 						"name": "INT_CADENA_VALOR",
 						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "DIM_VENDEDORES",
@@ -53467,6 +53481,8 @@
 					{
 						"name": "FACT_CADENA_VALOR",
 						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "INT_CADENA_VALOR",
@@ -55839,7 +55855,7 @@
 						"container": "dev"
 					},
 					"sheetIndex": 0,
-					"range": "A1:B18",
+					"range": "A1:B4",
 					"firstRowAsHeader": true
 				},
 				"schema": [
@@ -59214,7 +59230,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
