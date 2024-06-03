@@ -13,7 +13,7 @@
 		},
 		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
 			"type": "string",
-			"defaultValue": "getUTCdate()"
+			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
 		},
 		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Modulo": {
 			"type": "string",

@@ -24,7 +24,7 @@
 			"value": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
 		},
 		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
-			"value": "getUTCdate()"
+			"value": "DATEADD(HOUR,-5,getUTCdate())"
 		},
 		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Modulo": {
 			"value": "'FACT'"
