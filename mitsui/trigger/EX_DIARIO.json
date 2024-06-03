@@ -11,7 +11,7 @@
 				},
 				"parameters": {
 					"Fecha_Desde": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))",
-					"Fecha_Hasta": "getUTCdate()",
+					"Fecha_Hasta": "DATEADD(HOUR,-5,getUTCdate())",
 					"Modulo": "'FACT'"
 				}
 			}
