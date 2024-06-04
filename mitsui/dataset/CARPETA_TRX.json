@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "desarrollo",
+				"folderPath": "productivo/PRD/TRASACCIONAL",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
