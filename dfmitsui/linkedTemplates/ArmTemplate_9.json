@@ -13,6 +13,104 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/IG_T171')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "T171",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "ParquetReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "MANDT",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "MANDT",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BZIRK",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "BZIRK",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "T171",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DESTINO_SQL",
+								"type": "DatasetReference",
+								"parameters": {
+									"TABLA": "IG_T171"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/IG_T171T')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -7362,202 +7460,6 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"TABLA": "IG_VLCHISTORY"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/IG_VLCINCINVOICE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "VLCINCINVOICE",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ParquetSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "ParquetReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "MANDT",
-											"type": "String",
-											"physicalType": "UTF8"
-										},
-										"sink": {
-											"name": "MANDT",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "VGUID",
-											"type": "String",
-											"physicalType": "UTF8"
-										},
-										"sink": {
-											"name": "VGUID",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "TSTMP",
-											"type": "Decimal",
-											"physicalType": "DECIMAL",
-											"scale": 7,
-											"precision": 21
-										},
-										"sink": {
-											"name": "TSTMP",
-											"type": "Decimal",
-											"physicalType": "decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "ACTDOCTYPE",
-											"type": "String",
-											"physicalType": "UTF8"
-										},
-										"sink": {
-											"name": "ACTDOCTYPE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "BELNR",
-											"type": "String",
-											"physicalType": "UTF8"
-										},
-										"sink": {
-											"name": "BELNR",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "GJAHR",
-											"type": "String",
-											"physicalType": "UTF8"
-										},
-										"sink": {
-											"name": "GJAHR",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "BUZEI",
-											"type": "String",
-											"physicalType": "UTF8"
-										},
-										"sink": {
-											"name": "BUZEI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "XBLNR",
-											"type": "String",
-											"physicalType": "UTF8"
-										},
-										"sink": {
-											"name": "XBLNR",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "ERNAM",
-											"type": "String",
-											"physicalType": "UTF8"
-										},
-										"sink": {
-											"name": "ERNAM",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "REVFLAG",
-											"type": "String",
-											"physicalType": "UTF8"
-										},
-										"sink": {
-											"name": "REVFLAG",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "VLCINCINVOICE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DESTINO_SQL",
-								"type": "DatasetReference",
-								"parameters": {
-									"TABLA": "IG_VLCINCINVOICE"
 								}
 							}
 						]

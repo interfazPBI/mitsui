@@ -25,6 +25,250 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/IG_ZTB_RESERVA')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ZTB_RESERVA",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "ParquetReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "MANDT",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "MANDT",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "VKORG",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "VKORG",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "VTWEG",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "VTWEG",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SPART",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "SPART",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "WERKS",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "WERKS",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BZIRK",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "BZIRK",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MATNR",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "MATNR",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CHARG",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "CHARG",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PERNR",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "PERNR",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "KUNNR",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "KUNNR",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PERIO",
+											"type": "Decimal",
+											"physicalType": "DECIMAL",
+											"scale": 0,
+											"precision": 3
+										},
+										"sink": {
+											"name": "PERIO",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "GJAHR",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "GJAHR",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FEC_RESERV",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "FEC_RESERV",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CANT",
+											"type": "Byte",
+											"physicalType": "UINT_8"
+										},
+										"sink": {
+											"name": "CANT",
+											"type": "Byte",
+											"physicalType": "tinyint"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ZTB_RESERVA",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DESTINO_SQL",
+								"type": "DatasetReference",
+								"parameters": {
+									"TABLA": "IG_ZTB_RESERVA"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/IG_ZTDBM_METASMODEL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -774,6 +1018,52 @@
 									]
 								}
 							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Delete1",
+						"type": "Delete",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "CARPETA_TRX",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"logStorageSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureBlobStorage1",
+									"type": "LinkedServiceReference"
+								}
+							},
+							"enableLogging": true,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
 						}
 					}
 				],
