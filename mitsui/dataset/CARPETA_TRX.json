@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DEV_IG_CVLC06.parquet",
 				"folderPath": "desarrollo",
 				"container": "dev"
 			},
