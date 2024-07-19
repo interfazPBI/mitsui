@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "DEV_IG_CVLC10T.parquet",
-				"folderPath": "desarrollo",
+				"folderPath": "productivo/desarrollo/MAESTROS",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
