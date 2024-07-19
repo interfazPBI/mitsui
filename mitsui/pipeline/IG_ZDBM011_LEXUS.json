@@ -75,12 +75,12 @@
 							},
 							{
 								"source": {
-									"name": "Des. Modelo vehículo",
+									"name": "Txt.modelo 1",
 									"type": "String",
 									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "Des. Modelo vehículo",
+									"name": "Txt.modelo 1",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
