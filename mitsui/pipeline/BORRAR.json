@@ -1,0 +1,580 @@
+{
+	"name": "BORRAR",
+	"properties": {
+		"activities": [
+			{
+				"name": "BORRAR",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Año",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Año",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Marca",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Marca",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Modelo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Modelo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Versión",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Versión",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Origen",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Origen",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Cod.ARAPER",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Cod.ARAPER",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Cat.RENAV",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Cat.RENAV",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Carroceria",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Carroceria",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Asientos",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Asientos",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Cilindrada",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Cilindrada",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PBV",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PBV",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Segmento",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Segmento",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Potencia ",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Potencia ",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Combustible",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Combustible",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Tp.Trans.",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Tp.Trans.",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Nro Cambios",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Nro Cambios",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ABS",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ABS",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "For.Rodante",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "For.Rodante",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Nro Puertas",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Nro Puertas",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": " Cap.Carga",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": " Cap.Carga",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Largo total",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Largo total",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Dia.Aro",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Dia.Aro",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Aire Aco.",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Aire Aco.",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Air bags",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Air bags",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Asi.Cuero",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Asi.Cuero",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Lunas elec.",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Lunas elec.",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Cierre cent.",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Cierre cent.",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Espejos elec.",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Espejos elec.",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Sunroof",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sunroof",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Aros Ale.",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Aros Ale.",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Precio",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Precio",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Enero",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Enero",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Febrero",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Febrero",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Marzo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Marzo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Abril",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Abril",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Mayo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Mayo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Junio",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Junio",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Julio",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Julio",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Agosto",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Agosto",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Septiembre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Septiembre",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Octubre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Octubre",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Noviembre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Noviembre",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Diciembre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Diciembre",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "BORRAR",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DESTINO_SQL",
+						"type": "DatasetReference",
+						"parameters": {
+							"TABLA": "WHOLE SALES 2.1"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
