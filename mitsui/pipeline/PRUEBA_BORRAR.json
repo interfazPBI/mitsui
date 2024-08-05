@@ -78,6 +78,8 @@
 			{
 				"name": "MAESTRAS",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LP_OBTIENE_FECHA",
@@ -101,6 +103,8 @@
 			{
 				"name": "TRANSVERSALES",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TRANSACCIONALES",
@@ -150,6 +154,8 @@
 			{
 				"name": "TOYOTA",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TRANSVERSALES",
@@ -183,6 +189,8 @@
 			{
 				"name": "HINO",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TRANSVERSALES",
@@ -216,6 +224,8 @@
 			{
 				"name": "LEXUS",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "TRANSVERSALES",
@@ -249,6 +259,8 @@
 			{
 				"name": "FECHA_ACTUALIZACION",
 				"type": "SqlServerStoredProcedure",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LP_OBTIENE_FECHA",
@@ -285,6 +297,8 @@
 			{
 				"name": "EXTRACCION_AUXILIARES",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LP_OBTIENE_FECHA",
@@ -309,11 +323,11 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "'2024-05-01'"
+				"defaultValue": "'2024-08-01'"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "'2024-05-31'"
+				"defaultValue": "'2024-08-05'"
 			},
 			"Modulo": {
 				"type": "string",
