@@ -323,11 +323,11 @@
 		"parameters": {
 			"Fecha_Desde": {
 				"type": "string",
-				"defaultValue": "'2024-08-01'"
+				"defaultValue": "'2024-07-01'"
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "'2024-08-05'"
+				"defaultValue": "'2024-07-31'"
 			},
 			"Modulo": {
 				"type": "string",
