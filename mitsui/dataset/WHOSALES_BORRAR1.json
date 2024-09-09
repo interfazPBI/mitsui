@@ -14,8 +14,8 @@
 				"folderPath": "productivo/desarrollo/MAESTROS",
 				"container": "dev"
 			},
-			"sheetIndex": 0,
-			"range": "A1:AB13530",
+			"sheetIndex": 1,
+			"range": "",
 			"firstRowAsHeader": true
 		},
 		"schema": [
