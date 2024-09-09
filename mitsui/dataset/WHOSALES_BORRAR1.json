@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "BBDD Encargado por tienda.xlsx",
-				"folderPath": "Archivos Planos",
+				"fileName": "Whole Sale 1 6.xlsx",
+				"folderPath": "productivo/desarrollo/MAESTROS",
 				"container": "dev"
 			},
 			"sheetIndex": 0,
