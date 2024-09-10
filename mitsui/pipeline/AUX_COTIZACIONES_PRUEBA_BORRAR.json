@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SharePointOnlineListSource",
 						"query": {
-							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/Cotizaciones%20(SGC)/''','and substringof(''202409'', Nombre)')",
+							"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/Cotizaciones%20(SGC)/''','and substringof(''',substring(replace(pipeline().parameters.fecha,'-',''),1,6),''',Nombre)')",
 							"type": "Expression"
 						},
 						"httpRequestTimeout": "00:05:00"
@@ -311,6 +311,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"fecha": {
+				"type": "string",
+				"defaultValue": "'2024-09-09'"
+			}
+		},
 		"annotations": []
 	}
 }
