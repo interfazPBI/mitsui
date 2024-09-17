@@ -2582,7 +2582,7 @@
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "Lookup1",
+								"activity": "VACIAR AUXILIAR COTIZACIONES",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -2854,6 +2854,39 @@
 								}
 							]
 						}
+					},
+					{
+						"name": "VACIAR AUXILIAR COTIZACIONES",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "CARPETA_AUXILIAR",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"enableLogging": false,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
 					}
 				],
 				"policy": {
@@ -2863,6 +2896,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource1')]",
+				"[concat(variables('factoryId'), '/datasets/CARPETA_AUXILIAR')]",
 				"[concat(variables('factoryId'), '/datasets/Binary1')]",
 				"[concat(variables('factoryId'), '/datasets/receptor_COTIZACIONES')]",
 				"[concat(variables('factoryId'), '/datasets/COTIZACIONES_EXCEL')]",
@@ -55507,6 +55541,32 @@
 								"enablePartitionDiscovery": false
 							}
 						}
+					},
+					{
+						"name": "VACIAR AUXILIAR COTIZACIONES",
+						"type": "Delete",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "CARPETA_AUXILIAR",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"enableLogging": false,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
 					}
 				],
 				"policy": {
@@ -55516,7 +55576,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/CARPETA_TRX')]",
-				"[concat(variables('factoryId'), '/datasets/CARPETA_MAESTRAS')]"
+				"[concat(variables('factoryId'), '/datasets/CARPETA_MAESTRAS')]",
+				"[concat(variables('factoryId'), '/datasets/CARPETA_AUXILIAR')]"
 			]
 		},
 		{
@@ -60885,6 +60946,52 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CARPETA_AUXILIAR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "Archivos Planos/Cotizaciones",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		}
 	]
