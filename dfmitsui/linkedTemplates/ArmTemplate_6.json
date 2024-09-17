@@ -2409,7 +2409,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AUX_COTIZACIONES_SHAREPOINT')]",
+			"name": "[concat(parameters('factoryName'), '/AUX_COTIZACIONES_PRUEBA_BORRAR')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2430,7 +2430,7 @@
 							"source": {
 								"type": "SharePointOnlineListSource",
 								"query": {
-									"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/Cotizaciones%20(SGC)/','''')",
+									"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/Cotizaciones%20(SGC)/''','and substringof(''',substring(replace(pipeline().parameters.fecha,'-',''),1,6),''',Nombre)')",
 									"type": "Expression"
 								},
 								"httpRequestTimeout": "00:05:00"
@@ -2446,6 +2446,8 @@
 					{
 						"name": "ForEach1",
 						"type": "ForEach",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "Lookup1",
@@ -2724,6 +2726,12 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"fecha": {
+						"type": "string",
+						"defaultValue": "'2024-09-09'"
+					}
 				},
 				"annotations": []
 			},

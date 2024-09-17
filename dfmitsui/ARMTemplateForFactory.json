@@ -27,15 +27,27 @@
 			"type": "string",
 			"defaultValue": "@{concat('https://mitsuiautomotrizcom.sharepoint.com/sites/BI-MASA/_api/web/GetFileByServerRelativeUrl(''',linkedService().path,'/',linkedService().file,''')/$value')}"
 		},
-		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
+		"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
 			"type": "string",
 			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
 		},
-		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
+		"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
 			"type": "string",
 			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
 		},
-		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Modulo": {
+		"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
+			"type": "string",
+			"defaultValue": "'FACT'"
+		},
+		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
+			"type": "string",
+			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
+		},
+		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
+			"type": "string",
+			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
+		},
+		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
 			"type": "string",
 			"defaultValue": "'FACT'"
 		}
@@ -2196,7 +2208,669 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AUX_COTIZACIONES_PRUEBA_BORRAR')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SharePointOnlineListSource",
+								"query": {
+									"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/Cotizaciones%20(SGC)/''','and substringof(''',substring(replace(pipeline().parameters.fecha,'-',''),1,6),''',Nombre)')",
+									"type": "Expression"
+								},
+								"httpRequestTimeout": "00:05:00"
+							},
+							"dataset": {
+								"referenceName": "SharePointOnlineListResource1",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.Value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Web1_copy1",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/x-www-form-urlencoded"
+										},
+										"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
+										"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
+									}
+								},
+								{
+									"name": "SHAREPOINT AZURE",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "Web1_copy1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "BinarySource",
+											"storeSettings": {
+												"type": "HttpReadSettings",
+												"requestMethod": "GET",
+												"additionalHeaders": {
+													"value": "@{concat('Authorization: Bearer ', activity('Web1_copy1').output.access_token)}",
+													"type": "Expression"
+												}
+											},
+											"formatSettings": {
+												"type": "BinaryReadSettings"
+											}
+										},
+										"sink": {
+											"type": "BinarySink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "Binary1",
+											"type": "DatasetReference",
+											"parameters": {
+												"ruta": {
+													"value": "@item().rutadeacceso",
+													"type": "Expression"
+												},
+												"archivo": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "receptor_COTIZACIONES",
+											"type": "DatasetReference",
+											"parameters": {
+												"archivo": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "AUX_COTIZACIONES_LEXUS",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "SHAREPOINT AZURE",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "Fec. Cotizacion",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Fec. Cotizacion",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Marca",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Marca",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Modelo",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Modelo",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Version",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Version",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Cod. Version",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Cod. Version",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Local",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Local",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Asesor Cotizacion",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Asesor Cotizacion",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Cant. Cotizada",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Cant. Cotizada",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "COTIZACIONES_EXCEL",
+											"type": "DatasetReference",
+											"parameters": {
+												"File": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DESTINO_SQL",
+											"type": "DatasetReference",
+											"parameters": {
+												"TABLA": "AUX_COTIZACIONES_LEXUS"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"fecha": {
+						"type": "string",
+						"defaultValue": "'2024-09-09'"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource1')]",
+				"[concat(variables('factoryId'), '/datasets/Binary1')]",
+				"[concat(variables('factoryId'), '/datasets/receptor_COTIZACIONES')]",
+				"[concat(variables('factoryId'), '/datasets/COTIZACIONES_EXCEL')]",
+				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AUX_COTIZACIONES_SHAREPOINT')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SharePointOnlineListSource",
+								"query": {
+									"value": "@concat('$filter=RutaDeAcceso eq ''','/sites/BI-MASA/Documentos%20compartidos/Cotizaciones%20(SGC)/','''')",
+									"type": "Expression"
+								},
+								"httpRequestTimeout": "00:05:00"
+							},
+							"dataset": {
+								"referenceName": "SharePointOnlineListResource1",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.Value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Web1_copy1",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/x-www-form-urlencoded"
+										},
+										"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
+										"body": "grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=uWQ8Q~j_3S_CKcQdDkNh.EedXkxN0RPeq00gxaY-&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6"
+									}
+								},
+								{
+									"name": "SHAREPOINT AZURE",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "Web1_copy1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "BinarySource",
+											"storeSettings": {
+												"type": "HttpReadSettings",
+												"requestMethod": "GET",
+												"additionalHeaders": {
+													"value": "@{concat('Authorization: Bearer ', activity('Web1_copy1').output.access_token)}",
+													"type": "Expression"
+												}
+											},
+											"formatSettings": {
+												"type": "BinaryReadSettings"
+											}
+										},
+										"sink": {
+											"type": "BinarySink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "Binary1",
+											"type": "DatasetReference",
+											"parameters": {
+												"ruta": {
+													"value": "@item().rutadeacceso",
+													"type": "Expression"
+												},
+												"archivo": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "receptor_COTIZACIONES",
+											"type": "DatasetReference",
+											"parameters": {
+												"archivo": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "AUX_COTIZACIONES_LEXUS",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "SHAREPOINT AZURE",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "Fec. Cotizacion",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Fec. Cotizacion",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Marca",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Marca",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Modelo",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Modelo",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Version",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Version",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Cod. Version",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Cod. Version",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Local",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Local",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Asesor Cotizacion",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Asesor Cotizacion",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Cant. Cotizada",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Cant. Cotizada",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "COTIZACIONES_EXCEL",
+											"type": "DatasetReference",
+											"parameters": {
+												"File": {
+													"value": "@item().Nombre",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DESTINO_SQL",
+											"type": "DatasetReference",
+											"parameters": {
+												"TABLA": "AUX_COTIZACIONES_LEXUS"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource1')]",
+				"[concat(variables('factoryId'), '/datasets/Binary1')]",
+				"[concat(variables('factoryId'), '/datasets/receptor_COTIZACIONES')]",
+				"[concat(variables('factoryId'), '/datasets/COTIZACIONES_EXCEL')]",
+				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AUX_COTIZACIONES_SHAREPOINT_backup_2024_09_09')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -60062,7 +60736,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/EX_DIARIO')]",
+			"name": "[concat(parameters('factoryName'), '/EX_DIARIO_FIN_MES')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -60075,16 +60749,16 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"Fecha_Desde": "[parameters('EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]",
-							"Fecha_Hasta": "[parameters('EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]",
-							"Modulo": "[parameters('EX_DIARIO_properties_PIPELINE GENERAL_parameters_Modulo')]"
+							"Fecha_Desde": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]",
+							"Fecha_Hasta": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]",
+							"Modulo": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Modulo')]"
 						}
 					}
 				],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Day",
+						"frequency": "Month",
 						"interval": 1,
 						"startTime": "2024-05-19T12:01:00",
 						"timeZone": "SA Pacific Standard Time",
@@ -60112,6 +60786,98 @@
 								9,
 								10,
 								11
+							],
+							"monthDays": [
+								26,
+								27,
+								28,
+								29,
+								30,
+								31,
+								-1
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EX_DIARIO_INICIO_MES')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PIPELINE GENERAL",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"Fecha_Desde": "[parameters('EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]",
+							"Fecha_Hasta": "[parameters('EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]",
+							"Modulo": "[parameters('EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Modulo')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 1,
+						"startTime": "2024-09-17T21:03:00",
+						"timeZone": "SA Pacific Standard Time",
+						"schedule": {
+							"minutes": [
+								0,
+								30
+							],
+							"hours": [
+								6,
+								7,
+								8,
+								9,
+								10,
+								11,
+								12,
+								13,
+								14,
+								15,
+								16,
+								17,
+								18,
+								19
+							],
+							"monthDays": [
+								1,
+								8,
+								15,
+								22,
+								23,
+								16,
+								9,
+								2,
+								3,
+								10,
+								17,
+								24,
+								25,
+								18,
+								11,
+								4,
+								5,
+								19,
+								20,
+								13,
+								12,
+								6,
+								7,
+								14,
+								21
 							]
 						}
 					}

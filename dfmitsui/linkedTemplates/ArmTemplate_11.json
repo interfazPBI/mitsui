@@ -7,15 +7,27 @@
 			"metadata": "Nombre de instancia de Data Factory",
 			"defaultValue": "dfmitsui"
 		},
-		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
+		"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
 			"type": "string",
 			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
 		},
-		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
+		"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
 			"type": "string",
 			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
 		},
-		"EX_DIARIO_properties_PIPELINE GENERAL_parameters_Modulo": {
+		"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
+			"type": "string",
+			"defaultValue": "'FACT'"
+		},
+		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
+			"type": "string",
+			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
+		},
+		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
+			"type": "string",
+			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
+		},
+		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
 			"type": "string",
 			"defaultValue": "'FACT'"
 		}
@@ -24,6 +36,854 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/IG_ZDBM108')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ZDBM108",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "ParquetReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "F.Orden",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "F.Orden",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Centro",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Centro",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Placa",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Placa",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Desc.Marca",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Desc.Marca",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Des.Modelo",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Des.Modelo",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "VIN",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "VIN",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Dsc.Tp.Ser",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Dsc.Tp.Ser",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Den.Ds.Ser",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Den.Ds.Ser",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "St.Orden",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "St.Orden",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Num.Orden",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Num.Orden",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CdMat/Mn.O",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "CdMat/Mn.O",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Denominación Posición",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Denominación Posición",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Ctd.nec.",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Ctd.nec.",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Ctd.toma",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Ctd.toma",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost.Plan",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Cost.Plan",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "User.Orden",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "User.Orden",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Org.Ventas",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Org.Ventas",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Ofic.vta.",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Ofic.vta.",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Can.distr.",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Can.distr.",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Sector",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Sector",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Descrip.Centro",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Descrip.Centro",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "División",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "División",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Cl.orden",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Cl.orden",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Des.ClOrd",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Des.ClOrd",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Cod.Tp.Ser",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Cod.Tp.Ser",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Cod.Ds.Ser",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Cod.Ds.Ser",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Nro Pedido",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Nro Pedido",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Mot.Ped",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Mot.Ped",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Ds.Mot.Ped",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Ds.Mot.Ped",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Num.Cotiz",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Num.Cotiz",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Fec.Cotiz",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Fec.Cotiz",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "St.Cotiz",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "St.Cotiz",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Fecha",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "Fecha",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ZDBM108",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DESTINO_SQL",
+								"type": "DatasetReference",
+								"parameters": {
+									"TABLA": "IG_ZDBM108"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/IG_ZSDTB_COTSISCO')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ZSDTB_COTSISCO",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "ParquetReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "MANDT",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "MANDT",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NUMCOT",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "NUMCOT",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IDLOCCON",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IDLOCCON",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IDCLI",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IDCLI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IDVERMOD",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IDVERMOD",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IDCOL",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IDCOL",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NUMANOFAB",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "NUMANOFAB",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CODTIPCOT",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "CODTIPCOT",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NUMCANSOL",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "NUMCANSOL",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IMPTIPCAM",
+											"type": "Decimal",
+											"physicalType": "DECIMAL",
+											"scale": 5,
+											"precision": 9
+										},
+										"sink": {
+											"name": "IMPTIPCAM",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "IMPPUVENDOL",
+											"type": "Decimal",
+											"physicalType": "DECIMAL",
+											"scale": 2,
+											"precision": 15
+										},
+										"sink": {
+											"name": "IMPPUVENDOL",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "IDFORPAG",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IDFORPAG",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FECVIGCOT",
+											"type": "DateTime",
+											"physicalType": "DATE"
+										},
+										"sink": {
+											"name": "FECVIGCOT",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "IDTIPCON",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IDTIPCON",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IDMEDPUB",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IDMEDPUB",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OTRINFADI",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "OTRINFADI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IDESTCOT",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IDESTCOT",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IDMOTEST",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IDMOTEST",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FECREG",
+											"type": "DateTime",
+											"physicalType": "DATE"
+										},
+										"sink": {
+											"name": "FECREG",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "HORREG",
+											"type": "TimeSpan",
+											"physicalType": "TIME_MILLIS"
+										},
+										"sink": {
+											"name": "HORREG",
+											"type": "TimeSpan",
+											"physicalType": "time"
+										}
+									},
+									{
+										"source": {
+											"name": "IDUSU",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "IDUSU",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "VBELN",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "VBELN",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "UNAME",
+											"type": "String",
+											"physicalType": "UTF8"
+										},
+										"sink": {
+											"name": "UNAME",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DATUM",
+											"type": "DateTime",
+											"physicalType": "DATE"
+										},
+										"sink": {
+											"name": "DATUM",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "UZEIT",
+											"type": "TimeSpan",
+											"physicalType": "TIME_MILLIS"
+										},
+										"sink": {
+											"name": "UZEIT",
+											"type": "TimeSpan",
+											"physicalType": "time"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ZSDTB_COTSISCO",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DESTINO_SQL",
+								"type": "DatasetReference",
+								"parameters": {
+									"TABLA": "IG_ZSDTB_COTSISCO"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/IG_ZTBCONSTANTES')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -3091,7 +3951,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/EX_DIARIO')]",
+			"name": "[concat(parameters('factoryName'), '/EX_DIARIO_FIN_MES')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3104,16 +3964,16 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"Fecha_Desde": "[parameters('EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]",
-							"Fecha_Hasta": "[parameters('EX_DIARIO_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]",
-							"Modulo": "[parameters('EX_DIARIO_properties_PIPELINE GENERAL_parameters_Modulo')]"
+							"Fecha_Desde": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]",
+							"Fecha_Hasta": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]",
+							"Modulo": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Modulo')]"
 						}
 					}
 				],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Day",
+						"frequency": "Month",
 						"interval": 1,
 						"startTime": "2024-05-19T12:01:00",
 						"timeZone": "SA Pacific Standard Time",
@@ -3141,6 +4001,98 @@
 								9,
 								10,
 								11
+							],
+							"monthDays": [
+								26,
+								27,
+								28,
+								29,
+								30,
+								31,
+								-1
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EX_DIARIO_INICIO_MES')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PIPELINE GENERAL",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"Fecha_Desde": "[parameters('EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]",
+							"Fecha_Hasta": "[parameters('EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]",
+							"Modulo": "[parameters('EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Modulo')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 1,
+						"startTime": "2024-09-17T21:03:00",
+						"timeZone": "SA Pacific Standard Time",
+						"schedule": {
+							"minutes": [
+								0,
+								30
+							],
+							"hours": [
+								6,
+								7,
+								8,
+								9,
+								10,
+								11,
+								12,
+								13,
+								14,
+								15,
+								16,
+								17,
+								18,
+								19
+							],
+							"monthDays": [
+								1,
+								8,
+								15,
+								22,
+								23,
+								16,
+								9,
+								2,
+								3,
+								10,
+								17,
+								24,
+								25,
+								18,
+								11,
+								4,
+								5,
+								19,
+								20,
+								13,
+								12,
+								6,
+								7,
+								14,
+								21
 							]
 						}
 					}
