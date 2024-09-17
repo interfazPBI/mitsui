@@ -53,7 +53,7 @@
 				}
 			},
 			{
-				"name": "vaciar carpeta trx_copy1",
+				"name": "VACIAR AUXILIAR COTIZACIONES",
 				"type": "Delete",
 				"dependsOn": [],
 				"policy": {
