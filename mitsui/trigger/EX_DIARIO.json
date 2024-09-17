@@ -19,7 +19,7 @@
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Day",
+				"frequency": "Month",
 				"interval": 1,
 				"startTime": "2024-05-19T12:01:00",
 				"timeZone": "SA Pacific Standard Time",
@@ -47,6 +47,15 @@
 						9,
 						10,
 						11
+					],
+					"monthDays": [
+						26,
+						27,
+						28,
+						29,
+						30,
+						31,
+						-1
 					]
 				}
 			}
