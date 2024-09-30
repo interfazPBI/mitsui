@@ -55988,6 +55988,52 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/CARPETA_AUXILIAR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "Archivos Planos/Cotizaciones",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CARPETA_MAESTRAS')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -60802,7 +60848,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -60946,52 +60992,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CARPETA_AUXILIAR')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "Archivos Planos/Cotizaciones",
-						"container": "dev"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "MANDT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SPRAS",
-						"type": "UTF8"
-					},
-					{
-						"name": "MATKL",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ60",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		}
 	]

@@ -13,6 +13,33 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DESTINO_SQL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BD_MITSUI",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"TABLA": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "STAGING",
+					"table": {
+						"value": "@dataset().TABLA",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DWH_PROCESO')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -829,52 +856,6 @@
 					{
 						"name": "WGBEZ60",
 						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_MASA_ORIGINAL_EXCEL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"File": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().File",
-							"type": "Expression"
-						},
-						"folderPath": "Archivos Planos/PL_MASA_ORIGINAL",
-						"container": "dev"
-					},
-					"sheetIndex": 0,
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Vendedor",
-						"type": "String"
-					},
-					{
-						"name": "Codigo",
-						"type": "String"
-					},
-					{
-						"name": "Sede",
-						"type": "String"
 					}
 				]
 			},
