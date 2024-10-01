@@ -27,6 +27,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"valor": {
+				"type": "string",
+				"defaultValue": "l._8~eDBlA.ZlL25ArDLhge23jwWkVdXDYyDbag"
+			}
+		},
 		"variables": {
 			"secret": {
 				"type": "String"
