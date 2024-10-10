@@ -53056,12 +53056,6 @@
 								"dependencyConditions": [
 									"Completed"
 								]
-							},
-							{
-								"activity": "EXTRACCION_AUXILIARES",
-								"dependencyConditions": [
-									"Completed"
-								]
 							}
 						],
 						"policy": {
@@ -53224,30 +53218,6 @@
 							"referenceName": "BD_MITSUI",
 							"type": "LinkedServiceReference"
 						}
-					},
-					{
-						"name": "EXTRACCION_AUXILIARES",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "EXTRACCION_AUXILIARES",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
 					}
 				],
 				"policy": {
@@ -53277,8 +53247,7 @@
 				"[concat(variables('factoryId'), '/pipelines/TOYOTA')]",
 				"[concat(variables('factoryId'), '/pipelines/HINO')]",
 				"[concat(variables('factoryId'), '/pipelines/LEXUS')]",
-				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_AUXILIARES')]"
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]"
 			]
 		},
 		{
@@ -61068,6 +61037,46 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AUXILIARES_SHAREPOINT')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "EXTRACCION_AUXILIARES",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2024-10-09T19:16:00",
+						"timeZone": "SA Pacific Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								8,
+								14,
+								20
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_AUXILIARES')]"
 			]
 		}
 	]
