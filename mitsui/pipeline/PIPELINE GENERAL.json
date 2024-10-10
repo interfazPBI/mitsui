@@ -113,12 +113,6 @@
 						"dependencyConditions": [
 							"Completed"
 						]
-					},
-					{
-						"activity": "EXTRACCION_AUXILIARES",
-						"dependencyConditions": [
-							"Completed"
-						]
 					}
 				],
 				"policy": {
@@ -280,29 +274,6 @@
 				"linkedServiceName": {
 					"referenceName": "BD_MITSUI",
 					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "EXTRACCION_AUXILIARES",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "LP_OBTIENE_FECHA",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "EXTRACCION_AUXILIARES",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
 				}
 			}
 		],
