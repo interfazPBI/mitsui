@@ -27,7 +27,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "DEV_IG_ZDBM010_FACT.parquet",
-						"folderPath": "desarrollo",
+						"folderPath": "productivo/PRD/TRASACCIONAL",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
