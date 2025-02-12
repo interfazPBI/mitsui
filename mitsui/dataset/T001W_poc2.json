@@ -1,0 +1,41 @@
+{
+	"name": "T001W_poc2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "nuevo-snowflake-test_2025-02-12_207807.parquet",
+				"container": "dev"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "MANDT",
+				"type": "UTF8"
+			},
+			{
+				"name": "SPRAS",
+				"type": "UTF8"
+			},
+			{
+				"name": "MATKL",
+				"type": "UTF8"
+			},
+			{
+				"name": "WGBEZ",
+				"type": "UTF8"
+			},
+			{
+				"name": "WGBEZ60",
+				"type": "UTF8"
+			}
+		]
+	}
+}
