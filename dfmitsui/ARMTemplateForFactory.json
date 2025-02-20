@@ -50,6 +50,18 @@
 		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
 			"type": "string",
 			"defaultValue": "'FACT'"
+		},
+		"EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
+			"type": "string",
+			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
+		},
+		"EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
+			"type": "string",
+			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
+		},
+		"EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Modulo": {
+			"type": "string",
+			"defaultValue": "'FACT'"
 		}
 	},
 	"variables": {
@@ -60933,7 +60945,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -61002,7 +61014,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -61070,6 +61082,48 @@
 								7,
 								14,
 								21
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EX_DIARIO_7AM')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PIPELINE GENERAL",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"Fecha_Desde": "[parameters('EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]",
+							"Fecha_Hasta": "[parameters('EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]",
+							"Modulo": "[parameters('EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Modulo')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2025-02-19T16:26:00",
+						"timeZone": "SA Pacific Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								7
 							]
 						}
 					}
