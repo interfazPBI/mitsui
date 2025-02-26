@@ -1,0 +1,17 @@
+{
+	"name": "EX_ARCHIVO_CRES",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/dev/blobs/prueba_crestone/TRIGGER",
+			"ignoreEmptyBlobs": false,
+			"scope": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
