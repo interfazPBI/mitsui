@@ -7,6 +7,18 @@
 			"metadata": "Nombre de instancia de Data Factory",
 			"defaultValue": "dfmitsui"
 		},
+		"EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
+			"type": "string",
+			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
+		},
+		"EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
+			"type": "string",
+			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
+		},
+		"EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Modulo": {
+			"type": "string",
+			"defaultValue": "'FACT'"
+		},
 		"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
 			"type": "string",
 			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
@@ -16,18 +28,6 @@
 			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
 		},
 		"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
-			"type": "string",
-			"defaultValue": "'FACT'"
-		},
-		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
-			"type": "string",
-			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
-		},
-		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
-			"type": "string",
-			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
-		},
-		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
 			"type": "string",
 			"defaultValue": "'FACT'"
 		}
@@ -4567,6 +4567,48 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/EX_DIARIO_7AM')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PIPELINE GENERAL",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"Fecha_Desde": "[parameters('EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]",
+							"Fecha_Hasta": "[parameters('EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]",
+							"Modulo": "[parameters('EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Modulo')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2025-02-19T16:26:00",
+						"timeZone": "SA Pacific Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								7
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/EX_DIARIO_FIN_MES')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -4626,89 +4668,6 @@
 								30,
 								31,
 								-1
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EX_DIARIO_INICIO_MES')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "PIPELINE GENERAL",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"Fecha_Desde": "[parameters('EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]",
-							"Fecha_Hasta": "[parameters('EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]",
-							"Modulo": "[parameters('EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Modulo')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Month",
-						"interval": 1,
-						"startTime": "2024-09-16T13:03:00",
-						"timeZone": "SA Pacific Standard Time",
-						"schedule": {
-							"minutes": [
-								0,
-								30
-							],
-							"hours": [
-								6,
-								7,
-								8,
-								9,
-								10,
-								11,
-								12,
-								13,
-								14,
-								15,
-								16,
-								17,
-								18,
-								19
-							],
-							"monthDays": [
-								1,
-								8,
-								15,
-								22,
-								23,
-								16,
-								9,
-								2,
-								3,
-								10,
-								17,
-								24,
-								25,
-								18,
-								11,
-								4,
-								5,
-								19,
-								20,
-								13,
-								12,
-								6,
-								7,
-								14,
-								21
 							]
 						}
 					}
