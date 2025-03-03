@@ -27,6 +27,22 @@
 			"type": "string",
 			"defaultValue": "@{concat('https://mitsuiautomotrizcom.sharepoint.com/sites/BI-MASA/_api/web/GetFileByServerRelativeUrl(''',linkedService().path,'/',linkedService().file,''')/$value')}"
 		},
+		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Desde": {
+			"type": "string",
+			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
+		},
+		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Hasta": {
+			"type": "string",
+			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
+		},
+		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Modulo": {
+			"type": "string",
+			"defaultValue": "'FACT'"
+		},
+		"EX_ARCHIVO_CRES_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui"
+		},
 		"EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
 			"type": "string",
 			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
@@ -62,22 +78,6 @@
 		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
 			"type": "string",
 			"defaultValue": "'FACT'"
-		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Desde": {
-			"type": "string",
-			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
-		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Hasta": {
-			"type": "string",
-			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
-		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Modulo": {
-			"type": "string",
-			"defaultValue": "'FACT'"
-		},
-		"EX_ARCHIVO_CRES_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui"
 		}
 	},
 	"variables": {
@@ -53601,6 +53601,366 @@
 					},
 					"Fecha_Hasta": {
 						"type": "string",
+						"defaultValue": "'2025-02-28'"
+					},
+					"Modulo": {
+						"type": "string",
+						"defaultValue": "'FACT'"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DWH_PROCESO')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_TRANSACCIONALES')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_MAESTRAS')]",
+				"[concat(variables('factoryId'), '/pipelines/TRANSVERSALES_SIN_STOCK')]",
+				"[concat(variables('factoryId'), '/pipelines/TOYOTA_SIN_STOCK')]",
+				"[concat(variables('factoryId'), '/pipelines/HINO_SIN_STOCK')]",
+				"[concat(variables('factoryId'), '/pipelines/LEXUS_SIN_STOCK')]",
+				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]",
+				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_AUXILIARES')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PIPELINE_POC')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LP_OBTIENE_FECHA",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "@concat('SELECT \nSUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10) AS FECHA_DESDE\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'','''') AS FECHA_DESDE_SAP\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10),''-'','''') AS FECHA_HASTA_SAP\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10) AS FECHA_HASTA\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,4) AS ANIO\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),6,2) AS MES\n, CONVERT(BIGINT,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'',''''))*1000000 AS TIMESTAMP\n,SUBSTRING(CONVERT(VARCHAR,DATEADD(HOUR,-5,getUTCdate()),120),1,19) AS FECHA_ACTUALIZACION\n\nFROM (SELECT \n',string(pipeline().parameters.Fecha_Desde), ' AS FECHA_DESDE ,\n',string(pipeline().parameters.Fecha_Hasta), ' AS FECHA_HASTA , \n',string(pipeline().parameters.Modulo) , ' AS MODULO from staging.dw_proceso) R' )",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DWH_PROCESO",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "TRANSACCIONALES",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXTRACCION_TRANSACCIONALES",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_DESDE": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE_SAP",
+									"type": "Expression"
+								},
+								"FECHA_HASTA": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA_SAP",
+									"type": "Expression"
+								},
+								"ANIO": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.ANIO",
+									"type": "Expression"
+								},
+								"MES": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.MES",
+									"type": "Expression"
+								},
+								"TIMESTAMP": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.TIMESTAMP",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "MAESTRAS",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXTRACCION_MAESTRAS",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "TRANSVERSALES",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "TRANSACCIONALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "MAESTRAS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							},
+							{
+								"activity": "EXTRACCION_AUXILIARES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "TRANSVERSALES_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_DESDE": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_HASTA": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_HASTA",
+									"type": "Expression"
+								},
+								"TIMESTAMP": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.TIMESTAMP",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "TOYOTA",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "TOYOTA_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "HINO",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HINO_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "LEXUS",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "LEXUS_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "FECHA_ACTUALIZACION",
+						"type": "SqlServerStoredProcedure",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DWH].[CARGA_FECHA_HORA_ACTUALIZACION]",
+							"storedProcedureParameters": {
+								"FECHA_ACTUALIZACION": {
+									"value": {
+										"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_ACTUALIZACION",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "EXTRACCION_AUXILIARES",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "LP_OBTIENE_FECHA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "EXTRACCION_AUXILIARES",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"Fecha_Desde": {
+						"type": "string",
+						"defaultValue": "'2025-02-01'"
+					},
+					"Fecha_Hasta": {
+						"type": "string",
 						"defaultValue": "'2025-02-17'"
 					},
 					"Modulo": {
@@ -60956,6 +61316,40 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/EX_ARCHIVO_CRES')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PIPELINE_POC",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"Fecha_Desde": "[parameters('EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Desde')]",
+							"Fecha_Hasta": "[parameters('EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Hasta')]",
+							"Modulo": "[parameters('EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Modulo')]"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/dev/blobs/prueba_crestone/TRIGGER",
+					"ignoreEmptyBlobs": false,
+					"scope": "[parameters('EX_ARCHIVO_CRES_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PIPELINE_POC')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/EX_DIARIO_7AM')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -61003,7 +61397,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -61072,7 +61466,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -61147,400 +61541,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PIPELINE_POC')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "LP_OBTIENE_FECHA",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "@concat('SELECT \nSUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10) AS FECHA_DESDE\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'','''') AS FECHA_DESDE_SAP\n,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10),''-'','''') AS FECHA_HASTA_SAP\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,10) AS FECHA_HASTA\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),1,4) AS ANIO\n,SUBSTRING(CONVERT(VARCHAR,FECHA_HASTA,120),6,2) AS MES\n, CONVERT(BIGINT,REPLACE(SUBSTRING(CONVERT(VARCHAR,FECHA_DESDE,120),1,10),''-'',''''))*1000000 AS TIMESTAMP\n,SUBSTRING(CONVERT(VARCHAR,DATEADD(HOUR,-5,getUTCdate()),120),1,19) AS FECHA_ACTUALIZACION\n\nFROM (SELECT \n',string(pipeline().parameters.Fecha_Desde), ' AS FECHA_DESDE ,\n',string(pipeline().parameters.Fecha_Hasta), ' AS FECHA_HASTA , \n',string(pipeline().parameters.Modulo) , ' AS MODULO from staging.dw_proceso) R' )",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "DWH_PROCESO",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "TRANSACCIONALES",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "EXTRACCION_TRANSACCIONALES",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_DESDE": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE_SAP",
-									"type": "Expression"
-								},
-								"FECHA_HASTA": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA_SAP",
-									"type": "Expression"
-								},
-								"ANIO": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.ANIO",
-									"type": "Expression"
-								},
-								"MES": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.MES",
-									"type": "Expression"
-								},
-								"TIMESTAMP": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.TIMESTAMP",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "MAESTRAS",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "EXTRACCION_MAESTRAS",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "TRANSVERSALES",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "TRANSACCIONALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							},
-							{
-								"activity": "MAESTRAS",
-								"dependencyConditions": [
-									"Completed"
-								]
-							},
-							{
-								"activity": "EXTRACCION_AUXILIARES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "TRANSVERSALES_SIN_STOCK",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_DESDE": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_HASTA": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_HASTA",
-									"type": "Expression"
-								},
-								"TIMESTAMP": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.TIMESTAMP",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "TOYOTA",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "TOYOTA_SIN_STOCK",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "HINO",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "HINO_SIN_STOCK",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "LEXUS",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "LEXUS_SIN_STOCK",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "FECHA_ACTUALIZACION",
-						"type": "SqlServerStoredProcedure",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[DWH].[CARGA_FECHA_HORA_ACTUALIZACION]",
-							"storedProcedureParameters": {
-								"FECHA_ACTUALIZACION": {
-									"value": {
-										"value": "@activity('LP_OBTIENE_FECHA').output.firstrow.FECHA_ACTUALIZACION",
-										"type": "Expression"
-									},
-									"type": "Datetime"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "BD_MITSUI",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "EXTRACCION_AUXILIARES",
-						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "LP_OBTIENE_FECHA",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "EXTRACCION_AUXILIARES",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"Fecha_Desde": {
-						"type": "string",
-						"defaultValue": "'2025-02-01'"
-					},
-					"Fecha_Hasta": {
-						"type": "string",
-						"defaultValue": "'2025-02-17'"
-					},
-					"Modulo": {
-						"type": "string",
-						"defaultValue": "'FACT'"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DWH_PROCESO')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_TRANSACCIONALES')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_MAESTRAS')]",
-				"[concat(variables('factoryId'), '/pipelines/TRANSVERSALES_SIN_STOCK')]",
-				"[concat(variables('factoryId'), '/pipelines/TOYOTA_SIN_STOCK')]",
-				"[concat(variables('factoryId'), '/pipelines/HINO_SIN_STOCK')]",
-				"[concat(variables('factoryId'), '/pipelines/LEXUS_SIN_STOCK')]",
-				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_AUXILIARES')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EX_ARCHIVO_CRES')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "PIPELINE_POC",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"Fecha_Desde": "[parameters('EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Desde')]",
-							"Fecha_Hasta": "[parameters('EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Hasta')]",
-							"Modulo": "[parameters('EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Modulo')]"
-						}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/dev/blobs/prueba_crestone/TRIGGER",
-					"ignoreEmptyBlobs": false,
-					"scope": "[parameters('EX_ARCHIVO_CRES_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PIPELINE_POC')]"
 			]
 		}
 	]

@@ -27,6 +27,22 @@
 			"type": "string",
 			"defaultValue": "@{concat('https://mitsuiautomotrizcom.sharepoint.com/sites/BI-MASA/_api/web/GetFileByServerRelativeUrl(''',linkedService().path,'/',linkedService().file,''')/$value')}"
 		},
+		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Desde": {
+			"type": "string",
+			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
+		},
+		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Hasta": {
+			"type": "string",
+			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
+		},
+		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Modulo": {
+			"type": "string",
+			"defaultValue": "'FACT'"
+		},
+		"EX_ARCHIVO_CRES_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui"
+		},
 		"EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
 			"type": "string",
 			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
@@ -62,22 +78,6 @@
 		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
 			"type": "string",
 			"defaultValue": "'FACT'"
-		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Desde": {
-			"type": "string",
-			"defaultValue": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
-		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Hasta": {
-			"type": "string",
-			"defaultValue": "DATEADD(HOUR,-5,getUTCdate())"
-		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Modulo": {
-			"type": "string",
-			"defaultValue": "'FACT'"
-		},
-		"EX_ARCHIVO_CRES_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui"
 		},
 		"containerUri": {
 			"type": "string",
@@ -347,15 +347,6 @@
 					},
 					"EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Modulo": {
 						"value": "[parameters('EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Modulo')]"
-					},
-					"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
-						"value": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]"
-					},
-					"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
-						"value": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]"
-					},
-					"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
-						"value": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Modulo')]"
 					}
 				}
 			},
@@ -376,6 +367,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
+						"value": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]"
+					},
+					"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta": {
+						"value": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Fecha_Hasta')]"
+					},
+					"EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
+						"value": "[parameters('EX_DIARIO_FIN_MES_properties_PIPELINE GENERAL_parameters_Modulo')]"
 					},
 					"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
 						"value": "[parameters('EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Fecha_Desde')]"

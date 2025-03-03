@@ -20,6 +20,18 @@
 		"XTRACT_SP_properties_typeProperties_url": {
 			"value": "@{concat('https://mitsuiautomotrizcom.sharepoint.com/sites/BI-MASA/_api/web/GetFileByServerRelativeUrl(''',linkedService().path,'/',linkedService().file,''')/$value')}"
 		},
+		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Desde": {
+			"value": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
+		},
+		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Hasta": {
+			"value": "DATEADD(HOUR,-5,getUTCdate())"
+		},
+		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Modulo": {
+			"value": "'FACT'"
+		},
+		"EX_ARCHIVO_CRES_properties_typeProperties_scope": {
+			"value": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui"
+		},
 		"EX_DIARIO_7AM_properties_PIPELINE GENERAL_parameters_Fecha_Desde": {
 			"value": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
 		},
@@ -46,18 +58,6 @@
 		},
 		"EX_DIARIO_INICIO_MES_properties_PIPELINE GENERAL_parameters_Modulo": {
 			"value": "'FACT'"
-		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Desde": {
-			"value": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
-		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Hasta": {
-			"value": "DATEADD(HOUR,-5,getUTCdate())"
-		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Modulo": {
-			"value": "'FACT'"
-		},
-		"EX_ARCHIVO_CRES_properties_typeProperties_scope": {
-			"value": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui"
 		},
 		"containerUri": {
 			"value": ""
