@@ -3,19 +3,7 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
-		"pipelines": [
-			{
-				"pipelineReference": {
-					"referenceName": "PIPELINE_POC",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"Fecha_Desde": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))",
-					"Fecha_Hasta": "DATEADD(HOUR,-5,getUTCdate())",
-					"Modulo": "'FACT'"
-				}
-			}
-		],
+		"pipelines": [],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
 			"blobPathBeginsWith": "/dev/blobs/crestone/TRIGGER",
