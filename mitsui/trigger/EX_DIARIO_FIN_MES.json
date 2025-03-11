@@ -2,7 +2,7 @@
 	"name": "EX_DIARIO_FIN_MES",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
