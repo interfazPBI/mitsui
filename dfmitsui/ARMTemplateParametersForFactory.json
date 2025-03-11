@@ -20,13 +20,13 @@
 		"XTRACT_SP_properties_typeProperties_url": {
 			"value": "@{concat('https://mitsuiautomotrizcom.sharepoint.com/sites/BI-MASA/_api/web/GetFileByServerRelativeUrl(''',linkedService().path,'/',linkedService().file,''')/$value')}"
 		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Desde": {
+		"EX_ARCHIVO_CRES_properties_PIPELINE_CRESTONE_parameters_Fecha_Desde": {
 			"value": "dateadd(dd ,1 ,eomonth(DATEADD(HOUR,-5,getUTCdate()),-1))"
 		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Fecha_Hasta": {
+		"EX_ARCHIVO_CRES_properties_PIPELINE_CRESTONE_parameters_Fecha_Hasta": {
 			"value": "DATEADD(HOUR,-5,getUTCdate())"
 		},
-		"EX_ARCHIVO_CRES_properties_PIPELINE_POC_parameters_Modulo": {
+		"EX_ARCHIVO_CRES_properties_PIPELINE_CRESTONE_parameters_Modulo": {
 			"value": "'FACT'"
 		},
 		"EX_ARCHIVO_CRES_properties_typeProperties_scope": {
