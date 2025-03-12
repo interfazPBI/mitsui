@@ -202,7 +202,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ORIGEN_BLOBSTORAGE_TRANSACCIONAL",
+									"referenceName": "ORIGEN_BLOBSTORAGE_TRX_CRESTONE",
 									"type": "DatasetReference",
 									"parameters": {
 										"FILENAME": {
