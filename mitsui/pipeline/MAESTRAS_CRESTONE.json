@@ -249,7 +249,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "CARPETA_MAESTRAS",
+						"referenceName": "MAESTROS_CRESTONE",
 						"type": "DatasetReference"
 					},
 					"enableLogging": false,
