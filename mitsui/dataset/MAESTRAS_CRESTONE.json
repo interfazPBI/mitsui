@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "productivo/PRD/MAESTROS",
+				"folderPath": "crestone/MAESTROS",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
