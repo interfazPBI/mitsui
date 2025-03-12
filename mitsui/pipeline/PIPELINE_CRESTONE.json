@@ -33,6 +33,8 @@
 			{
 				"name": "TRANSACCIONALES",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LP_OBTIENE_FECHA",
