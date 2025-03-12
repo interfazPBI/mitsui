@@ -1,5 +1,5 @@
 {
-	"name": "MAESTRAS_CRESTONE",
+	"name": "MAESTROS_CRESTONE",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
