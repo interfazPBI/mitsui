@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "crestone/TRANSACCIONAL",
+				"folderPath": "crestone/TRANSACCIONALES",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
