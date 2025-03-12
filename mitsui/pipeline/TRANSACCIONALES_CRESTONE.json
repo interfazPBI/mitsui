@@ -155,7 +155,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata Maestros').output.childItems",
+						"value": "@activity('Get Metadata transaccionales').output.childItems",
 						"type": "Expression"
 					},
 					"activities": [
