@@ -62527,7 +62527,7 @@
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/dev/blobs/crestone/TRIGGER",
+					"blobPathBeginsWith": "/dev/blobs/CRESTONE/TRIGGER",
 					"ignoreEmptyBlobs": false,
 					"scope": "[parameters('EX_ARCHIVO_CRES_properties_typeProperties_scope')]",
 					"events": [
