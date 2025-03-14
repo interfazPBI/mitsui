@@ -19,7 +19,7 @@
 					"value": "@dataset().FILENAME",
 					"type": "Expression"
 				},
-				"folderPath": "crestone/TRANSACCIONALES",
+				"folderPath": "CRESTONE/TRANSACCIONALES",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
