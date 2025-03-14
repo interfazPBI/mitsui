@@ -19,7 +19,7 @@
 					"value": "@dataset().FILENAME",
 					"type": "Expression"
 				},
-				"folderPath": "crestone/MAESTROS",
+				"folderPath": "CRESTONE/MAESTROS",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
