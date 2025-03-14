@@ -54284,7 +54284,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "EXTRACCION_TRANSACCIONALES",
+								"referenceName": "TRANSACCIONALES_CRESTONE",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -54329,7 +54329,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "EXTRACCION_MAESTRAS",
+								"referenceName": "MAESTRAS_CRESTONE",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -54566,8 +54566,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DWH_PROCESO')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_TRANSACCIONALES')]",
-				"[concat(variables('factoryId'), '/pipelines/EXTRACCION_MAESTRAS')]",
+				"[concat(variables('factoryId'), '/pipelines/TRANSACCIONALES_CRESTONE')]",
+				"[concat(variables('factoryId'), '/pipelines/MAESTRAS_CRESTONE')]",
 				"[concat(variables('factoryId'), '/pipelines/TRANSVERSALES_SIN_STOCK')]",
 				"[concat(variables('factoryId'), '/pipelines/TOYOTA_SIN_STOCK')]",
 				"[concat(variables('factoryId'), '/pipelines/HINO_SIN_STOCK')]",
@@ -57468,7 +57468,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": "crestone/TRANSACCIONALES",
+						"folderPath": "CRESTONE/TRANSACCIONALES",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -58323,6 +58323,52 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/GETMETADATA_CRESTONE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "CRESTONE/MAESTROS",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/GETMETADATA_PRD')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -58383,6 +58429,52 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"folderPath": "productivo/PRD/TRASACCIONAL",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GETMETADATA_TRANSACCIONAL_CRESTONE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "CRESTONE/TRANSACCIONALES",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -58690,6 +58782,52 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/MAESTROS_CRESTONE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "CRESTONE/MAESTROS",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MAKT')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -58926,6 +59064,61 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ORIGEN_BLOBSTORAGE_CRESTONE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"FILENAME": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().FILENAME",
+							"type": "Expression"
+						},
+						"folderPath": "CRESTONE/MAESTROS",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ORIGEN_BLOBSTORAGE_TRANSACCIONAL')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -58949,6 +59142,61 @@
 							"type": "Expression"
 						},
 						"folderPath": "productivo/PRD/TRASACCIONAL",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ORIGEN_BLOBSTORAGE_TRX_CRESTONE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"FILENAME": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().FILENAME",
+							"type": "Expression"
+						},
+						"folderPath": "CRESTONE/TRANSACCIONALES",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -62483,254 +62731,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MAESTROS_CRESTONE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "crestone/MAESTROS",
-						"container": "dev"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "MANDT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SPRAS",
-						"type": "UTF8"
-					},
-					{
-						"name": "MATKL",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ60",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/GETMETADATA_CRESTONE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "crestone/MAESTROS",
-						"container": "dev"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "MANDT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SPRAS",
-						"type": "UTF8"
-					},
-					{
-						"name": "MATKL",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ60",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ORIGEN_BLOBSTORAGE_CRESTONE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"FILENAME": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().FILENAME",
-							"type": "Expression"
-						},
-						"folderPath": "crestone/MAESTROS",
-						"container": "dev"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "MANDT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SPRAS",
-						"type": "UTF8"
-					},
-					{
-						"name": "MATKL",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ60",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/GETMETADATA_TRANSACCIONAL_CRESTONE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "crestone/TRANSACCIONALES",
-						"container": "dev"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "MANDT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SPRAS",
-						"type": "UTF8"
-					},
-					{
-						"name": "MATKL",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ60",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ORIGEN_BLOBSTORAGE_TRX_CRESTONE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"FILENAME": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().FILENAME",
-							"type": "Expression"
-						},
-						"folderPath": "crestone/TRANSACCIONALES",
-						"container": "dev"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "MANDT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SPRAS",
-						"type": "UTF8"
-					},
-					{
-						"name": "MATKL",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ60",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		}
 	]

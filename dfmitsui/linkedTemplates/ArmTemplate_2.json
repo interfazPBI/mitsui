@@ -277,6 +277,50 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/GETMETADATA_CRESTONE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "CRESTONE/MAESTROS",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/GETMETADATA_PRD')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -335,6 +379,50 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"folderPath": "productivo/PRD/TRASACCIONAL",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GETMETADATA_TRANSACCIONAL_CRESTONE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "CRESTONE/TRANSACCIONALES",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -628,6 +716,50 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/MAESTROS_CRESTONE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "CRESTONE/MAESTROS",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MAKT')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -688,142 +820,6 @@
 						"type": "AzureBlobStorageLocation",
 						"fileName": "DEV_IG_MARA.parquet",
 						"folderPath": "desarrollo",
-						"container": "dev"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "MANDT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SPRAS",
-						"type": "UTF8"
-					},
-					{
-						"name": "MATKL",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ60",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MASIVA')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "MASIVA_MITSUI.xlsx",
-						"container": "dev"
-					},
-					"sheetIndex": 0,
-					"range": "A1:B20",
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Vendedor",
-						"type": "String"
-					},
-					{
-						"name": "Codigo",
-						"type": "String"
-					},
-					{
-						"name": "Sede",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MSEG')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "DEV_IG_MSEG.parquet",
-						"folderPath": "desarrollo",
-						"container": "dev"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "MANDT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SPRAS",
-						"type": "UTF8"
-					},
-					{
-						"name": "MATKL",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ60",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ORIGEN_BLOBSTORAGE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"FILENAME": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().FILENAME",
-							"type": "Expression"
-						},
-						"folderPath": "productivo/PRD/MAESTROS",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"

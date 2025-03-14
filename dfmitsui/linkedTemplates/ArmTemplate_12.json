@@ -1414,7 +1414,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "EXTRACCION_TRANSACCIONALES",
+								"referenceName": "TRANSACCIONALES_CRESTONE",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -1459,7 +1459,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "EXTRACCION_MAESTRAS",
+								"referenceName": "MAESTRAS_CRESTONE",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
