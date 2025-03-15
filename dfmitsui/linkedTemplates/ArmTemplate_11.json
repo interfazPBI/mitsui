@@ -5364,8 +5364,6 @@
 					{
 						"name": "vaciar carpeta maestras",
 						"type": "Delete",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "ForEach2",
@@ -5954,8 +5952,6 @@
 					{
 						"name": "vaciar carpeta trx",
 						"type": "Delete",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "ForEach2",
