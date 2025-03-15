@@ -231,8 +231,6 @@
 			{
 				"name": "vaciar carpeta maestras",
 				"type": "Delete",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEach2",
