@@ -56493,7 +56493,14 @@
 					{
 						"name": "IG_ZTSTSTKTOY",
 						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "CARGA_UPDATE",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -56504,6 +56511,26 @@
 						"userProperties": [],
 						"typeProperties": {
 							"storedProcedureName": "[[STAGING].[CARGA_IG_ZTSTSTKTOY]"
+						},
+						"linkedServiceName": {
+							"referenceName": "BD_MITSUI",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "CARGA_UPDATE",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[STAGING].[CARGA_UPDATE]"
 						},
 						"linkedServiceName": {
 							"referenceName": "BD_MITSUI",
