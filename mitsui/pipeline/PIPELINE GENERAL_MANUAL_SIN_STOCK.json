@@ -313,7 +313,7 @@
 			},
 			"Fecha_Hasta": {
 				"type": "string",
-				"defaultValue": "'2025-03-11'"
+				"defaultValue": "'2025-03-18'"
 			},
 			"Modulo": {
 				"type": "string",
