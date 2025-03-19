@@ -817,6 +817,8 @@
 					{
 						"name": "TRANSVERSALES",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSACCIONALES",
@@ -860,6 +862,8 @@
 					{
 						"name": "TOYOTA",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSVERSALES",
@@ -893,6 +897,8 @@
 					{
 						"name": "HINO",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSVERSALES",
@@ -926,6 +932,8 @@
 					{
 						"name": "LEXUS",
 						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSVERSALES",
