@@ -291,18 +291,6 @@
 							},
 							{
 								"source": {
-									"name": "ZZFECHA_TARJETA_REPSOL",
-									"type": "DateTime",
-									"physicalType": "DATE"
-								},
-								"sink": {
-									"name": "ZZFECHA_TARJETA_REPSOL",
-									"type": "DateTime",
-									"physicalType": "date"
-								}
-							},
-							{
-								"source": {
 									"name": "VBLTY",
 									"type": "String",
 									"physicalType": "UTF8"
