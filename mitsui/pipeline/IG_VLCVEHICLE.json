@@ -39,18 +39,6 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "MANDT",
-									"type": "String",
-									"physicalType": "UTF8"
-								},
-								"sink": {
-									"name": "MANDT",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
 									"name": "VGUID",
 									"type": "String",
 									"physicalType": "UTF8"
