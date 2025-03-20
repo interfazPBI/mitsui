@@ -39,14 +39,14 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "ZZFECHA_TARJETA_REPSOL",
-									"type": "DateTime",
-									"physicalType": "DATE"
+									"name": "VGUID",
+									"type": "String",
+									"physicalType": "UTF8"
 								},
 								"sink": {
-									"name": "ZZFECHA_TARJETA_REPSOL",
-									"type": "DateTime",
-									"physicalType": "date"
+									"name": "VGUID",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							}
 						],
