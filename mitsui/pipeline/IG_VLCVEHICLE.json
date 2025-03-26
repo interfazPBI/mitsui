@@ -16,14 +16,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ParquetSource",
+						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
-							"type": "ParquetReadSettings"
+							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -39,33 +39,9 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "MATNR",
-									"type": "String",
-									"physicalType": "UTF8"
-								},
-								"sink": {
-									"name": "MATNR",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "ZZMODELO",
-									"type": "String",
-									"physicalType": "UTF8"
-								},
-								"sink": {
-									"name": "ZZMODELO",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
 									"name": "VGUID",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "VGUID",
@@ -75,24 +51,24 @@
 							},
 							{
 								"source": {
-									"name": "VHCLE",
+									"name": "MATNR",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
-									"name": "VHCLE",
+									"name": "MATNR",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "CUOBJ",
+									"name": "CHARG",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
-									"name": "CUOBJ",
+									"name": "CHARG",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -101,22 +77,10 @@
 								"source": {
 									"name": "WERKS",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "WERKS",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "DBM_BUSTYPE",
-									"type": "String",
-									"physicalType": "UTF8"
-								},
-								"sink": {
-									"name": "DBM_BUSTYPE",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -125,7 +89,7 @@
 								"source": {
 									"name": "LGORT",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "LGORT",
@@ -135,36 +99,12 @@
 							},
 							{
 								"source": {
-									"name": "LOCTN",
+									"name": "CUOBJ",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
-									"name": "LOCTN",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "VHCEX",
-									"type": "String",
-									"physicalType": "UTF8"
-								},
-								"sink": {
-									"name": "VHCEX",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "AVAIL",
-									"type": "String",
-									"physicalType": "UTF8"
-								},
-								"sink": {
-									"name": "AVAIL",
+									"name": "CUOBJ",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -173,7 +113,7 @@
 								"source": {
 									"name": "MMSTA",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "MMSTA",
@@ -185,7 +125,7 @@
 								"source": {
 									"name": "SDSTA",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "SDSTA",
@@ -197,7 +137,7 @@
 								"source": {
 									"name": "VHVIN",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "VHVIN",
@@ -207,9 +147,57 @@
 							},
 							{
 								"source": {
+									"name": "VHCEX",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "VHCEX",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "AVAIL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "AVAIL",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "VBLTY",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "VBLTY",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LOCTN",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LOCTN",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
 									"name": "DBM_LICEXT",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "DBM_LICEXT",
@@ -219,12 +207,12 @@
 							},
 							{
 								"source": {
-									"name": "ZZNUM_MOTOR",
+									"name": "DBM_BUSTYPE",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
-									"name": "ZZNUM_MOTOR",
+									"name": "DBM_BUSTYPE",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -233,7 +221,7 @@
 								"source": {
 									"name": "ZZANO_FABRICACION",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "ZZANO_FABRICACION",
@@ -245,7 +233,7 @@
 								"source": {
 									"name": "ZZANO_MODELO",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "ZZANO_MODELO",
@@ -257,7 +245,7 @@
 								"source": {
 									"name": "ZZCOLOR_COMERCIAL",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "ZZCOLOR_COMERCIAL",
@@ -267,12 +255,36 @@
 							},
 							{
 								"source": {
+									"name": "ZZNUM_MOTOR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ZZNUM_MOTOR",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
 									"name": "ZZZDESCR_COLOR_COM",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "ZZZDESCR_COLOR_COM",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ZZMODELO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ZZMODELO",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -281,7 +293,7 @@
 								"source": {
 									"name": "ZZTARJETA_REPSOL",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "ZZTARJETA_REPSOL",
@@ -291,24 +303,12 @@
 							},
 							{
 								"source": {
-									"name": "VBLTY",
+									"name": "ZZFECHA_TARJETA_REPSOL",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								},
 								"sink": {
-									"name": "VBLTY",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "CHARG",
-									"type": "String",
-									"physicalType": "UTF8"
-								},
-								"sink": {
-									"name": "CHARG",
+									"name": "ZZFECHA_TARJETA_REPSOL",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
@@ -323,7 +323,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "VLCVEHICLE",
+						"referenceName": "VLCVEHICLE_PRUEBA",
 						"type": "DatasetReference"
 					}
 				],
@@ -332,7 +332,7 @@
 						"referenceName": "DESTINO_SQL",
 						"type": "DatasetReference",
 						"parameters": {
-							"TABLA": "IG_VLCVEHICLE"
+							"TABLA": "IG_VLCVEHICLE_PRUEBA"
 						}
 					}
 				]
