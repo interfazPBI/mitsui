@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "VLCVEHICLE_PRUEBA.csv",
-				"folderPath": "CRESTONE/VLCVEHICLE",
+				"fileName": "VLCVEHICLE",
+				"folderPath": "CRESTONE/MAESTROS",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
