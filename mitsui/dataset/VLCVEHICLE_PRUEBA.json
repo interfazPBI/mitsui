@@ -1,0 +1,117 @@
+{
+	"name": "VLCVEHICLE_PRUEBA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "VLCVEHICLE_PRUEBA.csv",
+				"folderPath": "CRESTONE/VLCVEHICLE",
+				"container": "dev"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "VGUID",
+				"type": "String"
+			},
+			{
+				"name": "MATNR",
+				"type": "String"
+			},
+			{
+				"name": "CHARG",
+				"type": "String"
+			},
+			{
+				"name": "WERKS",
+				"type": "String"
+			},
+			{
+				"name": "LGORT",
+				"type": "String"
+			},
+			{
+				"name": "CUOBJ",
+				"type": "String"
+			},
+			{
+				"name": "MMSTA",
+				"type": "String"
+			},
+			{
+				"name": "SDSTA",
+				"type": "String"
+			},
+			{
+				"name": "VHVIN",
+				"type": "String"
+			},
+			{
+				"name": "VHCEX",
+				"type": "String"
+			},
+			{
+				"name": "AVAIL",
+				"type": "String"
+			},
+			{
+				"name": "VBLTY",
+				"type": "String"
+			},
+			{
+				"name": "LOCTN",
+				"type": "String"
+			},
+			{
+				"name": "DBM_LICEXT",
+				"type": "String"
+			},
+			{
+				"name": "DBM_BUSTYPE",
+				"type": "String"
+			},
+			{
+				"name": "ZZANO_FABRICACION",
+				"type": "String"
+			},
+			{
+				"name": "ZZANO_MODELO",
+				"type": "String"
+			},
+			{
+				"name": "ZZCOLOR_COMERCIAL",
+				"type": "String"
+			},
+			{
+				"name": "ZZNUM_MOTOR",
+				"type": "String"
+			},
+			{
+				"name": "ZZZDESCR_COLOR_COM",
+				"type": "String"
+			},
+			{
+				"name": "ZZMODELO",
+				"type": "String"
+			},
+			{
+				"name": "ZZTARJETA_REPSOL",
+				"type": "String"
+			},
+			{
+				"name": "ZZFECHA_TARJETA_REPSOL",
+				"type": "String"
+			}
+		]
+	}
+}
