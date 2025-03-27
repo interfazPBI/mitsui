@@ -51387,6 +51387,161 @@
 								"enablePartitionDiscovery": false
 							}
 						}
+					},
+					{
+						"name": "Get Metadata VLCVEHICLE",
+						"type": "GetMetadata",
+						"dependsOn": [
+							{
+								"activity": "Truncate Maestras",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "GETMETADATA_CRESTONE_VLCVEHICLE",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "ParquetReadSettings"
+							}
+						}
+					},
+					{
+						"name": "ForEach2_copy1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Get Metadata VLCVEHICLE",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Get Metadata VLCVEHICLE').output.childItems",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "COPIAR DATA A SQL_copy1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "VLCVEHICLE1",
+											"type": "DatasetReference",
+											"parameters": {
+												"FILENAME": "@item().name"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DESTINO_SQL",
+											"type": "DatasetReference",
+											"parameters": {
+												"TABLA": {
+													"value": "@replace(replace(string(item().name),'.csv',''),'DEV_','')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"name": "vaciar carpeta VLCVEHICLE",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "ForEach2_copy1",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "MAESTROS_CRESTONE_VLCVEHICLE",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"enableLogging": false,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
 					}
 				],
 				"policy": {
@@ -51399,8 +51554,11 @@
 				"[concat(variables('factoryId'), '/linkedServices/BD_MITSUI')]",
 				"[concat(variables('factoryId'), '/datasets/GETMETADATA_CRESTONE')]",
 				"[concat(variables('factoryId'), '/datasets/MAESTROS_CRESTONE')]",
+				"[concat(variables('factoryId'), '/datasets/GETMETADATA_CRESTONE_VLCVEHICLE')]",
+				"[concat(variables('factoryId'), '/datasets/MAESTROS_CRESTONE_VLCVEHICLE')]",
 				"[concat(variables('factoryId'), '/datasets/ORIGEN_BLOBSTORAGE_CRESTONE')]",
-				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]"
+				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]",
+				"[concat(variables('factoryId'), '/datasets/VLCVEHICLE1')]"
 			]
 		},
 		{
@@ -60897,6 +61055,228 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GETMETADATA_CRESTONE_VLCVEHICLE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "CRESTONE/VLCVEHICLE",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MAESTROS_CRESTONE_VLCVEHICLE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "CRESTONE/VLCVEHICLE",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/VLCVEHICLE1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"FILENAME": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().FILENAME",
+							"type": "Expression"
+						},
+						"folderPath": "CRESTONE/VLCVEHICLE",
+						"container": "dev"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "VGUID",
+						"type": "String"
+					},
+					{
+						"name": "VHCLE",
+						"type": "String"
+					},
+					{
+						"name": "MATNR",
+						"type": "String"
+					},
+					{
+						"name": "CHARG",
+						"type": "String"
+					},
+					{
+						"name": "WERKS",
+						"type": "String"
+					},
+					{
+						"name": "LGORT",
+						"type": "String"
+					},
+					{
+						"name": "CUOBJ",
+						"type": "String"
+					},
+					{
+						"name": "MMSTA",
+						"type": "String"
+					},
+					{
+						"name": "SDSTA",
+						"type": "String"
+					},
+					{
+						"name": "VHVIN",
+						"type": "String"
+					},
+					{
+						"name": "VHCEX",
+						"type": "String"
+					},
+					{
+						"name": "AVAIL",
+						"type": "String"
+					},
+					{
+						"name": "VBLTY",
+						"type": "String"
+					},
+					{
+						"name": "LOCTN",
+						"type": "String"
+					},
+					{
+						"name": "DBM_LICEXT",
+						"type": "String"
+					},
+					{
+						"name": "DBM_BUSTYPE",
+						"type": "String"
+					},
+					{
+						"name": "ZZANO_FABRICACION",
+						"type": "String"
+					},
+					{
+						"name": "ZZANO_MODELO",
+						"type": "String"
+					},
+					{
+						"name": "ZZCOLOR_COMERCIAL",
+						"type": "String"
+					},
+					{
+						"name": "ZZNUM_MOTOR",
+						"type": "String"
+					},
+					{
+						"name": "ZZZDESCR_COLOR_COM",
+						"type": "String"
+					},
+					{
+						"name": "ZZMODELO",
+						"type": "String"
+					},
+					{
+						"name": "ZZTARJETA_REPSOL",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		}
 	]
