@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "CRESTONE/MAESTROS",
+				"folderPath": "CRESTONE/VLCVEHICLE",
 				"container": "dev"
 			},
 			"compressionCodec": "snappy"
