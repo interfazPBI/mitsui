@@ -311,7 +311,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata Maestros').output.childItems",
+						"value": "@activity('Get Metadata VLCVEHICLE').output.childItems",
 						"type": "Expression"
 					},
 					"activities": [
@@ -329,14 +329,14 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "ParquetSource",
+									"type": "DelimitedTextSource",
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
-										"type": "ParquetReadSettings"
+										"type": "DelimitedTextReadSettings"
 									}
 								},
 								"sink": {
@@ -358,13 +358,10 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ORIGEN_BLOBSTORAGE_CRESTONE",
+									"referenceName": "VLCVEHICLE1",
 									"type": "DatasetReference",
 									"parameters": {
-										"FILENAME": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
+										"FILENAME": "@item().name"
 									}
 								}
 							],
@@ -374,7 +371,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"TABLA": {
-											"value": "@replace(replace(string(item().name),'.parquet',''),'DEV_','')",
+											"value": "@replace(replace(string(item().name),'.csv',''),'DEV_','')",
 											"type": "Expression"
 										}
 									}
@@ -387,7 +384,14 @@
 			{
 				"name": "vaciar carpeta VLCVEHICLE",
 				"type": "Delete",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ForEach2_copy1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
