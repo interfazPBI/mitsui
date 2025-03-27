@@ -5,12 +5,20 @@
 			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"FILENAME": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "DEV_IG_VLCVEHICLE.csv",
+				"fileName": {
+					"value": "@dataset().FILENAME",
+					"type": "Expression"
+				},
 				"folderPath": "CRESTONE/VLCVEHICLE",
 				"container": "dev"
 			},
