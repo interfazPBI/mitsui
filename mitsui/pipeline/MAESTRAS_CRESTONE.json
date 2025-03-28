@@ -388,7 +388,7 @@
 					{
 						"activity": "ForEach2_copy1",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
