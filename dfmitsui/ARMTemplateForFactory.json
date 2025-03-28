@@ -59754,6 +59754,7 @@
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
+					"nullValue": " ",
 					"quoteChar": "\""
 				},
 				"schema": [
