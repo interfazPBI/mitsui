@@ -51517,7 +51517,7 @@
 							{
 								"activity": "ForEach2_copy1",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -56693,6 +56693,52 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/GETMETADATA_CRESTONE_VLCVEHICLE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "CRESTONE/VLCVEHICLE",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/GETMETADATA_PRD')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -57120,6 +57166,52 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"folderPath": "CRESTONE/MAESTROS",
+						"container": "dev"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "MANDT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SPRAS",
+						"type": "UTF8"
+					},
+					{
+						"name": "MATKL",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ",
+						"type": "UTF8"
+					},
+					{
+						"name": "WGBEZ60",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MAESTROS_CRESTONE_VLCVEHICLE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "CRESTONE/VLCVEHICLE",
 						"container": "dev"
 					},
 					"compressionCodec": "snappy"
@@ -59342,6 +59434,136 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/VLCVEHICLE1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"FILENAME": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().FILENAME",
+							"type": "Expression"
+						},
+						"folderPath": "CRESTONE/VLCVEHICLE",
+						"container": "dev"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "VGUID",
+						"type": "String"
+					},
+					{
+						"name": "VHCLE",
+						"type": "String"
+					},
+					{
+						"name": "MATNR",
+						"type": "String"
+					},
+					{
+						"name": "CHARG",
+						"type": "String"
+					},
+					{
+						"name": "WERKS",
+						"type": "String"
+					},
+					{
+						"name": "LGORT",
+						"type": "String"
+					},
+					{
+						"name": "CUOBJ",
+						"type": "String"
+					},
+					{
+						"name": "MMSTA",
+						"type": "String"
+					},
+					{
+						"name": "SDSTA",
+						"type": "String"
+					},
+					{
+						"name": "VHVIN",
+						"type": "String"
+					},
+					{
+						"name": "VHCEX",
+						"type": "String"
+					},
+					{
+						"name": "AVAIL",
+						"type": "String"
+					},
+					{
+						"name": "VBLTY",
+						"type": "String"
+					},
+					{
+						"name": "LOCTN",
+						"type": "String"
+					},
+					{
+						"name": "DBM_LICEXT",
+						"type": "String"
+					},
+					{
+						"name": "DBM_BUSTYPE",
+						"type": "String"
+					},
+					{
+						"name": "ZZANO_FABRICACION",
+						"type": "String"
+					},
+					{
+						"name": "ZZANO_MODELO",
+						"type": "String"
+					},
+					{
+						"name": "ZZCOLOR_COMERCIAL",
+						"type": "String"
+					},
+					{
+						"name": "ZZNUM_MOTOR",
+						"type": "String"
+					},
+					{
+						"name": "ZZZDESCR_COLOR_COM",
+						"type": "String"
+					},
+					{
+						"name": "ZZMODELO",
+						"type": "String"
+					},
+					{
+						"name": "ZZTARJETA_REPSOL",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Vendedores')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -61055,228 +61277,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PIPELINE GENERAL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/GETMETADATA_CRESTONE_VLCVEHICLE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "CRESTONE/VLCVEHICLE",
-						"container": "dev"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "MANDT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SPRAS",
-						"type": "UTF8"
-					},
-					{
-						"name": "MATKL",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ60",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MAESTROS_CRESTONE_VLCVEHICLE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "CRESTONE/VLCVEHICLE",
-						"container": "dev"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "MANDT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SPRAS",
-						"type": "UTF8"
-					},
-					{
-						"name": "MATKL",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ",
-						"type": "UTF8"
-					},
-					{
-						"name": "WGBEZ60",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/VLCVEHICLE1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"FILENAME": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().FILENAME",
-							"type": "Expression"
-						},
-						"folderPath": "CRESTONE/VLCVEHICLE",
-						"container": "dev"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "VGUID",
-						"type": "String"
-					},
-					{
-						"name": "VHCLE",
-						"type": "String"
-					},
-					{
-						"name": "MATNR",
-						"type": "String"
-					},
-					{
-						"name": "CHARG",
-						"type": "String"
-					},
-					{
-						"name": "WERKS",
-						"type": "String"
-					},
-					{
-						"name": "LGORT",
-						"type": "String"
-					},
-					{
-						"name": "CUOBJ",
-						"type": "String"
-					},
-					{
-						"name": "MMSTA",
-						"type": "String"
-					},
-					{
-						"name": "SDSTA",
-						"type": "String"
-					},
-					{
-						"name": "VHVIN",
-						"type": "String"
-					},
-					{
-						"name": "VHCEX",
-						"type": "String"
-					},
-					{
-						"name": "AVAIL",
-						"type": "String"
-					},
-					{
-						"name": "VBLTY",
-						"type": "String"
-					},
-					{
-						"name": "LOCTN",
-						"type": "String"
-					},
-					{
-						"name": "DBM_LICEXT",
-						"type": "String"
-					},
-					{
-						"name": "DBM_BUSTYPE",
-						"type": "String"
-					},
-					{
-						"name": "ZZANO_FABRICACION",
-						"type": "String"
-					},
-					{
-						"name": "ZZANO_MODELO",
-						"type": "String"
-					},
-					{
-						"name": "ZZCOLOR_COMERCIAL",
-						"type": "String"
-					},
-					{
-						"name": "ZZNUM_MOTOR",
-						"type": "String"
-					},
-					{
-						"name": "ZZZDESCR_COLOR_COM",
-						"type": "String"
-					},
-					{
-						"name": "ZZMODELO",
-						"type": "String"
-					},
-					{
-						"name": "ZZTARJETA_REPSOL",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		}
 	]

@@ -13,130 +13,21 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/VLCVEHICLE1')]",
+			"name": "[concat(parameters('factoryName'), '/status_stock_lexus_acum')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "BD_MITSUI",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"FILENAME": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
-				"type": "DelimitedText",
+				"type": "AzureSqlTable",
+				"schema": [],
 				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().FILENAME",
-							"type": "Expression"
-						},
-						"folderPath": "CRESTONE/VLCVEHICLE",
-						"container": "dev"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "VGUID",
-						"type": "String"
-					},
-					{
-						"name": "VHCLE",
-						"type": "String"
-					},
-					{
-						"name": "MATNR",
-						"type": "String"
-					},
-					{
-						"name": "CHARG",
-						"type": "String"
-					},
-					{
-						"name": "WERKS",
-						"type": "String"
-					},
-					{
-						"name": "LGORT",
-						"type": "String"
-					},
-					{
-						"name": "CUOBJ",
-						"type": "String"
-					},
-					{
-						"name": "MMSTA",
-						"type": "String"
-					},
-					{
-						"name": "SDSTA",
-						"type": "String"
-					},
-					{
-						"name": "VHVIN",
-						"type": "String"
-					},
-					{
-						"name": "VHCEX",
-						"type": "String"
-					},
-					{
-						"name": "AVAIL",
-						"type": "String"
-					},
-					{
-						"name": "VBLTY",
-						"type": "String"
-					},
-					{
-						"name": "LOCTN",
-						"type": "String"
-					},
-					{
-						"name": "DBM_LICEXT",
-						"type": "String"
-					},
-					{
-						"name": "DBM_BUSTYPE",
-						"type": "String"
-					},
-					{
-						"name": "ZZANO_FABRICACION",
-						"type": "String"
-					},
-					{
-						"name": "ZZANO_MODELO",
-						"type": "String"
-					},
-					{
-						"name": "ZZCOLOR_COMERCIAL",
-						"type": "String"
-					},
-					{
-						"name": "ZZNUM_MOTOR",
-						"type": "String"
-					},
-					{
-						"name": "ZZZDESCR_COLOR_COM",
-						"type": "String"
-					},
-					{
-						"name": "ZZMODELO",
-						"type": "String"
-					},
-					{
-						"name": "ZZTARJETA_REPSOL",
-						"type": "String"
-					}
-				]
+					"schema": "STAGING",
+					"table": "AUX_STATUS_STOCK_LEXUS"
+				}
 			},
 			"dependsOn": []
 		},
