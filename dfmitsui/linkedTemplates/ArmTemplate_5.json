@@ -450,6 +450,10 @@
 					{
 						"name": "ZZTARJETA_REPSOL",
 						"type": "String"
+					},
+					{
+						"name": "ZZFECHA_TARJETA_REPSOL",
+						"type": "String"
 					}
 				]
 			},
