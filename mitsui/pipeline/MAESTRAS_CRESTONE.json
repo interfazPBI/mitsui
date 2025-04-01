@@ -231,6 +231,8 @@
 			{
 				"name": "vaciar carpeta maestras",
 				"type": "Delete",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEach2",
@@ -674,6 +676,8 @@
 			{
 				"name": "vaciar carpeta VLCVEHICLE",
 				"type": "Delete",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEach2_copy1",
