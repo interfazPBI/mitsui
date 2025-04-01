@@ -158,7 +158,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "TOYOTA",
+						"referenceName": "TOYOTA_SIN_STOCK",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -191,7 +191,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "HINO",
+						"referenceName": "HINO_SIN_STOCK",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -224,7 +224,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "LEXUS",
+						"referenceName": "LEXUS_SIN_STOCK",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
