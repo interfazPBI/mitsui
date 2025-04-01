@@ -51358,8 +51358,6 @@
 					{
 						"name": "vaciar carpeta maestras",
 						"type": "Delete",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "ForEach2",
@@ -51805,8 +51803,6 @@
 					{
 						"name": "vaciar carpeta VLCVEHICLE",
 						"type": "Delete",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "ForEach2_copy1",
@@ -54519,8 +54515,6 @@
 					{
 						"name": "vaciar carpeta trx",
 						"type": "Delete",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "ForEach2",
@@ -60974,7 +60968,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -61386,8 +61380,6 @@
 					{
 						"name": "TOYOTA",
 						"type": "ExecutePipeline",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "TRANSVERSALES",
@@ -61529,11 +61521,11 @@
 				"parameters": {
 					"Fecha_Desde": {
 						"type": "string",
-						"defaultValue": "'2024-03-01'"
+						"defaultValue": "'2025-03-01'"
 					},
 					"Fecha_Hasta": {
 						"type": "string",
-						"defaultValue": "'2024-03-31'"
+						"defaultValue": "'2025-03-31'"
 					},
 					"Modulo": {
 						"type": "string",
