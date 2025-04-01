@@ -231,6 +231,8 @@
 			{
 				"name": "vaciar carpeta trx",
 				"type": "Delete",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEach2",
