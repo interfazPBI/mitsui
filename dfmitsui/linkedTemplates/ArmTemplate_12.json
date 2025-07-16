@@ -2971,11 +2971,11 @@
 				"parameters": {
 					"Fecha_Desde": {
 						"type": "string",
-						"defaultValue": "'2025-04-01'"
+						"defaultValue": "'2025-06-01'"
 					},
 					"Fecha_Hasta": {
 						"type": "string",
-						"defaultValue": "'2025-04-30'"
+						"defaultValue": "'2025-06-30'"
 					},
 					"Modulo": {
 						"type": "string",
