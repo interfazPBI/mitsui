@@ -58,10 +58,6 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"pipeline": {
-									"referenceName": "PIPELINE GENERAL_MANUAL_SIN_STOCK",
-									"type": "PipelineReference"
-								},
 								"waitOnCompletion": true,
 								"parameters": {
 									"Fecha_Desde": {
