@@ -2,7 +2,7 @@
 	"name": "EX_ARCHIVO_CRES",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
