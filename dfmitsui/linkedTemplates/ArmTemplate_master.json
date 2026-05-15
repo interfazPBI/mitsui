@@ -43,6 +43,22 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui"
 		},
+		"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Desde": {
+			"type": "string",
+			"defaultValue": "dateadd(month, datediff(month, 0, DATEADD(HOUR,-5,getUTCdate())) - 1, 0)"
+		},
+		"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Hasta": {
+			"type": "string",
+			"defaultValue": "eomonth(DATEADD(HOUR,-5,getUTCdate()), -1)"
+		},
+		"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Modulo": {
+			"type": "string",
+			"defaultValue": "'FACT'"
+		},
+		"INICIO_MES_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI de la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas."
@@ -254,6 +270,18 @@
 					},
 					"EX_ARCHIVO_CRES_properties_typeProperties_scope": {
 						"value": "[parameters('EX_ARCHIVO_CRES_properties_typeProperties_scope')]"
+					},
+					"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Desde": {
+						"value": "[parameters('INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Desde')]"
+					},
+					"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Hasta": {
+						"value": "[parameters('INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Hasta')]"
+					},
+					"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Modulo": {
+						"value": "[parameters('INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Modulo')]"
+					},
+					"INICIO_MES_properties_typeProperties_scope": {
+						"value": "[parameters('INICIO_MES_properties_typeProperties_scope')]"
 					}
 				}
 			},
