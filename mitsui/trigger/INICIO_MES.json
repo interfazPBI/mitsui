@@ -3,19 +3,7 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Stopped",
-		"pipelines": [
-			{
-				"pipelineReference": {
-					"referenceName": "PIPELINE_CRESTONE_MANUAL_SIN_STOCK",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"Fecha_Desde": "dateadd(month, datediff(month, 0, DATEADD(HOUR,-5,getUTCdate())) - 1, 0)",
-					"Fecha_Hasta": "eomonth(DATEADD(HOUR,-5,getUTCdate()), -1)",
-					"Modulo": "'FACT'"
-				}
-			}
-		],
+		"pipelines": [],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
 			"blobPathBeginsWith": "/dev/blobs/CRESTONE/INICIO_MES",
