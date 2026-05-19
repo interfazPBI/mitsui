@@ -142,105 +142,6 @@
 				}
 			},
 			{
-				"name": "TOYOTA",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "TRANSVERSALES",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"policy": {
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "TOYOTA",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"FECHA_INI": {
-							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-							"type": "Expression"
-						},
-						"FECHA_FIN": {
-							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "HINO",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "TRANSVERSALES",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"policy": {
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "HINO",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"FECHA_INI": {
-							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-							"type": "Expression"
-						},
-						"FECHA_FIN": {
-							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
-				"name": "LEXUS",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "TRANSVERSALES",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"policy": {
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "LEXUS",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"FECHA_INI": {
-							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-							"type": "Expression"
-						},
-						"FECHA_FIN": {
-							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-							"type": "Expression"
-						}
-					}
-				}
-			},
-			{
 				"name": "FECHA_ACTUALIZACION",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
@@ -274,6 +175,105 @@
 				"linkedServiceName": {
 					"referenceName": "BD_MITSUI",
 					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "TOYOTA",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRANSVERSALES",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "TOYOTA_SIN_STOCK",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_INI": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_FIN": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "HINO",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRANSVERSALES",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "HINO_SIN_STOCK",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_INI": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_FIN": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "LEXUS",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "TRANSVERSALES",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LEXUS_SIN_STOCK",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"FECHA_INI": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+							"type": "Expression"
+						},
+						"FECHA_FIN": {
+							"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
