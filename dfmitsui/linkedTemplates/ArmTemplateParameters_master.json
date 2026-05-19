@@ -32,13 +32,13 @@
 		"EX_ARCHIVO_CRES_properties_typeProperties_scope": {
 			"value": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui"
 		},
-		"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Desde": {
+		"INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Fecha_Desde": {
 			"value": "dateadd(month, datediff(month, 0, DATEADD(HOUR,-5,getUTCdate())) - 1, 0)"
 		},
-		"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Hasta": {
+		"INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Fecha_Hasta": {
 			"value": "eomonth(DATEADD(HOUR,-5,getUTCdate()), -1)"
 		},
-		"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Modulo": {
+		"INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Modulo": {
 			"value": "'FACT'"
 		},
 		"INICIO_MES_properties_typeProperties_scope": {

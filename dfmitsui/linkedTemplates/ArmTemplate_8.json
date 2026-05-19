@@ -23,15 +23,15 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/2b9e0c05-41dc-4652-a897-3f88ff959ac9/resourceGroups/RG_MITSUI/providers/Microsoft.Storage/storageAccounts/mitsui"
 		},
-		"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Desde": {
+		"INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Fecha_Desde": {
 			"type": "string",
 			"defaultValue": "dateadd(month, datediff(month, 0, DATEADD(HOUR,-5,getUTCdate())) - 1, 0)"
 		},
-		"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Hasta": {
+		"INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Fecha_Hasta": {
 			"type": "string",
 			"defaultValue": "eomonth(DATEADD(HOUR,-5,getUTCdate()), -1)"
 		},
-		"INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Modulo": {
+		"INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Modulo": {
 			"type": "string",
 			"defaultValue": "'FACT'"
 		},
@@ -3431,105 +3431,6 @@
 						}
 					},
 					{
-						"name": "TOYOTA",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "TOYOTA",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "HINO",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "HINO",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "LEXUS",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "TRANSVERSALES",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "LEXUS",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"FECHA_INI": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
-									"type": "Expression"
-								},
-								"FECHA_FIN": {
-									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
 						"name": "FECHA_ACTUALIZACION",
 						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
@@ -3563,6 +3464,105 @@
 						"linkedServiceName": {
 							"referenceName": "BD_MITSUI",
 							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "TOYOTA",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "TOYOTA_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "HINO",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "HINO_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "LEXUS",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "TRANSVERSALES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "LEXUS_SIN_STOCK",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"FECHA_INI": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_DESDE",
+									"type": "Expression"
+								},
+								"FECHA_FIN": {
+									"value": "@activity('LP_OBTIENE_FECHA').output.firstRow.FECHA_HASTA",
+									"type": "Expression"
+								}
+							}
 						}
 					}
 				],
@@ -3979,17 +3979,17 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "PIPELINE_CRESTONE_MANUAL_SIN_STOCK",
+							"referenceName": "PIPELINE_CRESTONE_INICIO_DE_MES",
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"Fecha_Desde": "[parameters('INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Desde')]",
-							"Fecha_Hasta": "[parameters('INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Fecha_Hasta')]",
-							"Modulo": "[parameters('INICIO_MES_properties_PIPELINE_CRESTONE_MANUAL_SIN_STOCK_parameters_Modulo')]"
+							"Fecha_Desde": "[parameters('INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Fecha_Desde')]",
+							"Fecha_Hasta": "[parameters('INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Fecha_Hasta')]",
+							"Modulo": "[parameters('INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Modulo')]"
 						}
 					}
 				],
@@ -4004,7 +4004,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PIPELINE_CRESTONE_MANUAL_SIN_STOCK')]"
+				"[concat(variables('factoryId'), '/pipelines/PIPELINE_CRESTONE_INICIO_DE_MES')]"
 			]
 		}
 	]
