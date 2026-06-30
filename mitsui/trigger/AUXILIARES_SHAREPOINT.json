@@ -2,7 +2,7 @@
 	"name": "AUXILIARES_SHAREPOINT",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
