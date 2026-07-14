@@ -1,0 +1,15 @@
+{
+	"name": "SharePointOnlineListResource2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SharePointOnlineList2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SharePointOnlineListResource",
+		"schema": [],
+		"typeProperties": {
+			"listName": "Documentos"
+		}
+	}
+}
