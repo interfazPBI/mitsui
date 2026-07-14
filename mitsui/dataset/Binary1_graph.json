@@ -1,0 +1,28 @@
+{
+	"name": "Binary1_graph",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "XTRACT_GRAPH",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ruta": {
+				"type": "string"
+			},
+			"archivo": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@{concat('/v1.0/sites/mitsuiautomotrizcom.sharepoint.com,7cbcadd9-30eb-4182-aac6-8aed73b18d84,87196d69-920e-4539-a993-fd3713638b0c/drives/b!2a28fOswgkGqxortc7GNhGltGYcOkjlFqZP9NxNjiwz_kfqPFqf9SbHIN5ZKLlpN/root:/', dataset().ruta, '/', dataset().archivo, ':/content')}",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}
