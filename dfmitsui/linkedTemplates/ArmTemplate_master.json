@@ -19,9 +19,25 @@
 			"type": "secureString",
 			"metadata": "Cadena protegida para \"servicePrincipalKey\"de \"SharePointOnlineList1\""
 		},
+		"SharePointOnlineList2_servicePrincipalEmbeddedCert": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"servicePrincipalEmbeddedCert\"de \"SharePointOnlineList2\""
+		},
+		"SharePointOnlineList2_servicePrincipalEmbeddedCertPassword": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"servicePrincipalEmbeddedCertPassword\"de \"SharePointOnlineList2\""
+		},
 		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
 			"defaultValue": "87d4e0d5-3458-4110-a34e-e699775c7c07"
+		},
+		"SharePointOnlineList2_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "87d4e0d5-3458-4110-a34e-e699775c7c07"
+		},
+		"XTRACT_GRAPH_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://graph.microsoft.com"
 		},
 		"XTRACT_SP_properties_typeProperties_url": {
 			"type": "string",
@@ -95,8 +111,20 @@
 					"SharePointOnlineList1_servicePrincipalKey": {
 						"value": "[parameters('SharePointOnlineList1_servicePrincipalKey')]"
 					},
+					"SharePointOnlineList2_servicePrincipalEmbeddedCert": {
+						"value": "[parameters('SharePointOnlineList2_servicePrincipalEmbeddedCert')]"
+					},
+					"SharePointOnlineList2_servicePrincipalEmbeddedCertPassword": {
+						"value": "[parameters('SharePointOnlineList2_servicePrincipalEmbeddedCertPassword')]"
+					},
 					"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
 						"value": "[parameters('SharePointOnlineList1_properties_typeProperties_servicePrincipalId')]"
+					},
+					"SharePointOnlineList2_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('SharePointOnlineList2_properties_typeProperties_servicePrincipalId')]"
+					},
+					"XTRACT_GRAPH_properties_typeProperties_url": {
+						"value": "[parameters('XTRACT_GRAPH_properties_typeProperties_url')]"
 					},
 					"XTRACT_SP_properties_typeProperties_url": {
 						"value": "[parameters('XTRACT_SP_properties_typeProperties_url')]"

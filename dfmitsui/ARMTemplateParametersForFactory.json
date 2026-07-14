@@ -14,8 +14,20 @@
 		"SharePointOnlineList1_servicePrincipalKey": {
 			"value": ""
 		},
+		"SharePointOnlineList2_servicePrincipalEmbeddedCert": {
+			"value": ""
+		},
+		"SharePointOnlineList2_servicePrincipalEmbeddedCertPassword": {
+			"value": ""
+		},
 		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
 			"value": "87d4e0d5-3458-4110-a34e-e699775c7c07"
+		},
+		"SharePointOnlineList2_properties_typeProperties_servicePrincipalId": {
+			"value": "87d4e0d5-3458-4110-a34e-e699775c7c07"
+		},
+		"XTRACT_GRAPH_properties_typeProperties_url": {
+			"value": "https://graph.microsoft.com"
 		},
 		"XTRACT_SP_properties_typeProperties_url": {
 			"value": "@{concat('https://mitsuiautomotrizcom.sharepoint.com/sites/BI-MASA/_api/web/GetFileByServerRelativeUrl(''',linkedService().path,'/',linkedService().file,''')/$value')}"

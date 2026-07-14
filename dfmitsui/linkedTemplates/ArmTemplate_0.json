@@ -19,9 +19,25 @@
 			"type": "secureString",
 			"metadata": "Cadena protegida para \"servicePrincipalKey\"de \"SharePointOnlineList1\""
 		},
+		"SharePointOnlineList2_servicePrincipalEmbeddedCert": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"servicePrincipalEmbeddedCert\"de \"SharePointOnlineList2\""
+		},
+		"SharePointOnlineList2_servicePrincipalEmbeddedCertPassword": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"servicePrincipalEmbeddedCertPassword\"de \"SharePointOnlineList2\""
+		},
 		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
 			"defaultValue": "87d4e0d5-3458-4110-a34e-e699775c7c07"
+		},
+		"SharePointOnlineList2_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "87d4e0d5-3458-4110-a34e-e699775c7c07"
+		},
+		"XTRACT_GRAPH_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://graph.microsoft.com"
 		},
 		"XTRACT_SP_properties_typeProperties_url": {
 			"type": "string",
@@ -73,6 +89,46 @@
 						"type": "SecureString",
 						"value": "[parameters('SharePointOnlineList1_servicePrincipalKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SharePointOnlineList2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SharePointOnlineList",
+				"typeProperties": {
+					"siteUrl": "https://mitsuiautomotrizcom.sharepoint.com/sites/BI-MASA",
+					"tenantId": "c36ebfba-c87f-4847-b182-f9ee332466e6",
+					"servicePrincipalId": "[parameters('SharePointOnlineList2_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalCredentialType": "ServicePrincipalCert",
+					"servicePrincipalEmbeddedCert": {
+						"type": "SecureString",
+						"value": "[parameters('SharePointOnlineList2_servicePrincipalEmbeddedCert')]"
+					},
+					"servicePrincipalEmbeddedCertPassword": {
+						"type": "SecureString",
+						"value": "[parameters('SharePointOnlineList2_servicePrincipalEmbeddedCertPassword')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/XTRACT_GRAPH')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Conexión a sharepoint mediante graph",
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('XTRACT_GRAPH_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
 				}
 			},
 			"dependsOn": []
@@ -2691,86 +2747,6 @@
 						"container": "dev"
 					},
 					"sheetIndex": 2,
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Vendedor",
-						"type": "String"
-					},
-					{
-						"name": "Codigo",
-						"type": "String"
-					},
-					{
-						"name": "Sede",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CAD_VAL_SEGUROS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Seguros",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Cadena de Valor.xlsx",
-						"folderPath": "Archivos Planos",
-						"container": "dev"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Vendedor",
-						"type": "String"
-					},
-					{
-						"name": "Codigo",
-						"type": "String"
-					},
-					{
-						"name": "Sede",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CAD_VAL_TOYOTA_LIFE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Cadena de Valor.xlsx",
-						"folderPath": "Archivos Planos",
-						"container": "dev"
-					},
-					"sheetIndex": 1,
 					"firstRowAsHeader": true
 				},
 				"schema": [

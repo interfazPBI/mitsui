@@ -19,9 +19,25 @@
 			"type": "secureString",
 			"metadata": "Cadena protegida para \"servicePrincipalKey\"de \"SharePointOnlineList1\""
 		},
+		"SharePointOnlineList2_servicePrincipalEmbeddedCert": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"servicePrincipalEmbeddedCert\"de \"SharePointOnlineList2\""
+		},
+		"SharePointOnlineList2_servicePrincipalEmbeddedCertPassword": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"servicePrincipalEmbeddedCertPassword\"de \"SharePointOnlineList2\""
+		},
 		"SharePointOnlineList1_properties_typeProperties_servicePrincipalId": {
 			"type": "string",
 			"defaultValue": "87d4e0d5-3458-4110-a34e-e699775c7c07"
+		},
+		"SharePointOnlineList2_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "87d4e0d5-3458-4110-a34e-e699775c7c07"
+		},
+		"XTRACT_GRAPH_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://graph.microsoft.com"
 		},
 		"XTRACT_SP_properties_typeProperties_url": {
 			"type": "string",
@@ -94,7 +110,7 @@
 								"httpRequestTimeout": "00:05:00"
 							},
 							"dataset": {
-								"referenceName": "SharePointOnlineListResource1",
+								"referenceName": "SharePointOnlineListResource2",
 								"type": "DatasetReference",
 								"parameters": {}
 							},
@@ -104,6 +120,8 @@
 					{
 						"name": "ForEach1",
 						"type": "ForEach",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "Lookup1",
@@ -136,9 +154,9 @@
 										"headers": {
 											"Content-Type": "application/x-www-form-urlencoded"
 										},
-										"url": "https://accounts.accesscontrol.windows.net/c36ebfba-c87f-4847-b182-f9ee332466e6/tokens/OAuth/2",
+										"url": "https://login.microsoftonline.com/c36ebfba-c87f-4847-b182-f9ee332466e6/oauth2/v2.0/token",
 										"body": {
-											"value": "@concat('grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=l._8Q~eDBlA.ZlL25ArDLhge23jwWkVdXDYyDba','g&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6')",
+											"value": "@concat('grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07&client_secret=l._8Q~eDBlA.ZlL25ArDLhge23jwWkVdXDYyDba','g&scope=https%3A%2F%2Fgraph.microsoft.com%2F.default')",
 											"type": "Expression"
 										}
 									}
@@ -1008,6 +1026,30 @@
 								}
 							]
 						}
+					},
+					{
+						"name": "Web1_copy1_copy1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/x-www-form-urlencoded"
+							},
+							"url": "https://login.microsoftonline.com/c36ebfba-c87f-4847-b182-f9ee332466e6/oauth2/v2.0/token",
+							"body": {
+								"value": "@concat('grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07&client_secret=l._8Q~eDBlA.ZlL25ArDLhge23jwWkVdXDYyDba','g&scope=https%3A%2F%2Fgraph.microsoft.com%2F.default')",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
@@ -1016,7 +1058,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource1')]",
+				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource2')]",
 				"[concat(variables('factoryId'), '/datasets/Binary1')]",
 				"[concat(variables('factoryId'), '/datasets/receptor')]",
 				"[concat(variables('factoryId'), '/datasets/CAD_VAL_TOYOTA_VALUE')]",
@@ -19098,6 +19140,26 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SharePointOnlineListResource2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SharePointOnlineList2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SharePointOnlineListResource",
+				"schema": [],
+				"typeProperties": {
+					"listName": "Documentos"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SharePointOnlineList2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/T001W')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -22009,6 +22071,46 @@
 						"type": "SecureString",
 						"value": "[parameters('SharePointOnlineList1_servicePrincipalKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SharePointOnlineList2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SharePointOnlineList",
+				"typeProperties": {
+					"siteUrl": "https://mitsuiautomotrizcom.sharepoint.com/sites/BI-MASA",
+					"tenantId": "c36ebfba-c87f-4847-b182-f9ee332466e6",
+					"servicePrincipalId": "[parameters('SharePointOnlineList2_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalCredentialType": "ServicePrincipalCert",
+					"servicePrincipalEmbeddedCert": {
+						"type": "SecureString",
+						"value": "[parameters('SharePointOnlineList2_servicePrincipalEmbeddedCert')]"
+					},
+					"servicePrincipalEmbeddedCertPassword": {
+						"type": "SecureString",
+						"value": "[parameters('SharePointOnlineList2_servicePrincipalEmbeddedCertPassword')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/XTRACT_GRAPH')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Conexión a sharepoint mediante graph",
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('XTRACT_GRAPH_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
 				}
 			},
 			"dependsOn": []
