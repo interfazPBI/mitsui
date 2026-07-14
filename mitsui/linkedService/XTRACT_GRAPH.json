@@ -1,0 +1,13 @@
+{
+	"name": "XTRACT_GRAPH",
+	"properties": {
+		"description": "Conexión a sharepoint mediante graph",
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://graph.microsoft.com",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
