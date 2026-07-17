@@ -24,7 +24,7 @@
 						"httpRequestTimeout": "00:05:00"
 					},
 					"dataset": {
-						"referenceName": "SharePointOnlineListResource1",
+						"referenceName": "SharePointOnlineListResource2",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -116,17 +116,11 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "Binary1",
+									"referenceName": "Binary1_graph",
 									"type": "DatasetReference",
 									"parameters": {
-										"ruta": {
-											"value": "@item().rutadeacceso",
-											"type": "Expression"
-										},
-										"archivo": {
-											"value": "@item().Nombre",
-											"type": "Expression"
-										}
+										"ruta": "@item().rutadeacceso",
+										"archivo": "@item().Nombre"
 									}
 								}
 							],
