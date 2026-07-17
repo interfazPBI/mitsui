@@ -298,6 +298,26 @@
 					},
 					"EX_ARCHIVO_CRES_properties_typeProperties_scope": {
 						"value": "[parameters('EX_ARCHIVO_CRES_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'dfmitsui_ArmTemplate_7')]"
+			]
+		},
+		{
+			"name": "dfmitsui_ArmTemplate_9",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_9.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Fecha_Desde": {
 						"value": "[parameters('INICIO_MES_properties_PIPELINE_CRESTONE_INICIO_DE_MES_parameters_Fecha_Desde')]"
@@ -314,7 +334,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'dfmitsui_ArmTemplate_7')]"
+				"[resourceId('Microsoft.Resources/deployments', 'dfmitsui_ArmTemplate_8')]"
 			]
 		}
 	]

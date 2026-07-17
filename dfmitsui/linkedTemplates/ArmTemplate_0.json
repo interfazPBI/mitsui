@@ -2689,6 +2689,39 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Binary1_graph')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "XTRACT_GRAPH",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ruta": {
+						"type": "string"
+					},
+					"archivo": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": {
+							"value": "@{concat('/v1.0/sites/mitsuiautomotrizcom.sharepoint.com,7cbcadd9-30eb-4182-aac6-8aed73b18d84,87196d69-920e-4539-a993-fd3713638b0c/drives/b!2a28fOswgkGqxortc7GNhGltGYcOkjlFqZP9NxNjiwz_kfqPFqf9SbHIN5ZKLlpN/root:/', dataset().ruta, '/', dataset().archivo, ':/content')}",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/XTRACT_GRAPH')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CAD_VAL_EPDP')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2707,46 +2740,6 @@
 						"container": "dev"
 					},
 					"sheetIndex": 4,
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Vendedor",
-						"type": "String"
-					},
-					{
-						"name": "Codigo",
-						"type": "String"
-					},
-					{
-						"name": "Sede",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CAD_VAL_MET_TOYOTA_LIFE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Cadena de Valor.xlsx",
-						"folderPath": "Archivos Planos",
-						"container": "dev"
-					},
-					"sheetIndex": 2,
 					"firstRowAsHeader": true
 				},
 				"schema": [

@@ -89,8 +89,6 @@
 					{
 						"name": "Lookup1",
 						"type": "Lookup",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -120,8 +118,6 @@
 					{
 						"name": "ForEach1",
 						"type": "ForEach",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "Lookup1",
@@ -205,17 +201,14 @@
 									},
 									"inputs": [
 										{
-											"referenceName": "Binary1",
+											"referenceName": "Binary1_graph",
 											"type": "DatasetReference",
 											"parameters": {
 												"ruta": {
-													"value": "@item().rutadeacceso",
+													"value": "@{replace(item().RutaDeAcceso, '/sites/BI-MASA/Documentos compartidos/', '')}",
 													"type": "Expression"
 												},
-												"archivo": {
-													"value": "@item().Nombre",
-													"type": "Expression"
-												}
+												"archivo": "@item().Nombre"
 											}
 										}
 									],
@@ -1026,30 +1019,6 @@
 								}
 							]
 						}
-					},
-					{
-						"name": "Web1_copy1_copy1",
-						"type": "WebActivity",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/x-www-form-urlencoded"
-							},
-							"url": "https://login.microsoftonline.com/c36ebfba-c87f-4847-b182-f9ee332466e6/oauth2/v2.0/token",
-							"body": {
-								"value": "@concat('grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07&client_secret=l._8Q~eDBlA.ZlL25ArDLhge23jwWkVdXDYyDba','g&scope=https%3A%2F%2Fgraph.microsoft.com%2F.default')",
-								"type": "Expression"
-							}
-						}
 					}
 				],
 				"policy": {
@@ -1059,7 +1028,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource2')]",
-				"[concat(variables('factoryId'), '/datasets/Binary1')]",
+				"[concat(variables('factoryId'), '/datasets/Binary1_graph')]",
 				"[concat(variables('factoryId'), '/datasets/receptor')]",
 				"[concat(variables('factoryId'), '/datasets/CAD_VAL_TOYOTA_VALUE')]",
 				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]",
@@ -2625,7 +2594,7 @@
 								"httpRequestTimeout": "00:05:00"
 							},
 							"dataset": {
-								"referenceName": "SharePointOnlineListResource1",
+								"referenceName": "SharePointOnlineListResource2",
 								"type": "DatasetReference",
 								"parameters": {}
 							},
@@ -2718,17 +2687,11 @@
 									},
 									"inputs": [
 										{
-											"referenceName": "Binary1",
+											"referenceName": "Binary1_graph",
 											"type": "DatasetReference",
 											"parameters": {
-												"ruta": {
-													"value": "@item().rutadeacceso",
-													"type": "Expression"
-												},
-												"archivo": {
-													"value": "@item().Nombre",
-													"type": "Expression"
-												}
+												"ruta": "@item().rutadeacceso",
+												"archivo": "@item().Nombre"
 											}
 										}
 									],
@@ -2953,9 +2916,9 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource1')]",
+				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource2')]",
 				"[concat(variables('factoryId'), '/datasets/CARPETA_AUXILIAR')]",
-				"[concat(variables('factoryId'), '/datasets/Binary1')]",
+				"[concat(variables('factoryId'), '/datasets/Binary1_graph')]",
 				"[concat(variables('factoryId'), '/datasets/receptor_COTIZACIONES')]",
 				"[concat(variables('factoryId'), '/datasets/COTIZACIONES_EXCEL')]",
 				"[concat(variables('factoryId'), '/datasets/DESTINO_SQL')]"
@@ -6817,7 +6780,14 @@
 					{
 						"name": "TRUNCATE AUXILIARES",
 						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -7049,6 +7019,47 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "Fail1",
+						"type": "Fail",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"message": "Error de conexión a Sharepoint!!",
+							"errorCode": "5001"
+						}
+					},
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SharePointOnlineListSource",
+								"httpRequestTimeout": "00:05:00"
+							},
+							"dataset": {
+								"referenceName": "SharePointOnlineListResource2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
 					}
 				],
 				"policy": {
@@ -7066,7 +7077,8 @@
 				"[concat(variables('factoryId'), '/pipelines/AUX_METAS_TIPO_PAGO_SHAREPOINT')]",
 				"[concat(variables('factoryId'), '/pipelines/AUX_STATUS_STOCK_SHAREPOINT')]",
 				"[concat(variables('factoryId'), '/pipelines/AUX_RESERVAS_HINO_SHAREPOINT')]",
-				"[concat(variables('factoryId'), '/pipelines/AUX_STOCK_PROY_SHAREPOINT')]"
+				"[concat(variables('factoryId'), '/pipelines/AUX_STOCK_PROY_SHAREPOINT')]",
+				"[concat(variables('factoryId'), '/datasets/SharePointOnlineListResource2')]"
 			]
 		},
 		{
@@ -16460,6 +16472,39 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/XTRACT_SP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Binary1_graph')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "XTRACT_GRAPH",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"ruta": {
+						"type": "string"
+					},
+					"archivo": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": {
+							"value": "@{concat('/v1.0/sites/mitsuiautomotrizcom.sharepoint.com,7cbcadd9-30eb-4182-aac6-8aed73b18d84,87196d69-920e-4539-a993-fd3713638b0c/drives/b!2a28fOswgkGqxortc7GNhGltGYcOkjlFqZP9NxNjiwz_kfqPFqf9SbHIN5ZKLlpN/root:/', dataset().ruta, '/', dataset().archivo, ':/content')}",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/XTRACT_GRAPH')]"
 			]
 		},
 		{

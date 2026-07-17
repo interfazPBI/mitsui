@@ -13,6 +13,36 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/receptor_STATUS_STSOCK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"archivo": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().archivo",
+							"type": "Expression"
+						},
+						"folderPath": "Archivos Planos/Status_Stock",
+						"container": "dev"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/receptor_STOCK_PROYECCION')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -70,8 +100,6 @@
 					{
 						"name": "Lookup1",
 						"type": "Lookup",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -101,8 +129,6 @@
 					{
 						"name": "ForEach1",
 						"type": "ForEach",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "Lookup1",
@@ -186,17 +212,14 @@
 									},
 									"inputs": [
 										{
-											"referenceName": "Binary1",
+											"referenceName": "Binary1_graph",
 											"type": "DatasetReference",
 											"parameters": {
 												"ruta": {
-													"value": "@item().rutadeacceso",
+													"value": "@{replace(item().RutaDeAcceso, '/sites/BI-MASA/Documentos compartidos/', '')}",
 													"type": "Expression"
 												},
-												"archivo": {
-													"value": "@item().Nombre",
-													"type": "Expression"
-												}
+												"archivo": "@item().Nombre"
 											}
 										}
 									],
@@ -1006,30 +1029,6 @@
 									]
 								}
 							]
-						}
-					},
-					{
-						"name": "Web1_copy1_copy1",
-						"type": "WebActivity",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/x-www-form-urlencoded"
-							},
-							"url": "https://login.microsoftonline.com/c36ebfba-c87f-4847-b182-f9ee332466e6/oauth2/v2.0/token",
-							"body": {
-								"value": "@concat('grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07&client_secret=l._8Q~eDBlA.ZlL25ArDLhge23jwWkVdXDYyDba','g&scope=https%3A%2F%2Fgraph.microsoft.com%2F.default')",
-								"type": "Expression"
-							}
 						}
 					}
 				],
@@ -2565,7 +2564,7 @@
 								"httpRequestTimeout": "00:05:00"
 							},
 							"dataset": {
-								"referenceName": "SharePointOnlineListResource1",
+								"referenceName": "SharePointOnlineListResource2",
 								"type": "DatasetReference",
 								"parameters": {}
 							},
@@ -2658,17 +2657,11 @@
 									},
 									"inputs": [
 										{
-											"referenceName": "Binary1",
+											"referenceName": "Binary1_graph",
 											"type": "DatasetReference",
 											"parameters": {
-												"ruta": {
-													"value": "@item().rutadeacceso",
-													"type": "Expression"
-												},
-												"archivo": {
-													"value": "@item().Nombre",
-													"type": "Expression"
-												}
+												"ruta": "@item().rutadeacceso",
+												"archivo": "@item().Nombre"
 											}
 										}
 									],
@@ -4395,281 +4388,6 @@
 								}
 							]
 						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AUX_PL_MASA_PLAN_ORIGINAL')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "PL_MASA_PLAN_ORIGINAL",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Cascada",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Cascada",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Marca",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Marca",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Tipo",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Tipo",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Area",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Area",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Año",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Año",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Enero",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Enero",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Febrero",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Febrero",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Marzo",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Marzo",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Abril",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Abril",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Mayo",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Mayo",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Junio",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Junio",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Julio",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Julio",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Agosto",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Agosto",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Setiembre",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Setiembre",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Octubre",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Octubre",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Noviembre",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Noviembre",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Diciembre",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Diciembre",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "PL_MASA_PLAN_ORIGINAL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DESTINO_SQL",
-								"type": "DatasetReference",
-								"parameters": {
-									"TABLA": "AUX_PL_MASA_PLAN_ORIGINAL"
-								}
-							}
-						]
 					}
 				],
 				"policy": {
