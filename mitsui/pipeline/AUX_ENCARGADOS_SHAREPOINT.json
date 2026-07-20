@@ -67,7 +67,7 @@
 								},
 								"url": "https://login.microsoftonline.com/c36ebfba-c87f-4847-b182-f9ee332466e6/oauth2/v2.0/token",
 								"body": {
-									"value": "@concat('grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07@c36ebfba-c87f-4847-b182-f9ee332466e6&client_secret=l._8Q~eDBlA.ZlL25ArDLhge23jwWkVdXDYyDba','g&resource=00000003-0000-0ff1-ce00-000000000000/mitsuiautomotrizcom.sharepoint.com@c36ebfba-c87f-4847-b182-f9ee332466e6')",
+									"value": "@concat('grant_type=client_credentials&client_id=87d4e0d5-3458-4110-a34e-e699775c7c07&client_secret=l._8Q~eDBlA.ZlL25ArDLhge23jwWkVdXDYyDba','g&scope=https%3A%2F%2Fgraph.microsoft.com%2F.default')",
 									"type": "Expression"
 								}
 							}
